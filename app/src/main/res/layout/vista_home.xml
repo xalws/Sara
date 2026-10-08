@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#262626"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp"
+        >
+
+<!--    Titulo -->
+    <TextView
+        android:id="@+id/txtTituloHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:textColor="#FFFFFF"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        />
+
+    <!-- Espacio -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        />
+
+    <!-- Título: Plano cartesiano -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Definición de plano cartesiano:"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Texto: Plano cartesiano -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Un plano cartesiano es un sistema de referencia formado por dos rectas numéricas perpendiculares que se cruzan en un punto llamado origen. Su función principal es ubicar puntos con exactitud mediante coordenadas. Fue creado por el matemático René Descartes."
+        android:textColor="#D0D0D0"
+        android:textSize="20sp"
+        android:lineSpacingExtra="4dp" />
+
+    <!-- Espacio -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+
+    <!-- Título: Derivada -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Definición de derivada:"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Texto: Derivada -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="La derivada es la razón de cambio instantánea con la que varía el valor de una función matemática según cambia su variable independiente. Sus principales aplicaciones son resolver ecuaciones diferenciales, analizar funciones y estudiar cambios."
+        android:textColor="#D0D0D0"
+        android:textSize="20sp"
+        android:lineSpacingExtra="4dp" />
+
+</LinearLayout>
+</ScrollView>
