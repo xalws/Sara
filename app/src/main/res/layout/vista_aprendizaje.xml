@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#262626"
+    android:fillViewport="true"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/txtTituloAprendizaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Aprendizaje"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <!-- Espacio -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+        <!-- Función cuadrática -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Función cuadrática:"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Fórmula -->
+        <TextView
+            android:id="@+id/txtFuncionCuadratica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="f(x) = x²"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <!-- Botón sonido -->
+        <Button
+            android:id="@+id/btnSonidoCuadratica"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="Reproducir sonido   ▶"
+            android:textColor="#262626"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+        <!-- Espacio -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+        <!-- Función logarítmica -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Función logarítmica:"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Fórmula -->
+        <TextView
+            android:id="@+id/txtFuncionLogaritmica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="f(x) = ln(x)"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <!-- Botón sonido -->
+        <Button
+            android:id="@+id/btnSonidoLogaritmica"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="Reproducir sonido   ▶"
+            android:textColor="#262626"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+        <!-- Espacio -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+        <!-- Funciones trigonométricas -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Funciones trigonométricas:"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Fórmula -->
+        <TextView
+            android:id="@+id/txtFuncionTrigonometrica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="f(x) = sen(x + 2)"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <!-- Botón sonido -->
+        <Button
+            android:id="@+id/btnSonidoTrigonometrica"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="Reproducir sonido   ▶"
+            android:textColor="#262626"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+        <!-- Espacio -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+
+        <!-- Otra sección -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Funciones trigonométricas:"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtFuncionTrigonometrica2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="f(x) = cos(x)"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnSonidoTrigonometrica2"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="Reproducir sonido   ▶"
+            android:textColor="#262626"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+        <!-- Espacio final -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+</ScrollView>
