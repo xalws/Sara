@@ -1,51 +1,74 @@
 package com.example.sara
 
+import android.adservices.adid.AdId
+import android.graphics.Color
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import com.example.sara.R
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var btnHome: ImageButton
-    private lateinit var btnAprendizaje: ImageButton
-    private lateinit var btnGraficar: ImageButton
-
     private lateinit var contenedorPrincipal: FrameLayout
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    private lateinit var btnHome : ImageButton
+    private lateinit var btnAprendizaje : ImageButton
+    private lateinit var btnGraficar : ImageButton
+
+    override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Botones del menú
-        btnHome = findViewById(R.id.btnHome)
-        btnAprendizaje = findViewById(R.id.btnAprendizaje)
-        btnGraficar = findViewById(R.id.btnGraficar)
-
-        // Contenedor
+        // Enlazamos el contenedor principal y los botones
         contenedorPrincipal = findViewById(R.id.contenedorPrincipal)
 
-        // Mostrar Home al iniciar
-        mostrarVista(R.layout.vista_home)
+        btnHome = findViewById<ImageButton>(R.id.btnHome)
+        btnAprendizaje = findViewById<ImageButton>(R.id.btnAprendizaje)
+        btnGraficar = findViewById<ImageButton>(R.id.btnGraficar)
 
-        // Botón Home
+        // Home por defecto
+        cambiarPantalla(R.layout.vista_home)
+        btnActivo(btnHome)
+
+        // Funcionalidad para botones de menu
         btnHome.setOnClickListener {
-            mostrarVista(R.layout.vista_home)
+            cambiarPantalla(R.layout.vista_home)
+            btnActivo(btnHome)
         }
 
-        // Botón Aprendizaje
         btnAprendizaje.setOnClickListener {
-            mostrarVista(R.layout.vista_aprendizaje)
+            cambiarPantalla(R.layout.vista_aprendizaje)
+            btnActivo(btnAprendizaje)
         }
 
-        // Botón Graficar
         btnGraficar.setOnClickListener {
-            // Pendiente hasta crear vista_graficacion.xml
+            cambiarPantalla(R.layout.vista_grafica)
+            btnActivo(btnGraficar)
         }
     }
 
-    private fun mostrarVista(layout: Int) {
+    private fun cambiarPantalla(layoutResId: Int){
+        // Limpiar
         contenedorPrincipal.removeAllViews()
-        layoutInflater.inflate(layout, contenedorPrincipal)
+
+        // Nueva pantallas
+        val nuevaPantalla: View = LayoutInflater.from(this).inflate(layoutResId, contenedorPrincipal, false)
+        contenedorPrincipal.addView(nuevaPantalla)
+    }
+
+    private fun btnActivo(btn: ImageButton){
+        // Colores
+        val amarillo = Color.parseColor("#ffb905")
+        val morado = Color.parseColor("#ee03ff")
+
+        // Todos apagados
+        btnHome.setBackgroundResource(R.drawable.btn_morado)
+        btnAprendizaje.setBackgroundResource(R.drawable.btn_morado)
+        btnGraficar.setBackgroundResource(R.drawable.btn_morado)
+
+        btn.setBackgroundResource(R.drawable.btn_amarillo)
     }
 }

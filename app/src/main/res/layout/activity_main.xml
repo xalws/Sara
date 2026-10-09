@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#262626"
-    android:paddingTop="40dp"
+    android:paddingTop="16dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
     android:paddingBottom="16dp">
@@ -22,13 +22,13 @@
         <!-- Btn Home -->
         <ImageButton
             android:id="@+id/btnHome"
-            android:layout_width="60dp"
+            android:layout_width="30dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_amarillo"
             android:contentDescription="Inicio"
             android:padding="14dp"
-            android:src="@drawable/ico_home" />
+            android:src="@drawable/ico_home"
+            />
 
         <Space
             android:layout_width="0dp"
@@ -38,10 +38,9 @@
         <!-- Btn Aprendizaje -->
         <ImageButton
             android:id="@+id/btnAprendizaje"
-            android:layout_width="60dp"
+            android:layout_width="30dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_morado"
             android:contentDescription="Aprendizaje"
             android:padding="14dp"
             android:src="@drawable/ico_aprendizaje" />
@@ -54,10 +53,9 @@
         <!-- Btn Graficar -->
         <ImageButton
             android:id="@+id/btnGraficar"
-            android:layout_width="60dp"
+            android:layout_width="30dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:background="@drawable/btn_morado"
             android:contentDescription="Graficar"
             android:padding="14dp"
             android:src="@drawable/ico_grafica" />
@@ -77,11 +75,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <!-- Vista Home -->
-        <include
-            layout="@layout/vista_home"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
 
     </FrameLayout>
 

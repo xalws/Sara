@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="#262626"
     android:fillViewport="true"
+    android:scrollbars="none"
     >
 
     <LinearLayout
@@ -48,15 +49,19 @@
             android:textStyle="bold" />
 
         <!-- Botón sonido -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSonidoCuadratica"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_marginTop="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:background="@drawable/btn_amarillo"
-            android:text="Reproducir sonido   ▶"
+            android:backgroundTint="@null"
+            android:text="Reproducir sonido "
+            android:drawableEnd="@drawable/ico_play"
             android:textColor="#262626"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textAllCaps="false" />
 
@@ -86,15 +91,18 @@
             android:textStyle="bold" />
 
         <!-- Botón sonido -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSonidoLogaritmica"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/btn_amarillo"
-            android:text="Reproducir sonido   ▶"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="Reproducir sonido "
+            android:drawableEnd="@drawable/ico_play"
             android:textColor="#262626"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textAllCaps="false" />
 
@@ -124,15 +132,18 @@
             android:textStyle="bold" />
 
         <!-- Botón sonido -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSonidoTrigonometrica"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/btn_amarillo"
-            android:text="Reproducir sonido   ▶"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="Reproducir sonido "
+            android:drawableEnd="@drawable/ico_play"
             android:textColor="#262626"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textAllCaps="false" />
 
@@ -160,15 +171,18 @@
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSonidoTrigonometrica2"
             android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/btn_amarillo"
-            android:text="Reproducir sonido   ▶"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="Reproducir sonido "
+            android:drawableEnd="@drawable/ico_play"
             android:textColor="#262626"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textAllCaps="false" />
 
