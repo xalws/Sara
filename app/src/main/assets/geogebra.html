@@ -22,38 +22,131 @@
 <div id="ggb-element"></div>
 
 <script>
-    var ggbApp;
+    var ggbApp = null;
+    var numVariables = 0;   // 0 = sin función, 1 = f(x), 2 = f(x,y), -1 = ecuación implícita
+
     var params = {
-        "appName": "graphing",
+        "appName": "classic",
+        "perspective": "G",
         "width": window.innerWidth,
         "height": window.innerHeight,
         "showToolBar": false,
         "showAlgebraInput": false,
         "showMenuBar": false,
         "showSideBar": false,
+        "showResetIcon": false,
         "enableLabelDrags": false,
         "enableShiftDragZoom": true,
-        "showResetIcon": false,
-        "appletOnLoad": function(api) {
+        "appletOnLoad": function (api) {
             ggbApp = api;
+            api.setGridVisible(true);
+            api.setAxesVisible(true, true);
         }
     };
 
     var applet = new GGBApplet(params, true);
-    window.addEventListener("load", function() {
+    window.addEventListener("load", function () {
         applet.inject('ggb-element');
     });
 
-    function cargarFuncion(expresion) {
-        if (!ggbApp) return;
-        ggbApp.evalCommand("Delete(f)");
-        ggbApp.evalCommand("f(x) = " + expresion);
-        ggbApp.setGridVisible(true);
-        ggbApp.setAxesVisible(true, true);
+    // Pasa la notación en español / unicode a la sintaxis de GeoGebra
+    function normalizar(s) {
+        return s
+            .replace(/²/g, '^2')
+            .replace(/³/g, '^3')
+            .replace(/√/g, 'sqrt')
+            .replace(/π/g, 'pi')
+            .replace(/\barcsen\(/gi, 'asin(')
+            .replace(/\barccos\(/gi, 'acos(')
+            .replace(/\barctan\(/gi, 'atan(')
+            .replace(/\bsenh\(/gi, 'sinh(')
+            .replace(/\bsen\(/gi, 'sin(')
+            .replace(/\bctg\(/gi, 'cot(')
+            .replace(/\btg\(/gi, 'tan(')
+            .replace(/\blog10\(/gi, 'lg(')
+            .trim();
     }
 
+    // Detecta qué variables (x, y) usa la expresión ignorando nombres de funciones
+    function detectarVariables(expr) {
+        var sinFunciones = expr.replace(
+            /(sinh|cosh|tanh|asin|acos|atan|sin|cos|tan|sen|tg|sec|csc|cot|sqrt|cbrt|abs|exp|ln|lg|log|floor|ceil|round|sgn|pi)/gi, '');
+        return {
+            x: /x/i.test(sinFunciones),
+            y: /y/i.test(sinFunciones)
+        };
+    }
+
+    // Grafica cualquier expresión. Devuelve: "ok1", "ok2", "impl", "error" o "cargando"
+    function graficar(entrada) {
+        if (!ggbApp) return "cargando";
+
+        var expr = normalizar(entrada);
+        if (!expr) return "error";
+
+        // Quita "y =", "z =", "f(x) =" o "f(x,y) =" del inicio
+        expr = expr.replace(/^\s*(y|z|f\s*\(\s*x\s*(,\s*y\s*)?\))\s*=\s*/i, '');
+
+        ggbApp.deleteObject("f");
+
+        var resultado;
+        try {
+            if (expr.indexOf('=') !== -1) {
+                // Ecuación implícita (x^2 + y^2 = 4, x = 3, ...)
+                ggbApp.setPerspective("G");
+                ggbApp.evalCommand("f: " + expr);
+                numVariables = -1;
+                resultado = "impl";
+            } else {
+                var v = detectarVariables(expr);
+                if (v.y) {
+                    // Dos variables: superficie z = f(x, y) en la vista 3D
+                    ggbApp.setPerspective("T");
+                    ggbApp.evalCommand("f(x, y) = " + expr);
+                    numVariables = 2;
+                    resultado = "ok2";
+                } else {
+                    ggbApp.setPerspective("G");
+                    ggbApp.evalCommand("f(x) = " + expr);
+                    numVariables = 1;
+                    resultado = "ok1";
+                }
+            }
+        } catch (e) {
+            numVariables = 0;
+            return "error";
+        }
+
+        if (!ggbApp.exists("f")) {
+            numVariables = 0;
+            return "error";
+        }
+
+        ggbApp.setGridVisible(true);
+        ggbApp.setAxesVisible(true, true);
+        return resultado;
+    }
+
+    // Evalúa f en n puntos de [xmin, xmax] (con y = 0 si hay dos variables).
+    // Devuelve un arreglo; los valores no definidos se devuelven como null.
+    function muestrear(n, xmin, xmax) {
+        var valores = [];
+        if (!ggbApp || (numVariables !== 1 && numVariables !== 2)) return valores;
+
+        for (var i = 0; i < n; i++) {
+            var x = xmin + (xmax - xmin) * i / (n - 1);
+            var cmd = (numVariables === 2)
+                ? "f(" + x.toFixed(6) + ", 0)"
+                : "f(" + x.toFixed(6) + ")";
+            var v = ggbApp.getValue(cmd);
+            valores.push(isFinite(v) ? v : null);
+        }
+        return valores;
+    }
+
+    // Valor de la función en un punto (para uso futuro de la app)
     function obtenerY(x) {
-        if (!ggbApp) return 0;
+        if (!ggbApp || numVariables !== 1) return 0;
         return ggbApp.getValue("f(" + x + ")");
     }
 </script>

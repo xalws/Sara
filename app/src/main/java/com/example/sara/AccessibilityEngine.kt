@@ -4,6 +4,8 @@ import android.content.Context
 import android.media.AudioFormat
 import android.media.AudioTrack
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.speech.tts.TextToSpeech
@@ -13,10 +15,13 @@ class AccessibilityEngine(private val context: Context) : TextToSpeech.OnInitLis
 
     private var tts: TextToSpeech = TextToSpeech(context, this)
     private val vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    private val handler = Handler(Looper.getMainLooper())
 
     private var audioTrack: AudioTrack? = null
     private val sampleRate = 44100
-    private var isPlaying = false
+
+    private val minFreq = 220.0  // Tono grave para valores bajos
+    private val maxFreq = 880.0  // Tono agudo para valores altos
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
@@ -28,30 +33,51 @@ class AccessibilityEngine(private val context: Context) : TextToSpeech.OnInitLis
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
     }
 
-    // Método para reproducir tono basado en la coordenada Y (-10 a +10)
+    // Tono basado en la coordenada Y (-10 a +10)
     fun playToneForY(yVal: Double) {
-        val minFreq = 220.0  // Tono grave para Y negativo
-        val maxFreq = 880.0  // Tono agudo para Y positivo
-
-        // Mapeo lineal simple de Y (-10 a 10) a frecuencias audibles
-        val clampedY = yVal.coerceIn(-10.0, 10.0)
-        val frequency = minFreq + ((clampedY + 10) / 20.0) * (maxFreq - minFreq)
-
-        generateTone(frequency)
+        playToneNormalized(yVal, -10.0, 10.0, 50)
     }
 
-    private fun generateTone(freqHz: Double) {
-        val durationMs = 50
+    // Tono para un valor dentro del rango [min, max] (sirve para cualquier función)
+    fun playToneNormalized(value: Double, min: Double, max: Double, durationMs: Int = 50) {
+        val t = if (max > min) ((value - min) / (max - min)).coerceIn(0.0, 1.0) else 0.5
+        generateTone(minFreq + t * (maxFreq - minFreq), durationMs)
+    }
+
+    // Reproduce la gráfica como una secuencia de tonos (izquierda a derecha).
+    // Los valores null (no definidos) se reproducen como silencio.
+    fun playSweep(values: List<Double?>, stepMs: Long = 45L, startDelayMs: Long = 0L) {
+        stopSweep()
+
+        val finite = values.filterNotNull()
+        if (finite.isEmpty()) {
+            speak("No hay valores para reproducir")
+            return
+        }
+        val min = finite.min()
+        val max = finite.max()
+
+        values.forEachIndexed { i, v ->
+            if (v != null) {
+                handler.postDelayed({
+                    playToneNormalized(v, min, max, stepMs.toInt())
+                }, startDelayMs + i * stepMs)
+            }
+        }
+    }
+
+    fun stopSweep() {
+        handler.removeCallbacksAndMessages(null)
+        audioTrack?.stop()
+    }
+
+    private fun generateTone(freqHz: Double, durationMs: Int) {
         val numSamples = (durationMs * sampleRate) / 1000
-        val sample = DoubleArray(numSamples)
         val generatedSnd = ByteArray(2 * numSamples)
 
-        for (i in 0 until numSamples) {
-            sample[i] = Math.sin(2.0 * Math.PI * i.toDouble() / (sampleRate / freqHz))
-        }
-
         var idx = 0
-        for (dVal in sample) {
+        for (i in 0 until numSamples) {
+            val dVal = Math.sin(2.0 * Math.PI * i.toDouble() / (sampleRate / freqHz))
             val valShort = (dVal * 32767).toInt().toShort()
             generatedSnd[idx++] = (valShort.toInt() and 0x00ff).toByte()
             generatedSnd[idx++] = (valShort.toInt() and 0xff00).shr(8).toByte()
@@ -59,6 +85,12 @@ class AccessibilityEngine(private val context: Context) : TextToSpeech.OnInitLis
 
         audioTrack?.stop()
         audioTrack?.release()
+
+        val minBuffer = AudioTrack.getMinBufferSize(
+            sampleRate,
+            AudioFormat.CHANNEL_OUT_MONO,
+            AudioFormat.ENCODING_PCM_16BIT
+        )
 
         audioTrack = AudioTrack.Builder()
             .setAudioFormat(
@@ -68,7 +100,7 @@ class AccessibilityEngine(private val context: Context) : TextToSpeech.OnInitLis
                     .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
                     .build()
             )
-            .setBufferSizeInBytes(generatedSnd.size)
+            .setBufferSizeInBytes(maxOf(generatedSnd.size, minBuffer))
             .build()
 
         audioTrack?.write(generatedSnd, 0, generatedSnd.size)
@@ -86,6 +118,7 @@ class AccessibilityEngine(private val context: Context) : TextToSpeech.OnInitLis
     }
 
     fun shutdown() {
+        handler.removeCallbacksAndMessages(null)
         tts.stop()
         tts.shutdown()
         audioTrack?.release()
