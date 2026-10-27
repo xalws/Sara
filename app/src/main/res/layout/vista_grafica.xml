@@ -36,7 +36,6 @@
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:background="#FFFFFF"
-            android:contentDescription="Gráfica de GeoGebra"
             />
 
         <Space
@@ -48,8 +47,7 @@
             android:id="@+id/etFuncion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ej: x^2, sen(x), x^2 + y^2"
-            android:contentDescription="Campo para escribir la función a graficar"
+            android:hint="Ingresa la función a graficar"
             android:textColorHint="#4d4d4d"
             android:backgroundTint="#4f4f4f"
             android:gravity="center"
@@ -72,7 +70,7 @@
             android:weightSum="2">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnGraficarFuncion"
+                android:id="@+id/btnGraficar"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
