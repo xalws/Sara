@@ -1,33 +1,32 @@
 package com.example.sara
 
-import android.adservices.adid.AdId
 import android.graphics.Color
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import android.view.LayoutInflater
-import android.view.View
-import com.example.sara.R
 
 class MainActivity : AppCompatActivity() {
     private lateinit var contenedorPrincipal: FrameLayout
 
-    private lateinit var btnHome : ImageButton
-    private lateinit var btnAprendizaje : ImageButton
-    private lateinit var btnGraficar : ImageButton
+    private lateinit var btnHome: ImageButton
+    private lateinit var btnAprendizaje: ImageButton
+    private lateinit var btnGraficar: ImageButton
 
-    override fun onCreate(savedInstanceState: Bundle?){
+    private var grafica: GraficaController? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         // Enlazamos el contenedor principal y los botones
         contenedorPrincipal = findViewById(R.id.contenedorPrincipal)
 
-        btnHome = findViewById<ImageButton>(R.id.btnHome)
-        btnAprendizaje = findViewById<ImageButton>(R.id.btnAprendizaje)
-        btnGraficar = findViewById<ImageButton>(R.id.btnGraficar)
+        btnHome = findViewById(R.id.btnHome)
+        btnAprendizaje = findViewById(R.id.btnAprendizaje)
+        btnGraficar = findViewById(R.id.btnGraficar)
 
         // Home por defecto
         cambiarPantalla(R.layout.vista_home)
@@ -50,25 +49,36 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun cambiarPantalla(layoutResId: Int){
+    private fun cambiarPantalla(layoutResId: Int) {
+        // Liberar el graficador anterior (WebView, voz y audio)
+        grafica?.destruir()
+        grafica = null
+
         // Limpiar
         contenedorPrincipal.removeAllViews()
 
-        // Nueva pantallas
-        val nuevaPantalla: View = LayoutInflater.from(this).inflate(layoutResId, contenedorPrincipal, false)
+        // Nueva pantalla
+        val nuevaPantalla: View =
+            LayoutInflater.from(this).inflate(layoutResId, contenedorPrincipal, false)
         contenedorPrincipal.addView(nuevaPantalla)
+
+        if (layoutResId == R.layout.vista_grafica) {
+            grafica = GraficaController(this, nuevaPantalla)
+        }
     }
 
-    private fun btnActivo(btn: ImageButton){
-        // Colores
-        val amarillo = Color.parseColor("#ffb905")
-        val morado = Color.parseColor("#ee03ff")
-
+    private fun btnActivo(btn: ImageButton) {
         // Todos apagados
         btnHome.setBackgroundResource(R.drawable.btn_morado)
         btnAprendizaje.setBackgroundResource(R.drawable.btn_morado)
         btnGraficar.setBackgroundResource(R.drawable.btn_morado)
 
         btn.setBackgroundResource(R.drawable.btn_amarillo)
+    }
+
+    override fun onDestroy() {
+        grafica?.destruir()
+        grafica = null
+        super.onDestroy()
     }
 }
