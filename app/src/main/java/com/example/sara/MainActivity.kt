@@ -1,16 +1,12 @@
 package com.example.sara
 
-import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.webkit.WebView
-import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import org.json.JSONArray
-import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     private lateinit var contenedorPrincipal: FrameLayout
@@ -19,14 +15,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnAprendizaje: ImageButton
     private lateinit var btnGraficar: ImageButton
 
-    private lateinit var accesibilidad: AccessibilityEngine
-    private var webGeogebra: WebView? = null
+    private var grafica: GraficaController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        accesibilidad = AccessibilityEngine(this)
 
         // Enlazamos el contenedor principal y los botones
         contenedorPrincipal = findViewById(R.id.contenedorPrincipal)
@@ -51,83 +44,26 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnGraficar.setOnClickListener {
-            val vista = cambiarPantalla(R.layout.vista_grafica)
-            configurarGrafica(vista)
+            cambiarPantalla(R.layout.vista_grafica)
             btnActivo(btnGraficar)
         }
     }
 
-    private fun cambiarPantalla(layoutResId: Int): View {
-        // Liberar el WebView anterior y detener sonido
-        accesibilidad.stopSweep()
-        webGeogebra?.destroy()
-        webGeogebra = null
+    private fun cambiarPantalla(layoutResId: Int) {
+        // Liberar el graficador anterior (WebView, voz y audio)
+        grafica?.destruir()
+        grafica = null
 
+        // Limpiar
         contenedorPrincipal.removeAllViews()
 
+        // Nueva pantalla
         val nuevaPantalla: View =
             LayoutInflater.from(this).inflate(layoutResId, contenedorPrincipal, false)
         contenedorPrincipal.addView(nuevaPantalla)
-        return nuevaPantalla
-    }
 
-    @SuppressLint("SetJavaScriptEnabled", "ClickableViewAccessibility")
-    private fun configurarGrafica(vista: View) {
-        val web = vista.findViewById<WebView>(R.id.contenedorGeogebra)
-        val etFuncion = vista.findViewById<EditText>(R.id.etFuncion)
-        val btnGraficarFuncion = vista.findViewById<View>(R.id.btnGraficarFuncion)
-        val btnReproducir = vista.findViewById<View>(R.id.btnReproducirGrafica)
-
-        webGeogebra = web
-        web.settings.javaScriptEnabled = true
-        web.settings.domStorageEnabled = true
-        // Evita que el ScrollView robe los gestos (zoom / mover la gráfica)
-        web.setOnTouchListener { v, _ ->
-            v.parent.requestDisallowInterceptTouchEvent(true)
-            false
-        }
-        web.loadUrl("file:///android_asset/geogebra.html")
-
-        btnGraficarFuncion.setOnClickListener {
-            val expresion = etFuncion.text.toString().trim()
-            if (expresion.isEmpty()) {
-                accesibilidad.speak("Escribe una función primero")
-                return@setOnClickListener
-            }
-
-            web.evaluateJavascript("graficar(${JSONObject.quote(expresion)})") { res ->
-                val estado = JSONArray("[$res]").optString(0)
-                accesibilidad.speak(
-                    when (estado) {
-                        "ok1" -> "Función graficada"
-                        "ok2" -> "Función de dos variables graficada en tres dimensiones"
-                        "impl" -> "Ecuación graficada"
-                        "cargando" -> "GeoGebra aún está cargando, intenta de nuevo"
-                        else -> "No pude graficar esa función, revisa la escritura"
-                    }
-                )
-            }
-        }
-
-        btnReproducir.setOnClickListener {
-            web.evaluateJavascript("muestrear(120, -10, 10)") { res ->
-                val arreglo = try {
-                    JSONArray(res)
-                } catch (e: Exception) {
-                    JSONArray()
-                }
-
-                if (arreglo.length() == 0) {
-                    accesibilidad.speak("Primero grafica una función")
-                    return@evaluateJavascript
-                }
-
-                val valores = List(arreglo.length()) { i ->
-                    if (arreglo.isNull(i)) null else arreglo.getDouble(i)
-                }
-                accesibilidad.speak("Reproduciendo gráfica de izquierda a derecha")
-                accesibilidad.playSweep(valores, startDelayMs = 2000)
-            }
+        if (layoutResId == R.layout.vista_grafica) {
+            grafica = GraficaController(this, nuevaPantalla)
         }
     }
 
@@ -141,8 +77,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        webGeogebra?.destroy()
-        accesibilidad.shutdown()
+        grafica?.destruir()
+        grafica = null
         super.onDestroy()
     }
 }
