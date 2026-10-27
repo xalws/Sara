@@ -10,11 +10,11 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #121212;
+            background-color: #FFFFFF;
         }
         #ggb-element {
-            width: 100vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
@@ -22,132 +22,193 @@
 <div id="ggb-element"></div>
 
 <script>
-    var ggbApp = null;
-    var numVariables = 0;   // 0 = sin función, 1 = f(x), 2 = f(x,y), -1 = ecuación implícita
+    var CURVA = "gfCurva";
+    var EVAL  = "gfEval";
+    var HF    = "gfH";
+    var X0    = "gfX0";
+    var Y0    = "gfY0";
 
-    var params = {
-        "appName": "classic",
-        "perspective": "G",
-        "width": window.innerWidth,
-        "height": window.innerHeight,
-        "showToolBar": false,
-        "showAlgebraInput": false,
-        "showMenuBar": false,
-        "showSideBar": false,
-        "showResetIcon": false,
-        "enableLabelDrags": false,
-        "enableShiftDragZoom": true,
-        "appletOnLoad": function (api) {
-            ggbApp = api;
-            api.setGridVisible(true);
-            api.setAxesVisible(true, true);
-        }
+    var ggb = null;
+    var paramsActuales = [];
+
+    function enviar(tipo, obj) {
+        try {
+            if (window.Android) Android.evento(tipo, typeof obj === "string" ? obj : JSON.stringify(obj));
+        } catch (e) { console.error(e); }
+    }
+
+    window.onerror = function (msg, src, linea) {
+        enviar("error", "Error en la página: " + msg + " (línea " + linea + ")");
     };
 
-    var applet = new GGBApplet(params, true);
-    window.addEventListener("load", function () {
-        applet.inject('ggb-element');
-    });
-
-    // Pasa la notación en español / unicode a la sintaxis de GeoGebra
-    function normalizar(s) {
-        return s
-            .replace(/²/g, '^2')
-            .replace(/³/g, '^3')
-            .replace(/√/g, 'sqrt')
-            .replace(/π/g, 'pi')
-            .replace(/\barcsen\(/gi, 'asin(')
-            .replace(/\barccos\(/gi, 'acos(')
-            .replace(/\barctan\(/gi, 'atan(')
-            .replace(/\bsenh\(/gi, 'sinh(')
-            .replace(/\bsen\(/gi, 'sin(')
-            .replace(/\bctg\(/gi, 'cot(')
-            .replace(/\btg\(/gi, 'tan(')
-            .replace(/\blog10\(/gi, 'lg(')
-            .trim();
+    function borrar(nombre) {
+        if (ggb.exists(nombre)) ggb.deleteObject(nombre);
     }
 
-    // Detecta qué variables (x, y) usa la expresión ignorando nombres de funciones
-    function detectarVariables(expr) {
-        var sinFunciones = expr.replace(
-            /(sinh|cosh|tanh|asin|acos|atan|sin|cos|tan|sen|tg|sec|csc|cot|sqrt|cbrt|abs|exp|ln|lg|log|floor|ceil|round|sgn|pi)/gi, '');
-        return {
-            x: /x/i.test(sinFunciones),
-            y: /y/i.test(sinFunciones)
-        };
+    function ocultar(nombre) {
+        if (ggb.exists(nombre)) ggb.setVisible(nombre, false);
     }
 
-    // Grafica cualquier expresión. Devuelve: "ok1", "ok2", "impl", "error" o "cargando"
-    function graficar(entrada) {
-        if (!ggbApp) return "cargando";
+    function redondear(v) {
+        return Math.round(v * 10000) / 10000;
+    }
 
-        var expr = normalizar(entrada);
-        if (!expr) return "error";
-
-        // Quita "y =", "z =", "f(x) =" o "f(x,y) =" del inicio
-        expr = expr.replace(/^\s*(y|z|f\s*\(\s*x\s*(,\s*y\s*)?\))\s*=\s*/i, '');
-
-        ggbApp.deleteObject("f");
-
-        var resultado;
+    // p = { modo, curva, eval, params: [{n, v}] }
+    function graficar(p) {
+        var res = { ok: false, mensaje: "" };
         try {
-            if (expr.indexOf('=') !== -1) {
-                // Ecuación implícita (x^2 + y^2 = 4, x = 3, ...)
-                ggbApp.setPerspective("G");
-                ggbApp.evalCommand("f: " + expr);
-                numVariables = -1;
-                resultado = "impl";
+            if (!ggb) throw new Error("La gráfica aún está cargando.");
+
+            borrar(EVAL); borrar(HF); borrar(CURVA);
+
+            var nuevos = p.params.map(function (q) { return q.n; });
+            paramsActuales.forEach(function (n) {
+                if (nuevos.indexOf(n) < 0) borrar(n);
+            });
+
+            p.params.forEach(function (q) {
+                if (!ggb.exists(q.n)) {
+                    ggb.evalCommand(q.n + " = Slider(-10, 10, 0.1)");
+                    ggb.setVisible(q.n, false);
+                }
+                ggb.setValue(q.n, q.v);
+            });
+            paramsActuales = nuevos;
+
+            if (!ggb.exists(X0)) { ggb.evalCommand(X0 + " = 0"); ocultar(X0); }
+            if (!ggb.exists(Y0)) { ggb.evalCommand(Y0 + " = 0"); ocultar(Y0); }
+
+            if (p.modo === "implicita") {
+                ggb.evalCommand(CURVA + ": " + p.curva);
+                ggb.evalCommand(HF + "(x, y) = " + p.eval);
+                ggb.evalCommand(EVAL + " = " + HF + "(" + X0 + ", " + Y0 + ")");
             } else {
-                var v = detectarVariables(expr);
-                if (v.y) {
-                    // Dos variables: superficie z = f(x, y) en la vista 3D
-                    ggbApp.setPerspective("T");
-                    ggbApp.evalCommand("f(x, y) = " + expr);
-                    numVariables = 2;
-                    resultado = "ok2";
-                } else {
-                    ggbApp.setPerspective("G");
-                    ggbApp.evalCommand("f(x) = " + expr);
-                    numVariables = 1;
-                    resultado = "ok1";
+                ggb.evalCommand(CURVA + "(x) = " + p.curva);
+                ggb.evalCommand(EVAL + " = " + CURVA + "(" + X0 + ")");
+            }
+
+            if (!ggb.exists(CURVA)) throw new Error("No pude interpretar esa expresión.");
+
+            ggb.setColor(CURVA, 190, 0, 210);
+            ggb.setLineThickness(CURVA, 6);
+            ggb.setLabelVisible(CURVA, false);
+            ocultar(EVAL); ocultar(HF);
+
+            res.ok = true;
+        } catch (e) {
+            res.mensaje = String((e && e.message) || e);
+        }
+        enviar("grafica", res);
+    }
+
+    function setParam(nombre, valor) {
+        if (ggb && ggb.exists(nombre)) ggb.setValue(nombre, valor);
+    }
+
+    function vista() {
+        try {
+            var v = JSON.parse(ggb.getViewProperties(1));
+            var xMin = v.xMin, yMin = v.yMin;
+            var xMax = xMin + v.width * v.invXscale;
+            var yMax = yMin + v.height * v.invYscale;
+            if ([xMin, xMax, yMin, yMax].every(isFinite) && xMax > xMin && yMax > yMin) {
+                return { xMin: xMin, xMax: xMax, yMin: yMin, yMax: yMax };
+            }
+        } catch (e) { }
+        return { xMin: -10, xMax: 10, yMin: -10, yMax: 10 };
+    }
+
+    function evalH(y) {
+        ggb.setValue(Y0, y);
+        return ggb.getValue(EVAL);
+    }
+
+    function biseccion(a, fa, b, fb) {
+        var fa0 = Math.abs(fa), fb0 = Math.abs(fb);
+        for (var k = 0; k < 18; k++) {
+            var m = (a + b) / 2, fm = evalH(m);
+            if (fm === 0) return m;
+            if (fa * fm < 0) { b = m; fb = fm; } else { a = m; fa = fm; }
+        }
+        var r = (a + b) / 2, fr = evalH(r);
+        return Math.abs(fr) <= Math.min(fa0, fb0) ? r : null;
+    }
+
+    function raices(v) {
+        var NY = 120, ys = [];
+        var y0 = v.yMin, f0 = evalH(y0);
+        if (f0 === 0) ys.push(y0);
+        for (var j = 1; j <= NY; j++) {
+            var y1 = v.yMin + (v.yMax - v.yMin) * j / NY, f1 = evalH(y1);
+            if (isFinite(f0) && isFinite(f1)) {
+                if (f1 === 0) ys.push(y1);
+                else if (f0 * f1 < 0) {
+                    var r = biseccion(y0, f0, y1, f1);
+                    if (r !== null) ys.push(r);
                 }
             }
+            y0 = y1; f0 = f1;
+        }
+        return ys.slice(0, 4).map(redondear);
+    }
+
+    function valorExplicito() {
+        var y = ggb.getValue(EVAL);
+        return isFinite(y) ? [redondear(y)] : [];
+    }
+
+    function muestrear(modo, n) {
+        var res = { ok: false, mensaje: "", series: [] };
+        try {
+            if (!ggb || !ggb.exists(EVAL)) throw new Error("Primero grafica una función.");
+            var v = vista();
+            res.xMin = v.xMin; res.xMax = v.xMax; res.yMin = v.yMin; res.yMax = v.yMax;
+
+            ggb.setRepaintingActive(false);
+            try {
+                for (var i = 0; i <= n; i++) {
+                    var x = v.xMin + (v.xMax - v.xMin) * i / n;
+                    ggb.setValue(X0, x);
+                    res.series.push(modo === "implicita" ? raices(v) : valorExplicito());
+                }
+            } finally {
+                ggb.setRepaintingActive(true);
+            }
+            res.ok = true;
         } catch (e) {
-            numVariables = 0;
-            return "error";
+            res.mensaje = String((e && e.message) || e);
         }
-
-        if (!ggbApp.exists("f")) {
-            numVariables = 0;
-            return "error";
-        }
-
-        ggbApp.setGridVisible(true);
-        ggbApp.setAxesVisible(true, true);
-        return resultado;
+        enviar("muestras", res);
     }
 
-    // Evalúa f en n puntos de [xmin, xmax] (con y = 0 si hay dos variables).
-    // Devuelve un arreglo; los valores no definidos se devuelven como null.
-    function muestrear(n, xmin, xmax) {
-        var valores = [];
-        if (!ggbApp || (numVariables !== 1 && numVariables !== 2)) return valores;
-
-        for (var i = 0; i < n; i++) {
-            var x = xmin + (xmax - xmin) * i / (n - 1);
-            var cmd = (numVariables === 2)
-                ? "f(" + x.toFixed(6) + ", 0)"
-                : "f(" + x.toFixed(6) + ")";
-            var v = ggbApp.getValue(cmd);
-            valores.push(isFinite(v) ? v : null);
-        }
-        return valores;
-    }
-
-    // Valor de la función en un punto (para uso futuro de la app)
-    function obtenerY(x) {
-        if (!ggbApp || numVariables !== 1) return 0;
-        return ggbApp.getValue("f(" + x + ")");
+    // ---------- Inicio ----------
+    if (typeof GGBApplet === "undefined") {
+        enviar("error", "No se pudo descargar GeoGebra (deployggb.js). Revisa tu internet.");
+    } else {
+        var params = {
+            "id": "ggbApplet",
+            "appName": "graphing",
+            "width": Math.max(window.innerWidth, 300),
+            "height": Math.max(window.innerHeight, 300),
+            "showToolBar": false,
+            "showAlgebraInput": false,
+            "showMenuBar": false,
+            "showSideBar": false,
+            "enableLabelDrags": false,
+            "enableShiftDragZoom": true,
+            "showResetIcon": false,
+            "appletOnLoad": function (api) {
+                ggb = api;
+                ggb.setGridVisible(true);
+                ggb.setAxesVisible(true, true);
+                enviar("listo", "");
+            }
+        };
+        var applet = new GGBApplet(params, true);
+        window.addEventListener("load", function () { applet.inject('ggb-element'); });
+        window.addEventListener("resize", function () {
+            if (ggb) ggb.setSize(window.innerWidth, window.innerHeight);
+        });
     }
 </script>
 </body>
