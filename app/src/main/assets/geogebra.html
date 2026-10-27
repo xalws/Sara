@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <style>
+        html, body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; background:#fff; }
+        #ggb-element { width:100vw; height:100vh; }
+    </style>
+</head>
+<body>
+<div id="ggb-element"></div>
+
+<script>
+    var ggbApp = null;
+    var paramsActuales = [];
+
+    // Envía eventos a Kotlin (Puente.evento)
+    function enviar(tipo, datos) {
+        try {
+            Android.evento(tipo, typeof datos === "string" ? datos : JSON.stringify(datos));
+        } catch (e) { console.log("Sin puente Android: " + tipo); }
+    }
+
+    var params = {
+        "appName": "graphing",
+        "width": window.innerWidth,
+        "height": window.innerHeight,
+        "showToolBar": false,
+        "showAlgebraInput": false,
+        "showMenuBar": false,
+        "showSideBar": false,
+        "enableLabelDrags": false,
+        "enableShiftDragZoom": true,
+        "showResetIcon": false,
+        "appletOnLoad": function (api) {
+            ggbApp = api;
+            ggbApp.setCoordSystem(-10, 10, -10, 10);
+            enviar("listo", "");
+        }
+    };
+
+    var applet = new GGBApplet(params, true);
+    window.addEventListener("load", function () { applet.inject("ggb-element"); });
+
+    // ---------- Graficar ----------
+    // plan = { modo, curva, eval, params: [{n, v}] }
+    function graficar(plan) {
+        if (!ggbApp) { enviar("error", "GeoGebra aún está cargando, espera un momento."); return; }
+        try {
+            // Limpiar lo anterior
+            ["curvaG", "evalG"].forEach(function (o) { if (ggbApp.exists(o)) ggbApp.deleteObject(o); });
+            paramsActuales.forEach(function (n) { if (ggbApp.exists(n)) ggbApp.deleteObject(n); });
+            paramsActuales = [];
+
+            // Parámetros primero
+            plan.params.forEach(function (p) {
+                ggbApp.evalCommand(p.n + " = " + p.v);
+                if (ggbApp.exists(p.n)) { ggbApp.setVisible(p.n, false); paramsActuales.push(p.n); }
+            });
+
+            if (plan.modo === "implicita") {
+                ggbApp.evalCommand("evalG(x, y) = " + plan.eval);
+                ggbApp.evalCommand("curvaG: " + plan.curva);
+            } else {
+                ggbApp.evalCommand("curvaG(x) = " + plan.curva);
+            }
+
+            ggbApp.setGridVisible(true);
+            ggbApp.setAxesVisible(true, true);
+
+            if (ggbApp.exists("curvaG")) {
+                enviar("grafica", { ok: true });
+            } else {
+                enviar("grafica", { ok: false, mensaje: "No se pudo graficar esa expresión. Revisa cómo la escribiste." });
+            }
+        } catch (e) {
+            enviar("grafica", { ok: false, mensaje: "Error al graficar: " + e });
+        }
+    }
+
+    function setParam(nombre, valor) {
+        if (ggbApp && ggbApp.exists(nombre)) ggbApp.setValue(nombre, valor);
+    }
+
+    // ---------- Muestreo para sonificación ----------
+    function vista() {
+        ggbApp.evalCommand("cA = Corner(1)");
+        ggbApp.evalCommand("cB = Corner(3)");
+        var r = {
+            xmin: ggbApp.getXcoord("cA"), ymin: ggbApp.getYcoord("cA"),
+            xmax: ggbApp.getXcoord("cB"), ymax: ggbApp.getYcoord("cB")
+        };
+        ggbApp.deleteObject("cA");
+        ggbApp.deleteObject("cB");
+        return r;
+    }
+
+    // Devuelve series = lista de pasos (izquierda -> derecha); cada paso = lista de valores Y
+    function muestrear(modo, n) {
+        try {
+            if (!ggbApp || !ggbApp.exists("curvaG")) {
+                enviar("muestras", { ok: false, mensaje: "Primero grafica una función." });
+                return;
+            }
+            var v = vista();
+            var series = [];
+            for (var i = 0; i < n; i++) {
+                var x = (v.xmin + (v.xmax - v.xmin) * i / (n - 1)).toFixed(6);
+                var paso = [];
+                if (modo === "implicita") {
+                    var M = 40, yPrev = null, gPrev = null;
+                    for (var j = 0; j <= M; j++) {
+                        var y = v.ymin + (v.ymax - v.ymin) * j / M;
+                        var g = ggbApp.getValue("evalG(" + x + ", " + y.toFixed(6) + ")");
+                        if (isFinite(g) && gPrev !== null && isFinite(gPrev) && gPrev * g < 0) {
+                            paso.push(yPrev - gPrev * (y - yPrev) / (g - gPrev)); // interpolación lineal
+                        }
+                        yPrev = y; gPrev = g;
+                    }
+                } else {
+                    var yv = ggbApp.getValue("curvaG(" + x + ")");
+                    if (isFinite(yv) && yv >= v.ymin && yv <= v.ymax) paso.push(yv);
+                }
+                series.push(paso);
+            }
+            enviar("muestras", { ok: true, series: series, yMin: v.ymin, yMax: v.ymax });
+        } catch (e) {
+            enviar("muestras", { ok: false, mensaje: "Error al calcular el sonido: " + e });
+        }
+    }
+</script>
+</body>
+</html>
