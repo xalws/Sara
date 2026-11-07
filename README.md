@@ -38,8 +38,8 @@ Permite escribir una función con un teclado matemático compatible con TalkBack
 ### Ejemplos de entrada
 
 ```
-| Escribes   | Resultado                                |
-|-----|------|                                          |
+| Escribes   | Resultado                                  |
+|-----|------|                                            |
 | x^2        | Función explícita sin parámetros           |
 | a*x^2+b    | Función explícita con parámetros a y b     |
 | sen(x)     | Se interpreta como `sin(x)`                |
