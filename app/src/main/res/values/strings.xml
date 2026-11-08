@@ -1,3 +1,45 @@
 <resources>
     <string name="app_name">Sara</string>
+    <string name="titulo_aprendizaje">Aprendizaje</string>
+    <string name="funcion_cuadratica">Función cuadrática:</string>
+    <string name="funcion_logaritmica">Función logarítmica:</string>
+    <string name="funciones_trigonometricas">Funciones trigonométricas:</string>
+    <string name="funcion_coseno">Función coseno:</string>
+    <string name="iniciar_leccion">Iniciar lección</string>
+
+    <!-- Elementos comunes para la vista de lección -->
+    <string name="btn_volver">← Volver</string>
+    <string name="btn_ir_a_graficar">Ir a Graficar</string>
+    <string name="titulo_seccion_definicion">Definición:</string>
+    <string name="titulo_seccion_formula">Forma general:</string>
+    <string name="titulo_seccion_propiedades">Características principales:</string>
+    <string name="titulo_seccion_ejemplo">Ejemplo práctico:</string>
+
+    <!-- Lección: Función Cuadrática -->
+    <string name="leccion_cuadratica_titulo">Función Cuadrática</string>
+    <string name="leccion_cuadratica_definicion">Una función cuadrática es una función polinómica de segundo grado cuya representación gráfica en el plano cartesiano es una parábola. Su orientación depende del signo del coeficiente principal.</string>
+    <string name="leccion_cuadratica_formula">f(x) = ax² + bx + c   (donde a ≠ 0)</string>
+    <string name="leccion_cuadratica_propiedades">• Vértice: Punto máximo o mínimo de la parábola.\n• Eje de simetría: Línea vertical x = -b / (2a).\n• Concavidad: Si a > 0 abre hacia arriba; si a &lt; 0 abre hacia abajo.\n• Discriminante (Δ = b² - 4ac): Determina las raíces o cortes con el eje X.</string>
+    <string name="leccion_cuadratica_ejemplo">f(x) = x² - 4x + 3\n• Vértice en (2, -1)\n• Intersección con el eje Y en (0, 3)\n• Cortes con el eje X en x = 1 y x = 3</string>
+
+    <!-- Lección: Función Logarítmica -->
+    <string name="leccion_logaritmica_titulo">Función Logarítmica</string>
+    <string name="leccion_logaritmica_definicion">La función logarítmica es la inversa de la función exponencial. Indica el exponente al que se debe elevar una base fija para obtener el argumento dado. Es estrictamente creciente cuando la base es mayor a 1.</string>
+    <string name="leccion_logaritmica_formula">f(x) = log_b(x)   (donde b > 0, b ≠ 1 y x > 0)</string>
+    <string name="leccion_logaritmica_propiedades">• Dominio: Solo números reales positivos (0, +∞).\n• Rango: Todos los números reales (-∞, +∞).\n• Asíntota vertical en el eje Y (recta x = 0).\n• Pasa siempre por el punto (1, 0) ya que log_b(1) = 0.</string>
+    <string name="leccion_logaritmica_ejemplo">f(x) = ln(x)  (Logaritmo natural con base e ≈ 2.718)\n• f(1) = 0\n• f(e) = 1\n• Cuando x tiende a 0 por la derecha, la función desciende hacia -∞</string>
+
+    <!-- Lección: Funciones Trigonométricas -->
+    <string name="leccion_trigonometrica_titulo">Funciones Trigonométricas</string>
+    <string name="leccion_trigonometrica_definicion">Las funciones trigonométricas son funciones periódicas asociadas a las razones trigonométricas calculadas sobre la circunferencia unitaria. Modelan fenómenos ondulatorios, vibraciones y ciclos repetitivos.</string>
+    <string name="leccion_trigonometrica_formula">f(x) = sen(x),  f(x) = cos(x),  f(x) = tan(x)</string>
+    <string name="leccion_trigonometrica_propiedades">• Periodicidad: Repiten sus valores cíclicamente (periodo de 2π para seno y coseno; π para tangente).\n• Acotación: El seno y el coseno oscilan estrictamente en el intervalo [-1, 1].\n• Continuidad: Seno y coseno están definidas y continuas en toda la recta real.</string>
+    <string name="leccion_trigonometrica_ejemplo">f(x) = sen(x)\n• Periodo = 2π rad\n• Máximo de 1 en x = π/2 rad\n• Mínimo de -1 en x = 3π/2 rad\n• Cruce por el origen en (0, 0)</string>
+
+    <!-- Lección: Función Coseno -->
+    <string name="leccion_coseno_titulo">Función Coseno</string>
+    <string name="leccion_coseno_definicion">La función coseno relaciona un ángulo con la coordenada horizontal (x) de la circunferencia unitaria. Se trata de una función periódica, suave y simétrica respecto al eje Y.</string>
+    <string name="leccion_coseno_formula">f(x) = A · cos(B · x + C) + D</string>
+    <string name="leccion_coseno_propiedades">• Dominio: Todos los números reales (-∞, +∞).\n• Rango estándar: [-1, 1].\n• Periodo fundamental: 2π radianes.\n• Simetría par: cos(-x) = cos(x).\n• En el origen x = 0, alcanza su valor máximo f(0) = 1.</string>
+    <string name="leccion_coseno_ejemplo">f(x) = 2 · cos(x)\n• Amplitud = 2 (rango entre -2 y 2)\n• Periodo = 2π\n• Máximo en x = 0 con valor 2\n• Cruces por cero en x = π/2 y x = 3π/2</string>
 </resources>

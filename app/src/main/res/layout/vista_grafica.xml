@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:background="#FFFFFF"
-            />
+            android:contentDescription="En este recuadro se muestra la función graficada." />
 
         <Space
             android:layout_width="match_parent"
@@ -47,16 +47,16 @@
             android:id="@+id/etFuncion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Ingresa la función a graficar"
-            android:textColorHint="#4d4d4d"
-            android:backgroundTint="#4f4f4f"
+            android:backgroundTint="#999999"
+            android:contentDescription="Ingresar la funcion a graficar"
             android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="#FFFFFF"
+            android:hint="Ingresa la función a graficar"
             android:inputType="textNoSuggestions"
             android:paddingBottom="15dp"
-            />
+            android:textColor="#FFFFFF"
+            android:textColorHint="#4d4d4d"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="match_parent"
@@ -73,29 +73,29 @@
                 android:id="@+id/btnGraficar"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_amarillo"
+                android:contentDescription="Graficar la funcion ingresada"
                 android:text="Graficar"
+                android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                android:layout_marginEnd="10dp"
-                />
+                android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnReproducirGrafica"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_morado"
+                android:contentDescription="Reproducir sonido de la gráfica"
                 android:text="Reproducir"
+                android:textAllCaps="false"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                android:layout_marginStart="10dp"
-                />
+                android:textStyle="bold" />
 
         </LinearLayout>
 

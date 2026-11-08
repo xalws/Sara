@@ -14,6 +14,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityManager
+import android.view.accessibility.AccessibilityNodeInfo
 import android.view.inputmethod.EditorInfo
 import android.webkit.ConsoleMessage
 import android.webkit.JavascriptInterface
@@ -27,6 +28,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatButton
 import androidx.core.view.ViewCompat
 import org.json.JSONObject
@@ -97,7 +99,17 @@ class GraficaController(private val activity: Activity, root: View) {
         contenido.addView(txtTituloParametros, pos + 2)
         contenido.addView(contenedorParametros, pos + 3)
 
-        etFuncion.hint = "Ej: x^2   a*x^2+b   x^2+y^2=25"
+        etFuncion.setAccessibilityDelegate(object : View.AccessibilityDelegate() {
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onInitializeAccessibilityNodeInfo(
+                host: View,
+                info: AccessibilityNodeInfo
+            ) {
+                super.onInitializeAccessibilityNodeInfo(host, info)
+                info.text = "Introduce una función matemática"
+                info.hintText = "Ej: x^2 a*x^2+b x^2+y^2=25"
+            }
+        })
         etFuncion.imeOptions = EditorInfo.IME_ACTION_DONE
         etFuncion.setSingleLine(true)
         // No abrir el teclado del sistema: se usa el teclado matemático

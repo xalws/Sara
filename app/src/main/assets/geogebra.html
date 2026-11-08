@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://www.geogebra.org/apps/deployggb.js"></script>
@@ -15,7 +16,36 @@
     var ggbApp = null;
     var paramsActuales = [];
 
-    // Envía eventos a Kotlin (Puente.evento)
+    // ---------- Accesibilidad TalkBack ----------
+    function configurarAccesibilidad() {
+        var contenedor = document.getElementById("ggb-element");
+
+        if (!contenedor) return;
+
+        contenedor.setAttribute("role", "region");
+        contenedor.setAttribute("aria-label", "Gráfica matemática interactiva de GeoGebra");
+
+        var grafica = contenedor.querySelector("canvas");
+
+        if (!grafica) {
+            grafica = contenedor.querySelector("svg");
+        }
+
+        if (grafica) {
+            grafica.setAttribute("role", "img");
+            grafica.setAttribute("aria-label", "Área de visualización de gráfica");
+            grafica.setAttribute("tabindex", "0");
+        }
+
+        var funciones = contenedor.querySelector(".ggbAlgebraView");
+
+        if (funciones) {
+            funciones.setAttribute("role", "img");
+            funciones.setAttribute("aria-label", "Funcion Matematica graficada");
+            funciones.setAttribute("tabindex", "0");
+        }
+    }
+
     function enviar(tipo, datos) {
         try {
             Android.evento(tipo, typeof datos === "string" ? datos : JSON.stringify(datos));
@@ -36,27 +66,43 @@
         "appletOnLoad": function (api) {
             ggbApp = api;
             ggbApp.setCoordSystem(-10, 10, -10, 10);
+
+            configurarAccesibilidad();
+
             enviar("listo", "");
         }
     };
 
     var applet = new GGBApplet(params, true);
-    window.addEventListener("load", function () { applet.inject("ggb-element"); });
+
+    window.addEventListener("load", function () {
+        applet.inject("ggb-element");
+    });
 
     // ---------- Graficar ----------
-    // plan = { modo, curva, eval, params: [{n, v}] }
     function graficar(plan) {
-        if (!ggbApp) { enviar("error", "GeoGebra aún está cargando, espera un momento."); return; }
+        if (!ggbApp) {
+            enviar("error", "GeoGebra aún está cargando, espera un momento.");
+            return;
+        }
+
         try {
-            // Limpiar lo anterior
-            ["curvaG", "evalG"].forEach(function (o) { if (ggbApp.exists(o)) ggbApp.deleteObject(o); });
-            paramsActuales.forEach(function (n) { if (ggbApp.exists(n)) ggbApp.deleteObject(n); });
+            ["curvaG", "evalG"].forEach(function (o) {
+                if (ggbApp.exists(o)) ggbApp.deleteObject(o);
+            });
+
+            paramsActuales.forEach(function (n) {
+                if (ggbApp.exists(n)) ggbApp.deleteObject(n);
+            });
+
             paramsActuales = [];
 
-            // Parámetros primero
             plan.params.forEach(function (p) {
                 ggbApp.evalCommand(p.n + " = " + p.v);
-                if (ggbApp.exists(p.n)) { ggbApp.setVisible(p.n, false); paramsActuales.push(p.n); }
+                if (ggbApp.exists(p.n)) {
+                    ggbApp.setVisible(p.n, false);
+                    paramsActuales.push(p.n);
+                }
             });
 
             if (plan.modo === "implicita") {
@@ -69,13 +115,21 @@
             ggbApp.setGridVisible(true);
             ggbApp.setAxesVisible(true, true);
 
+            configurarAccesibilidad();
+
             if (ggbApp.exists("curvaG")) {
                 enviar("grafica", { ok: true });
             } else {
-                enviar("grafica", { ok: false, mensaje: "No se pudo graficar esa expresión. Revisa cómo la escribiste." });
+                enviar("grafica", {
+                    ok: false,
+                    mensaje: "No se pudo graficar esa expresión. Revisa cómo la escribiste."
+                });
             }
         } catch (e) {
-            enviar("grafica", { ok: false, mensaje: "Error al graficar: " + e });
+            enviar("grafica", {
+                ok: false,
+                mensaje: "Error al graficar: " + e
+            });
         }
     }
 
@@ -87,46 +141,73 @@
     function vista() {
         ggbApp.evalCommand("cA = Corner(1)");
         ggbApp.evalCommand("cB = Corner(3)");
+
         var r = {
-            xmin: ggbApp.getXcoord("cA"), ymin: ggbApp.getYcoord("cA"),
-            xmax: ggbApp.getXcoord("cB"), ymax: ggbApp.getYcoord("cB")
+            xmin: ggbApp.getXcoord("cA"),
+            ymin: ggbApp.getYcoord("cA"),
+            xmax: ggbApp.getXcoord("cB"),
+            ymax: ggbApp.getYcoord("cB")
         };
+
         ggbApp.deleteObject("cA");
         ggbApp.deleteObject("cB");
+
         return r;
     }
 
-    // Devuelve series = lista de pasos (izquierda -> derecha); cada paso = lista de valores Y
     function muestrear(modo, n) {
         try {
             if (!ggbApp || !ggbApp.exists("curvaG")) {
-                enviar("muestras", { ok: false, mensaje: "Primero grafica una función." });
+                enviar("muestras", {
+                    ok: false,
+                    mensaje: "Primero grafica una función."
+                });
                 return;
             }
+
             var v = vista();
             var series = [];
+
             for (var i = 0; i < n; i++) {
                 var x = (v.xmin + (v.xmax - v.xmin) * i / (n - 1)).toFixed(6);
                 var paso = [];
+
                 if (modo === "implicita") {
                     var M = 40, yPrev = null, gPrev = null;
+
                     for (var j = 0; j <= M; j++) {
                         var y = v.ymin + (v.ymax - v.ymin) * j / M;
                         var g = ggbApp.getValue("evalG(" + x + ", " + y.toFixed(6) + ")");
+
                         if (isFinite(g) && gPrev !== null && isFinite(gPrev) && gPrev * g < 0) {
-                            paso.push(yPrev - gPrev * (y - yPrev) / (g - gPrev)); // interpolación lineal
+                            paso.push(yPrev - gPrev * (y - yPrev) / (g - gPrev));
                         }
-                        yPrev = y; gPrev = g;
+
+                        yPrev = y;
+                        gPrev = g;
                     }
                 } else {
                     var yv = ggbApp.getValue("curvaG(" + x + ")");
-                    if (isFinite(yv) && yv >= v.ymin && yv <= v.ymax) paso.push(yv);
+                    if (isFinite(yv) && yv >= v.ymin && yv <= v.ymax) {
+                        paso.push(yv);
+                    }
                 }
+
                 series.push(paso);
             }
-            enviar("muestras", { ok: true, series: series, yMin: v.ymin, yMax: v.ymax });
+
+            enviar("muestras", {
+                ok: true,
+                series: series,
+                yMin: v.ymin,
+                yMax: v.ymax
+            });
+
         } catch (e) {
-            enviar("muestras", { ok: false, mensaje: "Error al calcular el sonido: " + e });
+            enviar("muestras", {
+                ok: false,
+                mensaje: "Error al calcular el sonido: " + e
+            });
         }
     }
 </script>
