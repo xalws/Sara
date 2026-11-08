@@ -1,4 +1,4 @@
-## [Nombre aquí] Oigan se va a llamar SARA? Comenten
+## SARA
 
 Aplicación Android accesible para graficar funciones con GeoGebra pensada para personas con discapacidad visual.
 Permite escribir una función con un teclado matemático compatible con TalkBack, graficarla y **escucharla**
@@ -15,13 +15,11 @@ Permite escribir una función con un teclado matemático compatible con TalkBack
 
 ## Requisitos
 
-- Android Studio [qué versión tenemos??].
+- Android Studio Quail 3 o superior.
 - Dispositivo o emulador con Android 6.0 (Marshmallow) o superior.
 - **Conexión a internet**: GeoGebra se carga en línea dentro de un WebView.
 
 ## Instalación
-
-##### Por ahora no nos preocupamos por hacerla instalable de otra forma fuera de esta opción, veda?
 
 1. Clona el repositorio:
    ```bash
@@ -33,7 +31,14 @@ Permite escribir una función con un teclado matemático compatible con TalkBack
 
 ## Guía de uso
 
-##### La neta todavía no la sé usar lol
+1. Activa TalkBack si lo utilizas y abre la aplicación [Nombre de la app].
+2. En la barra inferior aparece la navegación. Elige Graficar.
+3. Toca el campo de función que muestra el teclado matemático integrado.
+4. Escribe la función. Utiliza las pestañas del teclado para cambiar de opciones.
+5. Pulsa OK o Graficar. La aplicación anunciará si la gráfica se creó o si hubo un error.
+6. Pulsa Reproducir para escuchar la gráfica: la intensidad del tono determina los valores en el eje Y, el sonido progresa de izquierda a derecha describiendo la continuidad del trazo de función en el eje X.
+7. Si la función tiene parámetros adicionales (a o b), aparecerán controles deslizantes que permiten cambiar de valor.
+8. En Aprendizaje encontrarás explicaciones sobre el uso y conceptos básicos del plano cartesiano y tipos de funciones.
 
 ### Ejemplos de entrada
 
@@ -101,15 +106,6 @@ app/src/main/
 - Máximo 6 parámetros por gráfica.
 - Al cambiar de pantalla se pierde la gráfica actual.
 
-## Pendientes??
-
-- Explorar de manera táctil la gráfica y vibración al cruzar ejes o puntos.
-- Podríamos agregar dictado por voz?
-- Conservar la gráfica al cambiar de pantalla.
-- Modo sin conexión.
-
 ## Licencia y créditos
 
-- Licencia del proyecto: *La documentación que usé de ejemplo decía que se pone licencia, pero no sé a qué carajo se refiere lol*
-
-- Esta app usa [GeoGebra](https://www.geogebra.org), gratuito para uso no comercial y con requisitos de atribución.
+- **Licencia del proyecto**: Elaborado utilizando GeoGebra® para la creación de componentes visuales y análisis matemático. GeoGebra es una marca registrada de [GeoGebra GmbH](https://www.geogebra.org/). Sus instaladores, servicios web y materiales de interfaz están sujetos a una licencia libre para uso no comercial, bajo los términos de la licencia *Creative Commons Attribution-NonCommercial-ShareAlike* (CC BY-NC-SA 4.0).
