@@ -13,13 +13,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 
-/**
- * Teclado matemático propio (estilo GeoGebra) para escribir funciones.
- * Tres páginas: 123 (números y operadores), f(x) (funciones) y abc (letras).
- * Cada tecla tiene descripción para TalkBack.
- */
+
 class TecladoMatematico(
-    private val activity: Activity,
+    private val actividad: Activity,
     private val campo: EditText,
     private val alAceptar: () -> Unit
 ) {
@@ -35,16 +31,16 @@ class TecladoMatematico(
         val accion: Accion
     )
 
-    val vista: LinearLayout = LinearLayout(activity)
-    private val contenedorTeclas = LinearLayout(activity)
-    private val filaPestanas = LinearLayout(activity)
+    val vista: LinearLayout = LinearLayout(actividad)
+    private val contenedorTeclas = LinearLayout(actividad)
+    private val filaPestanas = LinearLayout(actividad)
     private val pestanas = mutableListOf<Button>()
     private var pagina = 0
 
     init {
         vista.orientation = LinearLayout.VERTICAL
         vista.visibility = View.GONE
-        vista.setPadding(0, dp(15), 0, 0)
+        vista.setPadding(0, aPixeles(15), 0, 0)
 
         contenedorTeclas.orientation = LinearLayout.VERTICAL
         filaPestanas.orientation = LinearLayout.HORIZONTAL
@@ -52,21 +48,19 @@ class TecladoMatematico(
         val nombres = listOf("123", "f(x)", "abc")
         val voces = listOf("Números y operadores", "Funciones", "Letras")
         nombres.forEachIndexed { i, nombre ->
-            val b = crearBoton(nombre, 18f, voces[i])
-            b.layoutParams = LinearLayout.LayoutParams(0, dp(44), 1f).apply {
-                setMargins(dp(3), dp(3), dp(3), dp(3))
+            val boton = crearBoton(nombre, 18f, voces[i])
+            boton.layoutParams = LinearLayout.LayoutParams(0, aPixeles(44), 1f).apply {
+                setMargins(aPixeles(3), aPixeles(3), aPixeles(3), aPixeles(3))
             }
-            b.setOnClickListener { mostrarPagina(i) }
-            pestanas.add(b)
-            filaPestanas.addView(b)
+            boton.setOnClickListener { mostrarPagina(i) }
+            pestanas.add(boton)
+            filaPestanas.addView(boton)
         }
 
         vista.addView(filaPestanas)
         vista.addView(contenedorTeclas)
         mostrarPagina(0)
     }
-
-    // ---------- Mostrar / ocultar ----------
 
     fun mostrar() {
         ocultarSistema()
@@ -86,16 +80,16 @@ class TecladoMatematico(
 
 
     private fun ocultarSistema() {
-        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(campo.windowToken, 0)
+        val gestorTeclado = actividad.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        gestorTeclado.hideSoftInputFromWindow(campo.windowToken, 0)
     }
 
-    // ---------- Páginas ----------
 
     private fun mostrarPagina(i: Int) {
         pagina = i
-        pestanas.forEachIndexed { n, b ->
-            b.setBackgroundResource(if (n == i) R.drawable.btn_amarillo else R.drawable.btn_morado)
+        pestanas.forEachIndexed { indice, boton ->
+            boton.setBackgroundResource(if (indice == i) R.drawable.btn_amarillo else R.drawable.btn_contorno)
+            boton.setTextColor(if (indice == i) Color.BLACK else AMARILLO)
         }
         contenedorTeclas.removeAllViews()
         val filas = when (i) {
@@ -104,7 +98,7 @@ class TecladoMatematico(
             else -> paginaLetras()
         }
         filas.forEach { fila ->
-            val linea = LinearLayout(activity)
+            val linea = LinearLayout(actividad)
             linea.orientation = LinearLayout.HORIZONTAL
             fila.forEach { tecla -> linea.addView(crearTecla(tecla)) }
             contenedorTeclas.addView(
@@ -116,17 +110,17 @@ class TecladoMatematico(
         }
     }
 
-    private fun num(e: String, ins: String = e, voz: String = e): Tecla =
-        Tecla(e, ins, voz, 0, 0, Accion.NINGUNA)
+    private fun num(etiqueta: String, textoInsertar: String = etiqueta, voz: String = etiqueta): Tecla =
+        Tecla(etiqueta, textoInsertar, voz, 0, 0, Accion.NINGUNA)
 
-    private fun op(e: String, ins: String, voz: String): Tecla =
-        Tecla(e, ins, voz, 0, 1, Accion.NINGUNA)
+    private fun op(etiqueta: String, textoInsertar: String, voz: String): Tecla =
+        Tecla(etiqueta, textoInsertar, voz, 0, 1, Accion.NINGUNA)
 
-    private fun fn(e: String, nombre: String, voz: String): Tecla =
-        Tecla(e, nombre + "()", voz, 1, 1, Accion.NINGUNA)
+    private fun funcion(etiqueta: String, nombre: String, voz: String): Tecla =
+        Tecla(etiqueta, nombre + "()", voz, 1, 1, Accion.NINGUNA)
 
-    private fun esp(e: String, accion: Accion, voz: String): Tecla =
-        Tecla(e, "", voz, 0, 2, accion)
+    private fun esp(etiqueta: String, accion: Accion, voz: String): Tecla =
+        Tecla(etiqueta, "", voz, 0, 2, accion)
 
     private fun paginaNumeros(): List<List<Tecla>> = listOf(
         listOf(num("x"), num("y"), num("7"), num("8"), num("9"), op("÷", "/", "dividido entre")),
@@ -140,7 +134,7 @@ class TecladoMatematico(
             num("0"), num(".", ".", "punto"), num("π", "pi", "pi"), op("+", "+", "más")
         ),
         listOf(
-            op("=", "=", "igual a"), fn("√", "sqrt", "raíz cuadrada"),
+            op("=", "=", "igual a"), funcion("√", "sqrt", "raíz cuadrada"),
             esp("←", Accion.IZQUIERDA, "mover cursor a la izquierda"),
             esp("→", Accion.DERECHA, "mover cursor a la derecha"),
             esp("⌫", Accion.BORRAR, "borrar"),
@@ -150,14 +144,14 @@ class TecladoMatematico(
 
     private fun paginaFunciones(): List<List<Tecla>> = listOf(
         listOf(
-            fn("sen", "sen", "seno"), fn("cos", "cos", "coseno"), fn("tan", "tan", "tangente"),
-            fn("sen⁻¹", "arcsen", "arco seno"), fn("cos⁻¹", "arccos", "arco coseno"),
-            fn("tan⁻¹", "arctan", "arco tangente")
+            funcion("sen", "sen", "seno"), funcion("cos", "cos", "coseno"), funcion("tan", "tan", "tangente"),
+            funcion("sen⁻¹", "arcsen", "arco seno"), funcion("cos⁻¹", "arccos", "arco coseno"),
+            funcion("tan⁻¹", "arctan", "arco tangente")
         ),
         listOf(
-            fn("ln", "ln", "logaritmo natural"), fn("log", "log", "logaritmo base diez"),
-            fn("√", "sqrt", "raíz cuadrada"), fn("|x|", "abs", "valor absoluto"),
-            fn("eˣ", "exp", "e elevado a"), num("π", "pi", "pi")
+            funcion("ln", "ln", "logaritmo natural"), funcion("log", "log", "logaritmo base diez"),
+            funcion("√", "sqrt", "raíz cuadrada"), funcion("|x|", "abs", "valor absoluto"),
+            funcion("eˣ", "exp", "e elevado a"), num("π", "pi", "pi")
         ),
         listOf(
             op("(", "(", "abre paréntesis"), op(")", ")", "cierra paréntesis"),
@@ -182,59 +176,64 @@ class TecladoMatematico(
         )
     )
 
-    // ---------- Vistas ----------
-
+    // vistas
     private fun crearBoton(texto: String, tamano: Float, voz: String): Button {
-        val b = Button(activity)
-        b.text = texto
-        b.textSize = tamano
-        b.isAllCaps = false
-        b.minWidth = 0
-        b.minHeight = 0
-        b.minimumWidth = 0
-        b.minimumHeight = 0
-        b.setPadding(0, 0, 0, 0)
-        b.setTextColor(Color.BLACK)
-        b.contentDescription = voz
-        return b
+        val boton = Button(actividad)
+        boton.text = texto
+        boton.textSize = tamano
+        boton.isAllCaps = false
+        boton.minWidth = 0
+        boton.minHeight = 0
+        boton.minimumWidth = 0
+        boton.minimumHeight = 0
+        boton.setPadding(0, 0, 0, 0)
+        boton.setTextColor(Color.BLACK)
+        boton.contentDescription = voz
+        return boton
     }
 
-    private fun crearTecla(t: Tecla): Button {
-        val grande = t.etiqueta.length <= 2
-        val b = crearBoton(t.etiqueta, if (grande) 20f else 16f, t.voz)
+    private fun crearTecla(tecla: Tecla): Button {
+        val grande = tecla.etiqueta.length <= 2
+        val boton = crearBoton(tecla.etiqueta, if (grande) 20f else 16f, tecla.voz)
 
         val fondo = GradientDrawable()
-        fondo.cornerRadius = dp(12).toFloat()
-        when (t.tipo) {
+        fondo.cornerRadius = aPixeles(12).toFloat()
+        // Números: borde blanco. Operadores y funciones: borde amarillo. Especiales: amarillo sólido.
+        when (tecla.tipo) {
             0 -> {
-                fondo.setColor(Color.parseColor("#4f4f4f"))
-                b.setTextColor(Color.WHITE)
+                fondo.setColor(FONDO_TECLA)
+                fondo.setStroke(aPixeles(2), Color.WHITE)
+                boton.setTextColor(Color.WHITE)
             }
-            1 -> fondo.setColor(Color.parseColor("#ee03ff"))
-            else -> fondo.setColor(Color.parseColor("#ffb905"))
+            1 -> {
+                fondo.setColor(FONDO_TECLA)
+                fondo.setStroke(aPixeles(2), AMARILLO)
+                boton.setTextColor(Color.WHITE)
+            }
+            else -> fondo.setColor(AMARILLO)
         }
-        b.background = fondo
-        b.layoutParams = LinearLayout.LayoutParams(0, dp(50), 1f).apply {
-            setMargins(dp(3), dp(3), dp(3), dp(3))
+        boton.background = fondo
+        boton.layoutParams = LinearLayout.LayoutParams(0, aPixeles(50), 1f).apply {
+            setMargins(aPixeles(3), aPixeles(3), aPixeles(3), aPixeles(3))
         }
 
-        b.setOnClickListener {
-            b.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
-            pulsar(t)
+        boton.setOnClickListener {
+            boton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP)
+            pulsar(tecla)
         }
-        if (t.accion == Accion.BORRAR) {
-            b.setOnLongClickListener {
+        if (tecla.accion == Accion.BORRAR) {
+            boton.setOnLongClickListener {
                 campo.text.clear()
                 true
             }
         }
-        return b
+        return boton
     }
 
     // ---------- Edición del texto ----------
 
-    private fun pulsar(t: Tecla) {
-        when (t.accion) {
+    private fun pulsar(tecla: Tecla) {
+        when (tecla.accion) {
             Accion.BORRAR -> borrar()
             Accion.IZQUIERDA -> mover(-1)
             Accion.DERECHA -> mover(1)
@@ -242,7 +241,7 @@ class TecladoMatematico(
                 ocultar()
                 alAceptar()
             }
-            Accion.NINGUNA -> insertar(t.insertar, t.atras)
+            Accion.NINGUNA -> insertar(tecla.insertar, tecla.atras)
         }
     }
 
@@ -272,5 +271,10 @@ class TecladoMatematico(
         campo.setSelection(pos)
     }
 
-    private fun dp(v: Int): Int = (v * activity.resources.displayMetrics.density).toInt()
+    private fun aPixeles(valor: Int): Int = (valor * actividad.resources.displayMetrics.density).toInt()
+
+    private companion object {
+        val AMARILLO = Color.parseColor("#FFD600")
+        val FONDO_TECLA = Color.parseColor("#1C1C1C")
+    }
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Botón secundario: fondo oscuro con borde amarillo -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/tarjeta" />
+    <stroke android:width="2dp" android:color="@color/amarillo" />
+    <corners android:radius="12dp" />
+</shape>

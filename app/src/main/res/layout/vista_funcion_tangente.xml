@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/txtTituloTangente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/encabezadotangente"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <!-- Forma general -->
+        <TextView
+            android:id="@+id/txtFormaTangente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/formatangente"
+            android:textColor="@color/amarillo"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="4dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tituloparametros"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/parametrotangente1"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/parametrotangente2"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/titulografica"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/graficatangente"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/titulocaracteristicas"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicatangente1"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicatangente2"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicatangente3"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicatangente4"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicatangente5"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Ejemplo -->
+        <TextView
+            android:id="@+id/txtEjemploTangente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/ejemplotangente"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="4dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@color/divisor" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tituloescuchargrafica"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <!-- Plano cartesiano que recorre la gráfica mientras suena -->
+        <com.example.sara.PlanoSonoroView
+            android:id="@+id/planoSonoro"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginTop="20dp" />
+
+        <!-- Botón sonido -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSonidoTangente"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="Reproducir sonido "
+            android:drawableEnd="@drawable/ico_reproducir"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+        <!-- Regresar: vuelve al panel de Aprendizaje -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRegresar"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="start"
+            android:layout_marginTop="40dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="25dp"
+            android:background="@drawable/btn_contorno"
+            android:drawableStart="@drawable/ico_regresar"
+            android:drawablePadding="8dp"
+            android:text="@string/regresar"
+            android:contentDescription="@string/regresaraprendizaje"
+            android:drawableTint="@color/amarillo"
+            android:textColor="@color/amarillo"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+        <!-- Espacio final -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+</ScrollView>

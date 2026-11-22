@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <!-- Título -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:id="@+id/txtTituloPlano"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/encabezadoplano"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tituloplano"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/definicionplano"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/definicionrectahorizontal"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/definicionrectavertical"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Fila de navegación: Regresar a la izquierda, Siguiente a la derecha -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <!-- Regresar: vuelve al panel de Aprendizaje -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRegresar"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:layout_height="55dp"
+                android:paddingStart="6dp"
+                android:paddingEnd="6dp"
+                android:background="@drawable/btn_contorno"
+                android:drawableStart="@drawable/ico_regresar"
+                android:drawablePadding="4dp"
+                android:text="@string/regresar"
+                android:contentDescription="@string/regresaraprendizaje"
+                android:drawableTint="@color/amarillo"
+            android:textColor="@color/amarillo"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:textAllCaps="false" />
+
+            <!-- Siguiente: lleva a la parte 2 (cuadrantes) -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSiguientePlano"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_height="55dp"
+                android:background="@drawable/btn_amarillo"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Siguiente"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Espacio final -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+</ScrollView>

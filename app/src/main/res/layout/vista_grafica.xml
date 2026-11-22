@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#262626"
+    android:background="@color/fondo"
     android:fillViewport="true"
     android:scrollbars="none"
     >
@@ -30,17 +30,47 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"/>
 
-<!--        Contenedor para cargar API de geogebra  -->
-        <WebView
-            android:id="@+id/contenedorGeogebra"
+<!--        Gráfica: GeoGebra (WebView) con una capa transparente encima
+            (CapaSonora) que permite explorarla con el dedo y escucharla  -->
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
-            android:background="#FFFFFF"
+            android:layout_height="350dp">
+
+            <WebView
+                android:id="@+id/contenedorGeogebra"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/fondo"
+                />
+
+            <com.example.sara.CapaSonora
+                android:id="@+id/capaSonora"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+
+        </FrameLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+
+<!--        Interruptor: el dedo explora con sonido (encendido) o mueve la gráfica (apagado).
+            Con TalkBack la exploración funciona siempre  -->
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/swExplorar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp"
+            android:text="@string/explorardedo"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
             />
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+            android:layout_height="30dp"/>
 
 <!--        Entrada de la funcion  -->
         <EditText
@@ -48,8 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Ingresa la función a graficar"
-            android:textColorHint="#4d4d4d"
-            android:backgroundTint="#4f4f4f"
+            android:textColorHint="#9E9E9E"
+            android:backgroundTint="@color/amarillo"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="20sp"
@@ -88,9 +118,9 @@
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_morado"
+                android:background="@drawable/btn_contorno"
                 android:text="Reproducir"
-                android:textColor="@color/black"
+                android:textColor="@color/amarillo"
                 android:textSize="21sp"
                 android:textAllCaps="false"
                 android:textStyle="bold"

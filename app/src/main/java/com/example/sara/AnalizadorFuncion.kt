@@ -4,8 +4,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 /**
- * modo: "explicita" (y = f(x)) o "implicita" (cualquier ecuación en x, y).
- * parametros: letras distintas de x, y que se convierten en controles deslizantes (a, b, c...).
+  modos: "explicita" (y = f(x)) o "implicita"
+  parametros: letras distintas de x, y que se convierten en controles deslizantes (a, b, candidato...).
  */
 data class PlanGrafica(
     val modo: String,
@@ -14,15 +14,15 @@ data class PlanGrafica(
     val parametros: List<String>
 ) {
     fun aJson(valores: Map<String, Double>): JSONObject {
-        val params = JSONArray()
-        parametros.forEach { n ->
-            params.put(JSONObject().put("n", n).put("v", valores[n] ?: 1.0))
+        val listaParametros = JSONArray()
+        parametros.forEach { nombre ->
+            listaParametros.put(JSONObject().put("nombre", nombre).put("valor", valores[nombre] ?: 1.0))
         }
         return JSONObject()
             .put("modo", modo)
             .put("curva", curva)
-            .put("eval", evaluacion)
-            .put("params", params)
+            .put("evaluacion", evaluacion)
+            .put("parametros", listaParametros)
     }
 }
 
@@ -35,7 +35,6 @@ object AnalizadorFuncion {
 
     const val MAX_PARAMETROS = 6
 
-    // Español -> GeoGebra. "log" es base 10 (como en los libros); "ln" es el natural.
     private val alias = mapOf(
         "sen" to "sin", "tg" to "tan", "tang" to "tan", "ctg" to "cot", "cosec" to "csc",
         "arcsen" to "asin", "arcsin" to "asin", "arccos" to "acos", "arctan" to "atan",
@@ -48,7 +47,6 @@ object AnalizadorFuncion {
         "floor", "ceil", "round", "sgn"
     )
 
-    // Más largos primero para que "arcsen" gane a "sen"
     private val candidatos: List<String> =
         (alias.keys + funciones + "pi").sortedByDescending { it.length }
 
@@ -87,13 +85,13 @@ object AnalizadorFuncion {
         return Analisis.Valido(plan)
     }
 
-    private fun explicita(expr: String): PlanGrafica =
-        PlanGrafica("explicita", expr, "", parametros(expr))
+    private fun explicita(expresion: String): PlanGrafica =
+        PlanGrafica("explicita", expresion, "", parametros(expresion))
 
     private fun implicita(izq: String, der: String): PlanGrafica =
         PlanGrafica("implicita", "$izq = $der", "($izq)-($der)", parametros("$izq $der"))
 
-    private fun limpiar(s: String): String = s
+    private fun limpiar(texto: String): String = texto
         .replace("²", "^2").replace("³", "^3")
         .replace("π", "pi").replace("√", "sqrt")
         .replace('−', '-').replace('×', '*').replace('·', '*').replace('÷', '/')
@@ -106,34 +104,34 @@ object AnalizadorFuncion {
     private fun expandirLetras(texto: String): String =
         letras.replace(texto) { expandir(it.value) }
 
-    private fun expandir(run: String): String {
-        val bajo = run.lowercase()
-        val sb = StringBuilder()
+    private fun expandir(grupo: String): String {
+        val bajo = grupo.lowercase()
+        val resultado = StringBuilder()
         var i = 0
-        while (i < run.length) {
-            if (sb.isNotEmpty()) sb.append('*')
-            val c = candidatos.firstOrNull { bajo.startsWith(it, i) }
-            if (c == null) {
-                sb.append(run[i])
+        while (i < grupo.length) {
+            if (resultado.isNotEmpty()) resultado.append('*')
+            val candidato = candidatos.firstOrNull { bajo.startsWith(it, i) }
+            if (candidato == null) {
+                resultado.append(grupo[i])
                 i++
-            } else if (c == "pi") {
-                sb.append("pi")
+            } else if (candidato == "pi") {
+                resultado.append("pi")
                 i += 2
             } else {
-                sb.append(alias[c] ?: c)
-                i += c.length
-                if (i < run.length) {
+                resultado.append(alias[candidato] ?: candidato)
+                i += candidato.length
+                if (i < grupo.length) {
                     // función pegada a su argumento: sinx -> sin(x)
-                    sb.append('(').append(expandir(run.substring(i))).append(')')
+                    resultado.append('(').append(expandir(grupo.substring(i))).append(')')
                 }
-                return sb.toString()
+                return resultado.toString()
             }
         }
-        return sb.toString()
+        return resultado.toString()
     }
 
-    private fun tieneVariable(texto: String, v: Char): Boolean =
-        Regex("(?<![A-Za-z])" + v + "(?![A-Za-z])").containsMatchIn(texto)
+    private fun tieneVariable(texto: String, variable: Char): Boolean =
+        Regex("(?<![A-Za-z])" + variable + "(?![A-Za-z])").containsMatchIn(texto)
 
     private fun parametros(texto: String): List<String> =
         letras.findAll(texto).map { it.value }

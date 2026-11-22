@@ -1,3 +1,250 @@
 <resources>
     <string name="app_name">Sara</string>
+
+    <!-- menú -->
+    <string name="menuinicio">Inicio</string>
+    <string name="menugraficar">Graficar</string>
+    <string name="menuaprender">Aprender</string>
+
+    <!-- inicio -->
+    <string name="tituloinicio">SARA</string>
+    <string name="introinicio">Sara convierte las gráficas de funciones en sonido, para que puedas entenderlas escuchándolas.</string>
+    <string name="titulosonificacion">Cómo se escucha una gráfica</string>
+    <string name="sonificaciontono">• El tono indica la altura: entre más arriba está la gráfica, más agudo suena; entre más abajo, más grave.</string>
+    <string name="sonificacionlado">• El sonido se mueve del oído izquierdo al derecho, igual que la gráfica avanza de izquierda a derecha. Se aprecia mejor con audífonos.</string>
+    <string name="sonificacionejes">• Un tic indica que la gráfica cruza el eje Y, y un bip, que cruza o toca el eje X. El teléfono también vibra en cada cruce.</string>
+    <string name="sonificacionsilencio">• Cuando hay silencio, la gráfica no existe en esa parte o se sale del plano.</string>
+    <string name="escucharejemplo">Escuchar ejemplo</string>
+    <string name="detenerejemplo">Detener ejemplo</string>
+    <string name="comenzar">Comenzar</string>
+    <string name="comenzardescripcion">Comenzar. Abre la graficadora.</string>
+
+    <!-- conceptos (pantalla de Aprendizaje) -->
+    <string name="encabezadoconceptos">Conceptos</string>
+    <string name="titulointervalo">Intervalo</string>
+    <string name="formaintervalo">Forma general: (a, b), [a, b], [a, b) o (a, b], con a menor que b.</string>
+    <string name="titulopartesintervalo">Qué significa cada parte:</string>
+    <string name="parteintervalo1">• a y b son los extremos: el valor donde empieza y donde termina el conjunto.</string>
+    <string name="parteintervalo2">• El paréntesis ( ) significa que el extremo no se incluye. El corchete [ ] significa que sí se incluye.</string>
+    <string name="interpretacionintervalo">Interpretación: un intervalo es el conjunto de todos los números entre dos extremos, incluidos los decimales. Equivale a una desigualdad: el intervalo (a, b) es lo mismo que a menor que x y x menor que b.</string>
+    <string name="caracteristicaintervalo1">• Abierto (a, b): no incluye a ninguno de los dos extremos.</string>
+    <string name="caracteristicaintervalo2">• Cerrado [a, b]: incluye a los dos.</string>
+    <string name="caracteristicaintervalo3">• Semiabierto [a, b) o (a, b]: incluye solo uno.</string>
+    <string name="caracteristicaintervalo4">• Infinito: (−∞, a) o [a, ∞). El infinito no es un número y siempre lleva paréntesis.</string>
+    <string name="caracteristicaintervalo5">• La unión ∪ junta intervalos, por ejemplo (−∞, 0) ∪ (0, ∞).</string>
+    <string name="caracteristicaintervalo6">• Sirve para expresar dominio y rango.</string>
+
+    <!-- la recta -->
+    <string name="encabezadorecta">La recta</string>
+    <string name="ejemplorecta">Ejemplo: y = a es una recta horizontal, con pendiente cero. Con a = 1, la recta queda 1 por encima del eje X: cruza el eje Y en 1 y nunca cruza el eje X.</string>
+    <string name="definicionrecta">Una línea que sigue una sola dirección y no se curva. Con pendiente positiva sube de izquierda a derecha, con negativa baja, con cero es horizontal. La recta vertical x = a tiene pendiente indefinida y no es una función.</string>
+
+    <!-- titulos comunes -->
+    <string name="tituloparametros">Parámetros:</string>
+    <string name="titulografica">La gráfica</string>
+    <string name="titulocaracteristicas">Características clave:</string>
+    <string name="tituloescuchargrafica">Escuchar la gráfica</string>
+
+    <!-- plano cartesiano -->
+    <string name="encabezadoplano">El plano cartesiano</string>
+    <string name="tituloplano">Definición de plano cartesiano:</string>
+    <string name="definicionplano">El plano cartesiano son dos rectas perpendiculares, cuyo punto de intersección se denomina origen.</string>
+    <string name="definicionrectahorizontal">La recta horizontal es el eje X. A la derecha del origen los valores son positivos y a la izquierda negativos.</string>
+    <string name="definicionrectavertical">La recta vertical es el eje Y. Arriba del origen los valores son positivos y abajo son negativos.</string>
+    <string name="titulocuadrantes">El plano cartesiano presenta cuatro regiones llamadas “cuadrantes”:</string>
+    <string name="definicioncuadrante1">o Cuadrante I: Arriba a la derecha, X positivo y Y positivo.</string>
+    <string name="definicioncuadrante2">o Cuadrante II: Arriba a la izquierda, X negativo y Y positivo.</string>
+    <string name="definicioncuadrante3">o Cuadrante III: Abajo a la izquierda, X negativo y Y negativo.</string>
+    <string name="definicioncuadrante4">o Cuadrante IV: Abajo a la derecha, X positivo y Y negativo.</string>
+    <string name="puntoplano">A cada punto en el plano se le asigna un par coordenado que se expresa de la siguiente forma: P (x, y)</string>
+    <string name="puntoplano2">o Para localizar un punto P (x, y) se toma como referencia el origen. El primer valor (x) determina cuánto se avanza a la derecha o la izquierda según su signo, y a partir de la nueva posición se avanza hacia arriba o abajo, según el segundo valor (y) y su signo.</string>
+
+    <!--funciones -->
+    <string name="encabezadofuncion">Funciones</string>
+    <string name="titulofuncion">¿Qué es una función?</string>
+    <string name="definicionfuncion">Una función es una regla que se le asigna a cada número de entrada y produce un resultado único de salida. Si le das el mismo número de entrada, siempre obtienes el mismo resultado.</string>
+    <string name="ejemplofuncion">Por ejemplo, imagina una máquina con una entrada y una salida. Metes un número, la máquina aplica su regla y te devuelve otro número. Por ejemplo, una máquina que “multiplica por 2 y suma 1” convierte el 3 que ingresas en 7.</string>
+    <string name="titulonotacion">Notación:</string>
+    <string name="notacion1">• f(x) se lee “f de x”.</string>
+    <string name="notacion2">• x es la variable independiente: el valor de entrada, que tú eliges.</string>
+    <string name="notacion3">• f(x), que también se escribe y, es la variable dependiente: el valor de salida, que depende de x.</string>
+    <string name="notacion4">• f(x) = 2x + 1 significa “toma x, multiplícalo por 2 y suma 1”.</string>
+    <string name="conceptosclaves">Conceptos clave:</string>
+    <string name="titulodominio">Dominio</string>
+    <string name="definiciondominio">Todos los valores de entrada que la función acepta.</string>
+    <string name="titulorango">Rango</string>
+    <string name="definicionrango">Todos los valores de salida que la función puede producir.</string>
+    <string name="conceptopareja">En el plano cartesiano cada pareja de valores de entrada y salida es un punto. Con x = 3 y f(x) = 7, el punto es (3, 7): avanzas 3 a la derecha y subes 7. La gráfica de la función es el conjunto de todos esos puntos.</string>
+    <string name="ejemplopareja">Ejemplo: f(x) = 2x + 1. Con x = 1 obtienes 3, con x = 2 obtienes 5 y con x = 10 obtienes 21. Cada entrada tiene una sola salida, así que es una función.</string>
+    <!-- escuchar grafica -->
+    <string name="definicionescuchargrafica">El tono representa el valor de salida: entre más alta está la gráfica, más agudo suena. El sonido viaja del oído izquierdo al derecho conforme avanza x. Al cruzar el eje Y escucharás un tic y sentirás dos vibraciones cortas; cuando la gráfica cruza o toca el eje X, escucharás un bip y sentirás una vibración firme. Si la gráfica no existe o sale del plano, hay silencio. Al terminar, se describe con palabras el recorrido. También puedes deslizar un dedo sobre el plano para explorar la gráfica a tu ritmo; al soltarlo, se dicen las coordenadas de ese punto. Usa audífonos para notar mejor el recorrido.</string>
+
+    <!-- funcion lineal-->
+    <string name="encabezadolineal">Función lineal</string>
+    <string name="formalineal">Forma general: f(x) = mx + b</string>
+    <string name="parametrolineal1">• m es la pendiente: cuánto sube o baja la gráfica por cada unidad que avanzas a la derecha.</string>
+    <string name="parametrolineal2">• b es la ordenada al origen: el valor de Y donde la gráfica cruza el eje Y.</string>
+    <string name="graficalineal">Una línea recta. Si m es positiva, sube de izquierda a derecha. Si m es negativa, baja. Si m es cero, es una recta horizontal.</string>
+    <string name="caracteristicalineal1">• Dominio: todos los números reales.</string>
+    <string name="caracteristicalineal2">• Rango: todos los números reales (si m es distinta de cero).</string>
+    <string name="caracteristicalineal3">• Cruce con el eje Y: en el punto (0, b).</string>
+    <string name="caracteristicalineal4">• Cruce con el eje X: en el punto (menos b entre m, 0).</string>
+    <string name="ejemplolineal">Ejemplo: f(x) = 2x + 1. Cruza el eje Y en 1 y el eje X en menos 0.5. Por cada unidad que avanzas a la derecha, la gráfica sube 2.</string>
+
+    <!-- funcion cuadratica-->
+    <string name="encabezadocuadratica">Función cuadrática</string>
+    <string name="formacuadratica">Forma general: f(x) = a·x² + b·x + c, con a distinta de cero.</string>
+    <string name="parametrocuadratica1">• a define hacia dónde abre la curva y qué tan cerrada es.</string>
+    <string name="parametrocuadratica2">• b y c desplazan la curva. c es el valor donde cruza el eje Y.</string>
+    <string name="graficacuadratica">Una curva suave en forma de U llamada parábola. Si a es positiva, abre hacia arriba y tiene un vértice en el punto más bajo. Si a es negativa, abre hacia abajo y tiene un vértice en el punto más alto.</string>
+    <string name="caracteristicacuadratica1">• Dominio: todos los números reales.</string>
+    <string name="caracteristicacuadratica2">• Rango: desde el valor del vértice hacia arriba (si a es positiva) o desde el vértice hacia abajo (si a es negativa).</string>
+    <string name="caracteristicacuadratica3">• Vértice: tiene X igual a menos b entre 2a.</string>
+    <string name="caracteristicacuadratica4">• Cruce con el eje Y: en (0, c).</string>
+    <string name="caracteristicacuadratica5">• Cruces con el eje X: puede tener dos, uno o ninguno.</string>
+    <string name="ejemplocuadratica">Ejemplo: f(x) = x² − 4x + 3. Abre hacia arriba. Su vértice está en (2, −1). Cruza el eje X en 1 y en 3, y el eje Y en 3.</string>
+
+    <!-- funcion cubica -->
+    <string name="encabezadocubica">Función cúbica</string>
+    <string name="formacubica">Forma general: f(x) = a·x³ + b·x² + c·x + d, con a distinta de cero.</string>
+    <string name="parametrocubica1">• a define la dirección general: si es positiva, la gráfica empieza abajo a la izquierda y termina arriba a la derecha. Si es negativa, ocurre al revés.</string>
+    <string name="parametrocubica2">• b, c y d modifican las curvas intermedias. d es el valor donde cruza el eje Y.</string>
+    <string name="graficacubica">Una curva suave en forma de S alargada. Puede tener una subida, una bajada y otra subida (o al revés), o crecer siempre sin cambiar de dirección.</string>
+    <string name="caracteristicacubica1">• Dominio y rango: todos los números reales.</string>
+    <string name="caracteristicacubica2">• Cruce con el eje Y: en (0, d).</string>
+    <string name="caracteristicacubica3">• Cruces con el eje X: al menos uno y hasta tres.</string>
+    <string name="ejemplocubica">Ejemplo: f(x) = x³ − 3x. Cruza el eje X en menos 1.73, en 0 y en 1.73 (aprox.).</string>
+
+    <!-- funciones valor absoluto-->
+    <string name="encabezadovalorabsoluto">Función valor absoluto</string>
+    <string name="formavalorabsoluto">Forma general: f(x) = a·|x − h| + k</string>
+    <string name="parametrovalorabsoluto1">• h mueve la gráfica a la derecha (si es positivo) o a la izquierda (si es negativo).</string>
+    <string name="parametrovalorabsoluto2">• k la sube o la baja.</string>
+    <string name="parametrovalorabsoluto3">• a define qué tan abiertos están los lados y hacia dónde abre. Si es negativo, se invierte.</string>
+    <string name="graficavalorabsoluto">Dos rectas que se unen en un punto con forma de V. El punto de unión se llama vértice y es una esquina marcada, no una curva suave.</string>
+    <string name="caracteristicavalorabsoluto1">• Dominio: todos los números reales.</string>
+    <string name="caracteristicavalorabsoluto2">• Rango: desde k hacia arriba (si a es positivo) o desde k hacia abajo (si a es negativo).</string>
+    <string name="caracteristicavalorabsoluto3">• Vértice: en (h, k).</string>
+    <string name="ejemplovalorabsoluto">Ejemplo: f(x) = |x − 2| + 1. El vértice está en (2, 1). Cruza el eje Y en 3 y no cruza el eje X.</string>
+
+    <!-- funciones raiz -->
+    <string name="encabezadoraiz">Función raíz</string>
+    <string name="formaraiz">Forma general: f(x) = a · √(x − h) + k</string>
+    <string name="parametroraiz1">• h mueve la gráfica a la derecha (si es positivo) o a la izquierda (si es negativo): es donde empieza.</string>
+    <string name="parametroraiz2">• k la sube o la baja.</string>
+    <string name="parametroraiz3">• a la estira, y si es negativo la voltea hacia abajo.</string>
+    <string name="graficaraiz">Una curva que nace en un punto de partida y sube hacia la derecha cada vez más despacio. Es la mitad de una parábola acostada y solo existe a la derecha de h.</string>
+    <string name="caracteristicaraiz1">• Dominio: x mayor o igual que h.</string>
+    <string name="caracteristicaraiz2">• Rango: y mayor o igual que k (si a es positivo).</string>
+    <string name="caracteristicaraiz3">• Punto de partida: (h, k). Para f(x) = √x, es el origen.</string>
+    <string name="caracteristicaraiz4">• Siempre creciente (si a es positivo).</string>
+    <string name="ejemploraiz">Ejemplo: f(x) = √(x − 2) + 1 empieza en (2, 1) y pasa por (3, 2) y (6, 3). No existe para x menor que 2.</string>
+
+    <!-- funciones exponenciales -->
+    <string name="encabezadoexponencial">Función exponencial</string>
+    <string name="formaexponencial">Forma general: f(x) = a · b^x, con b positiva y distinta de 1.</string>
+    <string name="parametroexponencial1">• a es el valor inicial: el valor de Y cuando x es 0.</string>
+    <string name="parametroexponencial2">• b es la base. Si b es mayor que 1, hay crecimiento. Si b está entre 0 y 1, hay decrecimiento.</string>
+    <string name="graficaexponencial">Una curva que crece cada vez más rápido (si b es mayor que 1) o que baja cada vez más lento, acercándose al eje X sin tocarlo (si b está entre 0 y 1).</string>
+    <string name="caracteristicaexponencial1">• Dominio: todos los números reales.</string>
+    <string name="caracteristicaexponencial2">• Rango: solo valores positivos (si a es positivo). Nunca llega a cero.</string>
+    <string name="caracteristicaexponencial3">• Cruce con el eje Y: en (0, a).</string>
+    <string name="caracteristicaexponencial4">• No cruza el eje X.</string>
+    <string name="ejemploexponencial">Ejemplo: f(x) = 2^x. Pasa por (menos 1, 0.5), (0, 1), (1, 2) y (2, 4). Hacia la izquierda se acerca a cero sin llegar. Hacia la derecha crece muy rápido.</string>
+
+    <!-- funciones logaritmicas-->
+    <string name="encabezadologaritmica">Función logarítmica</string>
+    <string name="formalogaritmica">Forma general: f(x) = log base b de x, con b positiva y distinta de 1.</string>
+    <string name="parametrologaritmica1">• b es la base. Si b es mayor que 1, la función crece.</string>
+    <string name="parametrologaritmica2">• Es la función inversa de la exponencial: responde a la pregunta “¿a qué potencia hay que elevar b para obtener x?”.</string>
+    <string name="graficalogaritmica">Una curva que sube muy rápido cerca del eje Y y luego sube cada vez más lento. Se acerca al eje Y por la derecha sin tocarlo.</string>
+    <string name="caracteristicalogaritmica1">• Dominio: solo números positivos (x mayor que 0).</string>
+    <string name="caracteristicalogaritmica2">• Rango: todos los números reales.</string>
+    <string name="caracteristicalogaritmica3">• Cruce con el eje X: siempre en (1, 0).</string>
+    <string name="caracteristicalogaritmica4">• No cruza el eje Y.</string>
+    <string name="ejemplologaritmica">Ejemplo: f(x) = log base 2 de x. Pasa por (0.5, −1), (1, 0), (2, 1) y (4, 2). Cada vez que quieres subir una unidad, tienes que duplicar la x.</string>
+
+    <!-- funciones conicas -->
+    <string name="encabezadoconicas">Funciones cónicas</string>
+    <string name="formaconicas">Forma general: A·x² + B·x·y + C·y² + D·x + E·y + F = 0</string>
+    <string name="introconicas">Las cónicas son las curvas que resultan al cortar un cono con un plano: circunferencia, parábola, elipse e hipérbola. Solo algunas son funciones: la parábola que abre hacia arriba o hacia abajo lo es, pero un círculo no, porque para un mismo punto en x hay dos valores de y.</string>
+    <string name="tituloecuacionesconicas">Ecuaciones con centro en el origen:</string>
+    <string name="ecuacionconica1">• Circunferencia: x² + y² = r², con radio r.</string>
+    <string name="ecuacionconica2">• Parábola: y = a·x² (abre hacia arriba o hacia abajo).</string>
+    <string name="ecuacionconica3">• Elipse: x²/a² + y²/b² = 1, con semiejes a y b. Si a es igual a b, es una circunferencia.</string>
+    <string name="ecuacionconica4">• Hipérbola: x²/a² − y²/b² = 1, con dos ramas separadas y asíntotas y = ±(b/a)·x.</string>
+    <string name="titulocaracteristicasconicas">Características:</string>
+    <string name="caracteristicaconica1">• La circunferencia es una curva cerrada con todos sus puntos a la misma distancia del centro.</string>
+    <string name="caracteristicaconica2">• La elipse es un círculo alargado en una dirección.</string>
+    <string name="caracteristicaconica3">• La parábola tiene una sola rama en forma de U.</string>
+    <string name="caracteristicaconica4">• La hipérbola tiene dos ramas que se alejan una de otra.</string>
+    <string name="tituloejemplosconicas">Ejemplos:</string>
+    <string name="ejemploconica1">• x² + y² = 25: circunferencia de radio 5. Cruza ambos ejes en 5 y −5.</string>
+    <string name="ejemploconica2">• x²/9 + y²/4 = 1: elipse que cruza el eje X en ±3 y el eje Y en ±2.</string>
+    <string name="ejemploconica3">• x²/4 − y²/9 = 1: hipérbola con vértices en (±2, 0) y asíntotas y = ±1.5x.</string>
+    <string name="notasonidoconicas">Como estas curvas no son funciones, para cada x hay dos puntos: uno arriba y otro abajo. Al reproducir el sonido o deslizar el dedo, los dos suenan a la vez: el de arriba más agudo y el de abajo más grave.</string>
+    <string name="titulocircunferencia">Circunferencia: x² + y² = 25</string>
+    <string name="tituloelipse">Elipse: x²/9 + y²/4 = 1</string>
+    <string name="titulohiperbola">Hipérbola: x²/4 − y²/9 = 1</string>
+
+    <!-- circulo unitario -->
+    <string name="encabezadocirculounitario">Círculo unitario</string>
+    <string name="formacirculounitario">Ecuación: x² + y² = 1</string>
+    <string name="titulopartescirculo">Qué significa cada parte:</string>
+    <string name="partecirculo1">• Es la circunferencia de radio 1 con centro en el origen.</string>
+    <string name="partecirculo2">• Un ángulo θ se mide desde el eje X positivo, girando en sentido contrario a las manecillas del reloj.</string>
+    <string name="partecirculo3">• El punto del círculo que corresponde al ángulo θ tiene coordenadas (cos θ, sen θ).</string>
+    <string name="explicacioncirculo">El coseno es la posición horizontal del punto y el seno es su altura. Por eso el seno y el coseno siempre valen entre −1 y 1.</string>
+    <string name="caracteristicacirculo1">• Una vuelta completa son 2π radianes (360°). Para convertir: radianes = grados por π entre 180.</string>
+    <string name="caracteristicacirculo2">• Ángulos clave: 0 da (1, 0); π/2 (90°) da (0, 1); π (180°) da (−1, 0); 3π/2 (270°) da (0, −1).</string>
+    <string name="caracteristicacirculo3">• Identidad fundamental: sen²θ + cos²θ = 1.</string>
+    <string name="caracteristicacirculo4">• La tangente es seno entre coseno: es la pendiente de la recta que une el origen con el punto y representa el radio del círculo.</string>
+    <string name="notasonidocirculo">Para cada x entre −1 y 1 el círculo tiene dos puntos: uno arriba y otro abajo. Al reproducir el sonido o deslizar el dedo, los dos suenan a la vez: el de arriba más agudo y el de abajo más grave. Al soltar el dedo se dicen las dos coordenadas.</string>
+
+    <!-- funciones trigonometricas -->
+    <string name="encabezadosenocoseno">Funciones trigonométricas (seno y coseno)</string>
+    <string name="formasenocoseno">Forma general: f(x) = A · sen(B·x) + D, y f(x) = A · cos(B·x) + D</string>
+    <string name="parametrosenocoseno1">• A es la amplitud: qué tan alto sube y qué tan bajo baja la onda respecto a su centro.</string>
+    <string name="parametrosenocoseno2">• B controla el periodo (cuánto tarda en repetirse): el periodo es 2π entre B.</string>
+    <string name="parametrosenocoseno3">• D desplaza toda la onda hacia arriba o hacia abajo.</string>
+    <string name="graficasenocoseno">Una onda suave que sube y baja de forma repetida e indefinida. Seno y coseno tienen la misma forma, pero el seno hace intersección con el origen y el coseno está desplazado.</string>
+    <string name="titulocaracteristicassenocoseno">Características clave (con A = 1, B = 1, D = 0):</string>
+    <string name="caracteristicasenocoseno1">• Dominio: todos los números reales.</string>
+    <string name="caracteristicasenocoseno2">• Rango: de menos 1 a 1.</string>
+    <string name="caracteristicasenocoseno3">• Periodo: 2π</string>
+    <string name="caracteristicasenocoseno4">• Seno: cruza el origen (0, 0). Su máximo (1) está en x = π/2 y su mínimo (menos 1) en x = 3π/2.</string>
+    <string name="caracteristicasenocoseno5">• Coseno: cruza el eje Y en (0, 1), que es un máximo.</string>
+    <string name="caracteristicasenocoseno6">• Cruces con el eje X: se repiten cada π (media vuelta).</string>
+    <string name="ejemplosenocoseno">Ejemplo: f(x) = 2·sen(x). Es una onda que va de menos 2 a 2, pasa por el origen y se repite cada 6.28 unidades.</string>
+
+
+    <string name="encabezadotangente">Funciones trigonométricas (tangente)</string>
+    <string name="formatangente">Forma general: f(x) = tan(x) = sen(x) entre cos(x)</string>
+    <string name="parametrotangente1">• Con el círculo unitario, es la pendiente de la recta del origen al punto del ángulo.</string>
+    <string name="parametrotangente2">• Si se escribe a·tan(b·x) + d, a la estira, b cambia el periodo (es π entre b) y d la sube o la baja.</string>
+    <string name="graficatangente">Una serie de curvas parecidas a una S inclinada. Cada una sube de abajo hacia arriba entre dos rectas verticales que la curva nunca toca. Estas curvas se repiten cada π.</string>
+    <string name="caracteristicatangente1">• Dominio: todos los reales excepto x = π/2 + k·π (donde el coseno vale cero).</string>
+    <string name="caracteristicatangente2">• Rango: todos los números reales.</string>
+    <string name="caracteristicatangente3">• Cruza el eje X en x = 0, ±π, ±2π…</string>
+    <string name="caracteristicatangente4">• Siempre creciente en cada tramo, sin máximos ni mínimos.</string>
+    <string name="caracteristicatangente5">• Periodo: π, aproximadamente 3.14.</string>
+    <string name="ejemplotangente">Ejemplo: tan(0) = 0, tan(π/4) = 1 y tan(−π/4) = −1. Entre −π/2 y π/2, la curva pasa por (−π/4, −1), (0, 0) y (π/4, 1).</string>
+
+
+    <string name="tituloaprendizaje">Aprendizaje</string>
+    <string name="tituloderivada">Definición de derivada:</string>
+    <string name="definicionderivada">La derivada es la razón de cambio instantánea con la que varía el valor de una función matemática según cambia su variable independiente. Sus principales aplicaciones son resolver ecuaciones diferenciales, analizar funciones y estudiar cambios.</string>
+    <string name="funcioncuadratica">Funcion Cuadratica:</string>
+    <string name="funcioncuadraticaejemplo">f(x) = x²</string>
+    <string name="funcionlog">Función logarítmica:</string>
+    <string name="funcionlogejemplo">f(x) = ln(x)</string>
+    <string name="funcionestrigonometricas">Funciones trigonométricas:</string>
+    <string name="funcionsenoejemplo">f(x) = sen(x + 2)</string>
+    <string name="funcioncosenoejemplo">f(x) = cos(x)</string>
+
+
+    <string name="regresar">Regresar</string>
+    <string name="regresaraprendizaje">Regresar a Aprendizaje</string>
+
+    <string name="explorardedo">Explorar con el dedo</string>
 </resources>

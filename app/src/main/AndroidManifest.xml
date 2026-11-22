@@ -25,6 +25,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Pantallas de los temas de Aprendizaje -->
+        <activity android:name=".PlanoCartesianoActivity" android:exported="false" />
+        <activity android:name=".PlanoCartesiano2Activity" android:exported="false" />
+        <activity android:name=".ConceptosActivity" android:exported="false" />
+        <activity android:name=".FuncionesActivity" android:exported="false" />
+        <activity android:name=".FuncionRectaActivity" android:exported="false" />
+        <activity android:name=".FuncionLinealActivity" android:exported="false" />
+        <activity android:name=".FuncionCuadraticaActivity" android:exported="false" />
+        <activity android:name=".FuncionCubicaActivity" android:exported="false" />
+        <activity android:name=".FuncionValorAbsolutoActivity" android:exported="false" />
+        <activity android:name=".FuncionRaizActivity" android:exported="false" />
+        <activity android:name=".FuncionExponencialActivity" android:exported="false" />
+        <activity android:name=".FuncionLogaritmicaActivity" android:exported="false" />
+        <activity android:name=".FuncionConicasActivity" android:exported="false" />
+        <activity android:name=".CirculoUnitarioActivity" android:exported="false" />
+        <activity android:name=".FuncionSenoCosenoActivity" android:exported="false" />
+        <activity android:name=".FuncionTangenteActivity" android:exported="false" />
     </application>
 
 </manifest>

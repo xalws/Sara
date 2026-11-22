@@ -2,9 +2,12 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <script src="https://www.geogebra.org/apps/deployggb.js"></script>
+    <!-- GeoGebra va dentro de la app (assets/geogebra/, paquete oficial "Math Apps Bundle"
+         5.4.934, licencia en geogebra/LICENCIA_GEOGEBRA.txt): no necesita internet -->
+    <script src="geogebra/deployggb.js"></script>
+    <link rel="icon" href="data:,"> <!-- sin ícono: evita que el WebView pida /favicon.ico -->
     <style>
-        html, body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; background:#fff; }
+        html, body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; background:#000; }
         #ggb-element { width:100vw; height:100vh; }
     </style>
 </head>
@@ -12,17 +15,19 @@
 <div id="ggb-element"></div>
 
 <script>
-    var ggbApp = null;
-    var paramsActuales = [];
+    var aplicacionGeogebra = null;
+    var parametrosActuales = [];
+    var modoActual = null;          // "explicita" o "implicita" de la gráfica dibujada
+    var temporizadorMapa = null;
 
     // Envía eventos a Kotlin (Puente.evento)
     function enviar(tipo, datos) {
         try {
             Android.evento(tipo, typeof datos === "string" ? datos : JSON.stringify(datos));
-        } catch (e) { console.log("Sin puente Android: " + tipo); }
+        } catch (error) { console.log("Sin puente Android: " + tipo); }
     }
 
-    var params = {
+    var opcionesVisor = {
         "appName": "graphing",
         "width": window.innerWidth,
         "height": window.innerHeight,
@@ -33,100 +38,174 @@
         "enableLabelDrags": false,
         "enableShiftDragZoom": true,
         "showResetIcon": false,
-        "appletOnLoad": function (api) {
-            ggbApp = api;
-            ggbApp.setCoordSystem(-10, 10, -10, 10);
+        // Solo la vista gráfica: sin el panel de álgebra, la gráfica ocupa todo el WebView
+        // y así coincide con la capa sonora que está encima
+        "perspective": "G",
+        // Solo se incluyeron los textos en español e inglés, así que se fija el idioma
+        "language": "es",
+        "appletOnLoad": function (interfaz) {
+            aplicacionGeogebra = interfaz;
+            try { aplicacionGeogebra.setPerspective("G"); } catch (error) { console.log("Sin setPerspective: " + error); }
+            fijarVentanaInicial();
+            aplicarTemaOscuro();
+            // Si el usuario mueve o hace zoom a la vista, el mapa para el tacto se rehace
+            try {
+                aplicacionGeogebra.registerClientListener(function (evento) {
+                    var tipo = evento && (evento.type || evento[0]);
+                    if (tipo === "viewChanged2D") programarMapa();
+                });
+            } catch (error) { console.log("Sin aviso de cambio de vista: " + error); }
             enviar("listo", "");
         }
     };
 
-    var applet = new GGBApplet(params, true);
-    window.addEventListener("load", function () { applet.inject("ggb-element"); });
+    // Ejes con la misma escala (1 unidad en X mide lo mismo que 1 en Y), así un círculo
+    // se ve redondo. X va de -10 a 10 y el rango de Y se calcula con la proporción del recuadro
+    // (en un teléfono vertical, el recuadro es más alto que ancho: Y llega a unos ±13).
+    // Al hacer zoom con dos dedos GeoGebra conserva esta proporción.
+    function fijarVentanaInicial() {
+        var ancho = window.innerWidth || 1;
+        var alto = window.innerHeight || ancho;
+        var mitadY = 10 * alto / ancho;
+        aplicacionGeogebra.setCoordSystem(-10, 10, -mitadY, mitadY);
+    }
+
+    // Plano oscuro, igual que el resto de la app: fondo negro, ejes claros y cuadrícula gris
+    function aplicarTemaOscuro() {
+        try {
+            aplicacionGeogebra.setGraphicsOptions(1, { bgColor: "#000000", axesColor: "#E0E0E0", gridColor: "#3A3A3A" });
+        } catch (error) { console.log("Sin tema oscuro: " + error); }
+    }
+
+    var visor = new GGBApplet(opcionesVisor, true);
+    // Código de GeoGebra local (true = modo sin conexión) en lugar de geogebra.org
+    visor.setHTML5Codebase("geogebra/HTML5/5.0/web3d/", true);
+    window.addEventListener("load", function () { visor.inject("ggb-element"); });
 
     // ---------- Graficar ----------
-    // plan = { modo, curva, eval, params: [{n, v}] }
+    // plan = { modo, curva, evaluacion, parametros: [{nombre, valor}] }
     function graficar(plan) {
-        if (!ggbApp) { enviar("error", "GeoGebra aún está cargando, espera un momento."); return; }
+        if (!aplicacionGeogebra) { enviar("error", "GeoGebra aún está cargando, espera un momento."); return; }
         try {
             // Limpiar lo anterior
-            ["curvaG", "evalG"].forEach(function (o) { if (ggbApp.exists(o)) ggbApp.deleteObject(o); });
-            paramsActuales.forEach(function (n) { if (ggbApp.exists(n)) ggbApp.deleteObject(n); });
-            paramsActuales = [];
+            ["curvaG", "evaluarG"].forEach(function (objeto) { if (aplicacionGeogebra.exists(objeto)) aplicacionGeogebra.deleteObject(objeto); });
+            parametrosActuales.forEach(function (nombre) { if (aplicacionGeogebra.exists(nombre)) aplicacionGeogebra.deleteObject(nombre); });
+            parametrosActuales = [];
 
             // Parámetros primero
-            plan.params.forEach(function (p) {
-                ggbApp.evalCommand(p.n + " = " + p.v);
-                if (ggbApp.exists(p.n)) { ggbApp.setVisible(p.n, false); paramsActuales.push(p.n); }
+            plan.parametros.forEach(function (parametro) {
+                aplicacionGeogebra.evalCommand(parametro.nombre + " = " + parametro.valor);
+                if (aplicacionGeogebra.exists(parametro.nombre)) { aplicacionGeogebra.setVisible(parametro.nombre, false); parametrosActuales.push(parametro.nombre); }
             });
 
             if (plan.modo === "implicita") {
-                ggbApp.evalCommand("evalG(x, y) = " + plan.eval);
-                ggbApp.evalCommand("curvaG: " + plan.curva);
+                aplicacionGeogebra.evalCommand("evaluarG(x, y) = " + plan.evaluacion);
+                aplicacionGeogebra.evalCommand("curvaG: " + plan.curva);
             } else {
-                ggbApp.evalCommand("curvaG(x) = " + plan.curva);
+                aplicacionGeogebra.evalCommand("curvaG(x) = " + plan.curva);
             }
 
-            ggbApp.setGridVisible(true);
-            ggbApp.setAxesVisible(true, true);
+            aplicacionGeogebra.setGridVisible(true);
+            aplicacionGeogebra.setAxesVisible(true, true);
 
-            if (ggbApp.exists("curvaG")) {
+            if (aplicacionGeogebra.exists("curvaG")) {
+                aplicacionGeogebra.setLabelVisible("curvaG", false); // el nombre interno no aporta nada
+                aplicacionGeogebra.setColor("curvaG", 255, 214, 0);       // amarillo de la app, resalta sobre el negro
+                aplicacionGeogebra.setLineThickness("curvaG", 6);
+                aplicarTemaOscuro();
+                modoActual = plan.modo;
                 enviar("grafica", { ok: true });
+                programarMapa();
             } else {
+                modoActual = null;
                 enviar("grafica", { ok: false, mensaje: "No se pudo graficar esa expresión. Revisa cómo la escribiste." });
             }
-        } catch (e) {
-            enviar("grafica", { ok: false, mensaje: "Error al graficar: " + e });
+        } catch (error) {
+            modoActual = null;
+            enviar("grafica", { ok: false, mensaje: "Error al graficar: " + error });
         }
     }
 
-    function setParam(nombre, valor) {
-        if (ggbApp && ggbApp.exists(nombre)) ggbApp.setValue(nombre, valor);
+    function fijarParametro(nombre, valor) {
+        if (aplicacionGeogebra && aplicacionGeogebra.exists(nombre)) {
+            aplicacionGeogebra.setValue(nombre, valor);
+            programarMapa();
+        }
     }
 
     // ---------- Muestreo para sonificación ----------
     function vista() {
-        ggbApp.evalCommand("cA = Corner(1)");
-        ggbApp.evalCommand("cB = Corner(3)");
-        var r = {
-            xmin: ggbApp.getXcoord("cA"), ymin: ggbApp.getYcoord("cA"),
-            xmax: ggbApp.getXcoord("cB"), ymax: ggbApp.getYcoord("cB")
+        aplicacionGeogebra.evalCommand("esquinaA = Corner(1)");
+        aplicacionGeogebra.evalCommand("esquinaB = Corner(3)");
+        var respuesta = {
+            xmin: aplicacionGeogebra.getXcoord("esquinaA"), ymin: aplicacionGeogebra.getYcoord("esquinaA"),
+            xmax: aplicacionGeogebra.getXcoord("esquinaB"), ymax: aplicacionGeogebra.getYcoord("esquinaB")
         };
-        ggbApp.deleteObject("cA");
-        ggbApp.deleteObject("cB");
-        return r;
+        aplicacionGeogebra.deleteObject("esquinaA");
+        aplicacionGeogebra.deleteObject("esquinaB");
+        return respuesta;
     }
 
-    // Devuelve series = lista de pasos (izquierda -> derecha); cada paso = lista de valores Y
-    function muestrear(modo, n) {
+    // Devuelve una lista de pasos (izquierda -> derecha); cada paso = lista de valores Y visibles
+    function calcularSeries(modo, cantidad, ventana) {
+        var series = [];
+        for (var i = 0; i < cantidad; i++) {
+            var x = (ventana.xmin + (ventana.xmax - ventana.xmin) * i / (cantidad - 1)).toFixed(6);
+            var paso = [];
+            if (modo === "implicita") {
+                var divisiones = 40, yAnterior = null, gAnterior = null;
+                for (var j = 0; j <= divisiones; j++) {
+                    var y = ventana.ymin + (ventana.ymax - ventana.ymin) * j / divisiones;
+                    var valorG = aplicacionGeogebra.getValue("evaluarG(" + x + ", " + y.toFixed(6) + ")");
+                    if (isFinite(valorG) && gAnterior !== null && isFinite(gAnterior) && gAnterior * valorG < 0) {
+                        paso.push(yAnterior - gAnterior * (y - yAnterior) / (valorG - gAnterior)); // interpolación lineal
+                    }
+                    yAnterior = y; gAnterior = valorG;
+                }
+            } else {
+                var yValor = aplicacionGeogebra.getValue("curvaG(" + x + ")");
+                if (isFinite(yValor) && yValor >= ventana.ymin && yValor <= ventana.ymax) paso.push(yValor);
+            }
+            series.push(paso);
+        }
+        return series;
+    }
+
+    // Para el botón Reproducir
+    function muestrear(modo, cantidad) {
         try {
-            if (!ggbApp || !ggbApp.exists("curvaG")) {
+            if (!aplicacionGeogebra || !aplicacionGeogebra.exists("curvaG")) {
                 enviar("muestras", { ok: false, mensaje: "Primero grafica una función." });
                 return;
             }
-            var v = vista();
-            var series = [];
-            for (var i = 0; i < n; i++) {
-                var x = (v.xmin + (v.xmax - v.xmin) * i / (n - 1)).toFixed(6);
-                var paso = [];
-                if (modo === "implicita") {
-                    var M = 40, yPrev = null, gPrev = null;
-                    for (var j = 0; j <= M; j++) {
-                        var y = v.ymin + (v.ymax - v.ymin) * j / M;
-                        var g = ggbApp.getValue("evalG(" + x + ", " + y.toFixed(6) + ")");
-                        if (isFinite(g) && gPrev !== null && isFinite(gPrev) && gPrev * g < 0) {
-                            paso.push(yPrev - gPrev * (y - yPrev) / (g - gPrev)); // interpolación lineal
-                        }
-                        yPrev = y; gPrev = g;
-                    }
-                } else {
-                    var yv = ggbApp.getValue("curvaG(" + x + ")");
-                    if (isFinite(yv) && yv >= v.ymin && yv <= v.ymax) paso.push(yv);
-                }
-                series.push(paso);
-            }
-            enviar("muestras", { ok: true, series: series, yMin: v.ymin, yMax: v.ymax });
-        } catch (e) {
-            enviar("muestras", { ok: false, mensaje: "Error al calcular el sonido: " + e });
+            var ventana = vista();
+            enviar("muestras", { ok: true, series: calcularSeries(modo, cantidad, ventana), yMin: ventana.ymin, yMax: ventana.ymax });
+        } catch (error) {
+            enviar("muestras", { ok: false, mensaje: "Error al calcular el sonido: " + error });
+        }
+    }
+
+    // ---------- Mapa para explorar con el dedo ----------
+    // Se manda a Kotlin (CapaSonora) cada vez que cambia la gráfica, un parámetro o la vista.
+    // Así, mientras el dedo se mueve, no hay que preguntarle nada a GeoGebra.
+    // La espera de 250 ms junta muchos cambios seguidos (arrastrar un control) en un solo mapa.
+    function programarMapa() {
+        if (!modoActual) return;
+        clearTimeout(temporizadorMapa);
+        temporizadorMapa = setTimeout(enviarMapa, 250);
+    }
+
+    function enviarMapa() {
+        try {
+            if (!modoActual || !aplicacionGeogebra || !aplicacionGeogebra.exists("curvaG")) return;
+            var ventana = vista();
+            var cantidad = modoActual === "implicita" ? 120 : 300;
+            var inicio = Date.now();
+            var series = calcularSeries(modoActual, cantidad, ventana);
+            console.log("Mapa de " + cantidad + " columnas en " + (Date.now() - inicio) + " ms");
+            enviar("mapa", { xMin: ventana.xmin, xMax: ventana.xmax, yMin: ventana.ymin, yMax: ventana.ymax, series: series });
+        } catch (error) {
+            console.log("No se pudo calcular el mapa: " + error);
         }
     }
 </script>

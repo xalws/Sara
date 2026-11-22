@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Texto e ícono del menú en amarillo en la pestaña seleccionada, blanco en las demás -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:color="@color/amarillo" />
+    <item android:color="@color/white" />
+</selector>

@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Documentación Sara</title>
+<style>
+  :root {
+    --vino: #5E1716;
+    --rojo-oscuro: #7F1F1D;
+    --ladrillo: #A9472F;
+    --ladrillo-claro: #C9785F;
+    --beige: #F2E8D8;
+    --beige-medio: #E6D6BD;
+    --papel: #FBF7F0;
+    --gris-900: #2D2A28;
+    --gris-700: #514C48;
+    --gris-500: #857E77;
+    --gris-300: #C9C2BA;
+    --gris-100: #ECE8E3;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--papel); color: var(--gris-900);
+    font: 16px/1.6 "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .portada {
+    background: linear-gradient(135deg, var(--vino), var(--rojo-oscuro) 55%, var(--ladrillo));
+    color: var(--beige); padding: 72px 24px 56px;
+  }
+  .portada .contenido, main { max-width: 980px; margin: 0 auto; }
+  .portada h1 { font-size: 44px; margin: 0 0 8px; letter-spacing: .5px; }
+  .portada p { margin: 4px 0; font-size: 18px; color: var(--beige-medio); }
+  .portada .etiqueta { display: inline-block; margin-top: 18px; padding: 4px 12px; border: 1px solid var(--beige-medio); border-radius: 999px; font-size: 14px; }
+  main { padding: 24px 16px 80px; }
+  nav.indice { background: var(--beige); border-left: 6px solid var(--ladrillo); padding: 16px 24px; margin: 24px 0 40px; }
+  nav.indice ol { margin: 8px 0 0; padding-left: 22px; columns: 2; column-gap: 32px; }
+  nav.indice a { color: var(--rojo-oscuro); text-decoration: none; }
+  h2 { color: var(--vino); font-size: 28px; margin: 56px 0 12px; padding-bottom: 6px; border-bottom: 3px solid var(--ladrillo); }
+  h3 { color: var(--rojo-oscuro); font-size: 20px; margin: 32px 0 8px; }
+  h4 { color: var(--ladrillo); margin: 20px 0 6px; }
+  a { color: var(--rojo-oscuro); }
+  p code, li code, td code, span code { overflow-wrap: anywhere; }
+  code { background: var(--gris-100); padding: 1px 6px; border-radius: 4px; font-size: 14px; color: var(--vino); }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 14.5px; background: #fff; }
+  th { background: var(--rojo-oscuro); color: var(--beige); text-align: left; padding: 8px 10px; }
+  td { border-bottom: 1px solid var(--gris-300); padding: 8px 10px; vertical-align: top; }
+  tr:nth-child(even) td { background: var(--papel); }
+  .nota { background: var(--beige); border-left: 5px solid var(--ladrillo); padding: 12px 16px; margin: 16px 0; }
+  .alerta { background: #F6E3DC; border-left: 5px solid var(--rojo-oscuro); padding: 12px 16px; margin: 16px 0; }
+  .figura { background: #fff; border: 1px solid var(--gris-300); border-radius: 10px; padding: 16px; margin: 16px 0 24px; overflow-x: auto; }
+  .figura svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+  .pie { text-align: center; color: var(--gris-700); font-size: 14px; margin-top: 8px; }
+  .muestras { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0 18px; }
+  .muestra { width: 150px; border: 1px solid var(--gris-300); border-radius: 8px; overflow: hidden; background: #fff; font-size: 13px; }
+  .muestra div:first-child { height: 52px; }
+  .muestra div:last-child { padding: 6px 8px; }
+  .wf-rejilla { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .linea-tiempo { border-left: 4px solid var(--ladrillo); margin: 16px 0 16px 8px; padding-left: 20px; }
+  .linea-tiempo div { margin-bottom: 14px; position: relative; }
+  .linea-tiempo div::before { content: ""; position: absolute; left: -29px; top: 6px; width: 14px; height: 14px; border-radius: 50%; background: var(--rojo-oscuro); border: 3px solid var(--papel); }
+  .linea-tiempo b { color: var(--vino); }
+  footer { text-align: center; color: var(--gris-500); font-size: 13px; padding: 24px; border-top: 1px solid var(--gris-300); }
+  .figura svg.diagrama { min-width: 760px; }
+  @media (max-width: 640px) {
+    table { display: block; overflow-x: auto; }
+    .portada h1 { font-size: 32px; }
+    nav.indice ol { columns: 1; }
+    table { font-size: 13px; }
+  }
+  @media print {
+    body { background: #fff; }
+    h2 { break-before: page; }
+    .figura, table { break-inside: avoid; }
+    nav.indice { break-after: page; }
+  }
+  /* Estilos de los diagramas y wireframes */
+  .caja { fill: var(--beige); stroke: var(--rojo-oscuro); stroke-width: 1.5; }
+  .caja-fuerte { fill: var(--rojo-oscuro); }
+  .caja-ladrillo { fill: var(--ladrillo); }
+  .caja-gris { fill: var(--gris-100); stroke: var(--gris-500); stroke-width: 1.2; }
+  .caja-plan { fill: #fff; stroke: var(--gris-500); stroke-width: 1.5; stroke-dasharray: 6 4; }
+  .t { font: 13px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--gris-900); }
+  .t-b { font: 600 13px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--gris-900); }
+  .t-claro { font: 600 13px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--beige); }
+  .t-chico { font: 11px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--gris-700); }
+  .t-titulo { font: 700 15px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--vino); }
+  .flecha { stroke: var(--gris-700); stroke-width: 1.6; fill: none; marker-end: url(#punta); }
+  .flecha-plan { stroke: var(--gris-500); stroke-width: 1.4; fill: none; stroke-dasharray: 5 4; marker-end: url(#punta); }
+  .wf-tel { fill: #fff; stroke: var(--gris-900); stroke-width: 2; }
+  .wf-fondo { fill: var(--gris-300); }
+  .wf-bloque { fill: var(--gris-100); stroke: var(--gris-500); stroke-width: 1; }
+  .wf-oscuro { fill: var(--gris-500); }
+  .wf-boton { fill: var(--gris-300); stroke: var(--gris-700); stroke-width: 1; }
+  .wf-texto { fill: var(--gris-500); }
+  .cota { stroke: var(--ladrillo); stroke-width: 1.2; fill: none; }
+  .cota-t { font: 600 11px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--ladrillo); }
+  .pliegue { stroke: var(--rojo-oscuro); stroke-width: 1.2; stroke-dasharray: 6 4; }
+</style>
+</head>
+<body>
+
+<header class="portada">
+  <div class="contenido">
+    <h1>Sara</h1>
+    <p>Aplicación Android para comprender la trayectoria de una gráfica mediante sonido</p>
+    <p>Documentación de arquitectura, maquetado, wireframes y tecnologías</p>
+    <span class="etiqueta">Versión del documento: 8 de noviembre de 2026 · Paquete <code style="background:transparent;color:inherit">com.example.sara</code></span>
+  </div>
+</header>
+
+<main>
+
+<nav class="indice">
+  <b>Contenido</b>
+  <ol>
+    <li><a href="#objetivo">Objetivo y alcance</a></li>
+    <li><a href="#tecnologias">Tecnologías</a></li>
+    <li><a href="#arquitectura">Diagrama de arquitectura</a></li>
+    <li><a href="#navegacion">Navegación entre pantallas</a></li>
+    <li><a href="#maquetado">Tipos de maquetado</a></li>
+    <li><a href="#paleta">Paleta de colores</a></li>
+    <li><a href="#wireframes">Wireframes</a></li>
+    <li><a href="#medidas">Medidas y su justificación</a></li>
+    <li><a href="#sonido">Medidas del sonido</a></li>
+    <li><a href="#recursos">Recursos y su origen</a></li>
+    <li><a href="#tiempo">Tiempo de desarrollo</a></li>
+    <li><a href="#integracion">Integración con Firebase y la app web</a></li>
+    <li><a href="#convenciones">Convenciones de código</a></li>
+    <li><a href="#pruebas">Pruebas en un teléfono real</a></li>
+    <li><a href="#pendientes">Pendientes y riesgos</a></li>
+  </ol>
+</nav>
+
+<!-- ===================================================== -->
+<h2 id="objetivo">1. Objetivo y alcance</h2>
+<p><b>Sara</b> apoya a personas con discapacidad visual para aprender <b>qué es una gráfica</b> y cómo es su <b>trayectoria</b>. En lugar de ver la curva, la persona la <b>escucha</b>: el tono sube cuando la gráfica sube, el sonido viaja del oído izquierdo al derecho conforme avanza <i>x</i>, y unas marcas de sonido y vibración avisan cuando la gráfica cruza los ejes. Al final, una voz describe el recorrido con palabras.</p>
+<p>La aplicación tiene tres secciones, a las que se llega desde el menú superior:</p>
+<table>
+  <tr><th>Sección</th><th>Contenido</th><th>Archivo de diseño</th></tr>
+  <tr><td>Inicio</td><td>Definiciones introductorias (plano cartesiano, derivada).</td><td><code>vista_inicio.xml</code></td></tr>
+  <tr><td>Aprendizaje</td><td>Lista de temas agrupados por título. Cada botón abre la pantalla del tema, con su explicación, su plano sonoro y sus botones de sonido.</td><td><code>vista_aprendizaje.xml</code> y 12 pantallas de tema</td></tr>
+  <tr><td>Graficar</td><td>Graficadora libre con GeoGebra, teclado matemático propio, parámetros con controles deslizantes y sonificación de la curva.</td><td><code>vista_grafica.xml</code></td></tr>
+</table>
+<p>El diseño parte de una regla: <b>todo lo importante debe poder entenderse sin ver la pantalla</b>. Por eso cada decisión de este documento (tamaños, contraste, orden de los elementos, sonido, voz y vibración) se explica pensando en una persona ciega o con baja visión que usa TalkBack o audífonos.</p>
+
+<!-- ===================================================== -->
+<h2 id="tecnologias">2. Tecnologías</h2>
+<p>La tabla separa lo que <b>ya está implementado</b> de lo que es un <b>requisito de integración</b> que todavía no existe en el código (ver la <a href="#integracion">sección 12</a>).</p>
+<table>
+  <tr><th>Tecnología</th><th>Uso en Sara</th><th>Estado</th></tr>
+  <tr><td>Android Studio + Gradle (Kotlin DSL)</td><td>Entorno de desarrollo y compilación. Android Gradle Plugin 9.3.3.</td><td>Implementado</td></tr>
+  <tr><td>Kotlin</td><td>Lenguaje de toda la app (Activities, vistas, audio, lógica).</td><td>Implementado</td></tr>
+  <tr><td>Java</td><td>Kotlin es 100 % interoperable con Java: se pueden agregar clases <code>.java</code> en <code>app/src/main/java</code> y usarlas desde Kotlin (o al revés) sin configuración extra. Hoy no hay archivos Java; la carpeta ya existe.</td><td>Disponible, sin uso actual</td></tr>
+  <tr><td>Android SDK</td><td><code>minSdk 24</code> (Android 7.0), <code>targetSdk</code> y <code>compileSdk 37</code>. El mínimo 24 cubre la gran mayoría de los teléfonos en uso, incluidos equipos económicos.</td><td>Implementado</td></tr>
+  <tr><td>AndroidX AppCompat 1.8.0, Core KTX 1.19.0, Activity KTX 1.13.0, Material Components 1.14.0</td><td>Compatibilidad entre versiones de Android, botones <code>AppCompatButton</code> y tema Material 3 sin barra de acción.</td><td>Implementado</td></tr>
+  <tr><td>ViewBinding</td><td>Las 12 Activities de temas acceden a sus vistas con clases generadas (<code>VistaFuncionLinealBinding</code>, etc.), sin riesgo de un id equivocado.</td><td>Implementado</td></tr>
+  <tr><td><code>findViewById</code></td><td>Lo usan <code>MainActivity</code> (menú y contenedor) y los botones de Aprendizaje, que se inflan dentro de un contenedor.</td><td>Implementado</td></tr>
+  <tr><td>Intents explícitos</td><td>Para cambiar de pantalla a cada tema y entre las partes del plano cartesiano.</td><td>Implementado</td></tr>
+  <tr><td>AudioTrack (PCM 16 bits, 44.1 kHz, estéreo)</td><td>Síntesis del sonido de las gráficas en tiempo real. No se usan archivos de audio.</td><td>Implementado</td></tr>
+  <tr><td>TextToSpeech</td><td>Voz en español (es-MX, con respaldo a "es") para guiar, dar coordenadas y leer el resumen.</td><td>Implementado</td></tr>
+  <tr><td>Vibrator / VibrationEffect</td><td>Patrones táctiles al cruzar los ejes.</td><td>Implementado</td></tr>
+  <tr><td>AccessibilityManager (TalkBack)</td><td>Detecta la exploración táctil para adaptar los tiempos y recibir los gestos.</td><td>Implementado</td></tr>
+  <tr><td>Canvas (vista personalizada)</td><td><code>PlanoSonoroView</code> dibuja el plano, la curva y el punto que recorre la gráfica.</td><td>Implementado</td></tr>
+  <tr><td>WebView + JavaScript + GeoGebra Apps API</td><td>La graficadora carga <code>assets/geogebra.html</code>, que inyecta GeoGebra desde la propia app (<code>assets/geogebra/</code>, servido con <code>WebViewAssetLoader</code> de <code>androidx.webkit</code>). Kotlin y JavaScript se comunican con un puente (<code>@JavascriptInterface</code>) y mensajes JSON.</td><td>Implementado (funciona sin internet)</td></tr>
+  <tr><td>JUnit 4</td><td>Pruebas unitarias del resumen hablado (<code>DescriptorGraficaTest</code>).</td><td>Implementado</td></tr>
+  <tr><td>Firebase (Authentication, Cloud Firestore)</td><td>Cuentas de usuario, progreso y sincronización con la app web.</td><td><b>Requisito, no implementado</b></td></tr>
+  <tr><td>Aplicación web multiplataforma</td><td>Debe compartir datos con la app a través de Firebase y reutilizar GeoGebra y el algoritmo de sonificación.</td><td><b>Requisito, no implementado</b></td></tr>
+</table>
+
+<!-- ===================================================== -->
+<h2 id="arquitectura">3. Diagrama de arquitectura</h2>
+<p>La aplicación está organizada en capas. Cada capa solo conoce a la de abajo: las pantallas usan componentes, los componentes usan la lógica y los motores de salida (sonido, voz, vibración), y nada de la lógica depende de la interfaz. Así se puede probar la lógica sin un teléfono (como ya ocurre con <code>DescriptorGrafica</code>) y reutilizarla en la app web.</p>
+
+<div class="figura">
+<svg class="diagrama" viewBox="0 0 1000 720" role="img" aria-labelledby="arq-t arq-d">
+  <title id="arq-t">Diagrama de arquitectura de Sara</title>
+  <desc id="arq-d">Dos columnas por capas. Izquierda: temas con PlanoSonoroView, su lógica y sus salidas de sonido, voz y vibración. Derecha: menú principal y graficadora con GeoGebra. Firebase y la app web aparecen punteados porque todavía no están implementados.</desc>
+  <defs>
+    <marker id="punta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#514C48"/>
+    </marker>
+  </defs>
+
+  <!-- Bandas y etiquetas de capa -->
+  <g>
+    <rect x="0" y="90" width="1000" height="120" fill="#F2E8D8" opacity=".35"/>
+    <rect x="0" y="372" width="1000" height="100" fill="#F2E8D8" opacity=".35"/>
+    <rect x="0" y="622" width="1000" height="90" fill="#F2E8D8" opacity=".35"/>
+    <text x="12" y="40" class="t-titulo">Usuario</text>
+    <text x="12" y="146" class="t-titulo">Presentación</text>
+    <text x="12" y="164" class="t-chico">pantallas</text>
+    <text x="12" y="292" class="t-titulo">Componentes</text>
+    <text x="12" y="310" class="t-chico">interacción</text>
+    <text x="12" y="424" class="t-titulo">Lógica</text>
+    <text x="12" y="442" class="t-chico">sin interfaz</text>
+    <text x="12" y="544" class="t-titulo">Salidas</text>
+    <text x="12" y="562" class="t-chico">sonido, voz,</text>
+    <text x="12" y="576" class="t-chico">vibración</text>
+    <text x="12" y="664" class="t-titulo">Externos</text>
+    <text x="12" y="682" class="t-chico">servicios</text>
+  </g>
+
+  <!-- Usuario -->
+  <rect x="405" y="12" width="300" height="50" rx="25" class="caja-fuerte"/>
+  <text x="555" y="33" text-anchor="middle" class="t-claro">Persona usuaria</text>
+  <text x="555" y="51" text-anchor="middle" class="t-claro" style="font-weight:400">TalkBack · audífonos · dedo sobre la pantalla</text>
+
+  <!-- Presentación -->
+  <rect x="125" y="100" width="410" height="100" rx="8" class="caja"/>
+  <text x="139" y="122" class="t-b">Activities de temas (12)</text>
+  <text x="139" y="141" class="t-chico">Plano cartesiano 1 y 2 · Funciones · Lineal · Cuadrática</text>
+  <text x="139" y="157" class="t-chico">Cúbica · Valor absoluto · Exponencial · Logarítmica</text>
+  <text x="139" y="173" class="t-chico">Seno y coseno · Raíz · Tangente</text>
+  <text x="139" y="189" class="t-chico">ViewBinding (enlace) · onStop detiene el sonido</text>
+
+  <rect x="575" y="100" width="410" height="100" rx="8" class="caja"/>
+  <text x="589" y="122" class="t-b">MainActivity</text>
+  <text x="589" y="141" class="t-chico">vista_principal.xml: menú superior + FrameLayout</text>
+  <text x="589" y="157" class="t-chico">Infla vista_inicio · vista_aprendizaje · vista_grafica</text>
+  <text x="589" y="173" class="t-chico">findViewById para el menú y los botones de Aprendizaje</text>
+  <text x="589" y="189" class="t-chico">Libera la graficadora al cambiar de sección</text>
+
+  <!-- Componentes -->
+  <rect x="125" y="250" width="410" height="92" rx="8" class="caja"/>
+  <text x="139" y="272" class="t-b">PlanoSonoroView</text>
+  <text x="139" y="291" class="t-chico">Dibuja plano, curva y punto (Canvas)</text>
+  <text x="139" y="307" class="t-chico">Recorrido guiado · exploración con el dedo (táctil y TalkBack)</text>
+  <text x="139" y="323" class="t-chico">Tonos de referencia · resumen hablado · secuencia por turnos</text>
+
+  <rect x="575" y="250" width="200" height="92" rx="8" class="caja"/>
+  <text x="589" y="272" class="t-b">ControladorGrafica</text>
+  <text x="589" y="291" class="t-chico">WebView + puente JS</text>
+  <text x="589" y="307" class="t-chico">CapaSonora: dedo → tono</text>
+  <text x="589" y="323" class="t-chico">Parámetros (SeekBar)</text>
+
+  <rect x="790" y="250" width="195" height="92" rx="8" class="caja"/>
+  <text x="804" y="272" class="t-b">TecladoMatematico</text>
+  <text x="804" y="291" class="t-chico">Páginas 123 · f(x) · abc</text>
+  <text x="804" y="307" class="t-chico">Descripción hablada</text>
+  <text x="804" y="323" class="t-chico">por tecla</text>
+
+  <!-- Lógica -->
+  <rect x="125" y="392" width="410" height="70" rx="8" class="caja-gris"/>
+  <text x="139" y="414" class="t-b">DescriptorGrafica</text>
+  <text x="139" y="433" class="t-chico">Muestreo, bisección y búsqueda ternaria → texto del recorrido</text>
+  <text x="139" y="449" class="t-chico">Probado con JUnit (DescriptorGraficaTest)</text>
+
+  <rect x="575" y="392" width="410" height="70" rx="8" class="caja-gris"/>
+  <text x="589" y="414" class="t-b">AnalizadorFuncion · PlanGrafica</text>
+  <text x="589" y="433" class="t-chico">Normaliza lo escrito (sen → sin, x² → x^2), detecta parámetros</text>
+  <text x="589" y="449" class="t-chico">Decide si la ecuación es explícita o implícita</text>
+
+  <!-- Salidas -->
+  <rect x="125" y="512" width="95" height="70" rx="8" class="caja-ladrillo"/>
+  <text x="172" y="542" text-anchor="middle" class="t-claro" style="font-size:12px">SonidoGrafica</text>
+  <text x="172" y="560" text-anchor="middle" class="t-claro" style="font-weight:400;font-size:10px">recorrido, tonos</text>
+  <rect x="230" y="512" width="95" height="70" rx="8" class="caja-ladrillo"/>
+  <text x="277" y="542" text-anchor="middle" class="t-claro" style="font-size:12px">TonoContinuo</text>
+  <text x="277" y="560" text-anchor="middle" class="t-claro" style="font-weight:400;font-size:10px">sigue al dedo</text>
+  <rect x="335" y="512" width="95" height="70" rx="8" class="caja-ladrillo"/>
+  <text x="382" y="542" text-anchor="middle" class="t-claro" style="font-size:12px">Narrador</text>
+  <text x="382" y="560" text-anchor="middle" class="t-claro" style="font-weight:400;font-size:10px">voz encadenada</text>
+  <rect x="440" y="512" width="95" height="70" rx="8" class="caja-ladrillo"/>
+  <text x="487" y="542" text-anchor="middle" class="t-claro" style="font-size:12px">Vibracion</text>
+  <text x="487" y="560" text-anchor="middle" class="t-claro" style="font-weight:400;font-size:10px">ejes X y Y</text>
+
+  <rect x="575" y="512" width="410" height="70" rx="8" class="caja-ladrillo"/>
+  <text x="780" y="542" text-anchor="middle" class="t-claro">MotorAccesibilidad</text>
+  <text x="780" y="561" text-anchor="middle" class="t-claro" style="font-weight:400;font-size:11px">sonificación de varias ramas · voz · vibración de la graficadora</text>
+
+  <!-- Externos -->
+  <rect x="125" y="632" width="200" height="70" rx="8" class="caja-plan"/>
+  <text x="139" y="654" class="t-b">App web (planeada)</text>
+  <text x="139" y="672" class="t-chico">multiplataforma</text>
+  <text x="139" y="688" class="t-chico">GeoGebra + Web Audio</text>
+  <rect x="335" y="632" width="200" height="70" rx="8" class="caja-plan"/>
+  <text x="349" y="654" class="t-b">Firebase (planeado)</text>
+  <text x="349" y="672" class="t-chico">Authentication</text>
+  <text x="349" y="688" class="t-chico">Cloud Firestore</text>
+  <rect x="575" y="632" width="410" height="70" rx="8" class="caja-gris"/>
+  <text x="589" y="654" class="t-b">GeoGebra dentro de la app (assets/geogebra)</text>
+  <text x="589" y="672" class="t-chico">Paquete oficial 5.4.934 · WebViewAssetLoader · sin internet</text>
+  <text x="589" y="688" class="t-chico">Comunicación por mensajes JSON</text>
+
+  <!-- Flechas: usuario -->
+  <path d="M555,62 L555,78 L330,78 L330,98" class="flecha"/>
+  <path d="M555,78 L780,78 L780,98" class="flecha"/>
+  <!-- Intent entre MainActivity y temas -->
+  <path d="M575,150 L538,150" class="flecha"/>
+  <text x="555" y="140" text-anchor="middle" class="t-chico">Intent</text>
+  <!-- Columna izquierda -->
+  <path d="M330,200 L330,248" class="flecha"/>
+  <path d="M330,342 L330,390" class="flecha"/>
+  <path d="M125,320 L114,320 L114,490 L487,490" class="flecha" style="marker-end:none"/>
+  <path d="M172,490 L172,510" class="flecha"/>
+  <path d="M277,490 L277,510" class="flecha"/>
+  <path d="M382,490 L382,510" class="flecha"/>
+  <path d="M487,490 L487,510" class="flecha"/>
+  <!-- Columna derecha -->
+  <path d="M675,200 L675,248" class="flecha"/>
+  <path d="M775,296 L788,296" class="flecha"/>
+  <path d="M675,342 L675,390" class="flecha"/>
+  <path d="M575,320 L548,320 L548,655 L573,655" class="flecha"/>
+  <path d="M548,490 L600,490 L600,510" class="flecha"/>
+  <!-- Planeado -->
+  <path d="M562,200 L562,690 L537,690" class="flecha-plan"/>
+  <path d="M325,667 L333,667" class="flecha-plan"/>
+</svg>
+<div class="pie">Figura 1. Arquitectura por capas. Línea continua: dependencia implementada. Punteado: integración planeada. <code>TonoContinuo</code>, <code>Narrador</code> y <code>Vibracion</code> también los usa <code>CapaSonora</code>, la capa que vuelve explorable con el dedo la gráfica de GeoGebra.</div>
+</div>
+
+<h3>Responsabilidad de cada pieza</h3>
+<table>
+  <tr><th>Clase / archivo</th><th>Responsabilidad</th><th>Por qué existe así</th></tr>
+  <tr><td><code>MainActivity</code></td><td>Menú superior y cambio de las tres secciones dentro de un <code>FrameLayout</code>.</td><td>Las tres secciones comparten el menú. Inflarlas en un contenedor evita recargar el menú y es rápido.</td></tr>
+  <tr><td>12 Activities de temas</td><td>Una pantalla por tema, con ViewBinding y un botón "Regresar" al final.</td><td>Cada tema es una pantalla independiente. TalkBack anuncia el cambio de pantalla, lo que orienta a la persona, y el botón "Regresar" ofrece una salida visible además del botón Atrás del sistema.</td></tr>
+  <tr><td><code>Navegacion.kt</code></td><td>Función <code>regresarAAprendizaje()</code> y las constantes <code>EXTRA_SECCION</code> / <code>SECCION_APRENDIZAJE</code>.</td><td>Las 12 pantallas regresan igual, con una sola línea. Al estar en un solo lugar, cambiar el destino o la forma de regresar se hace una vez.</td></tr>
+  <tr><td><code>BarrasSistema.kt</code></td><td>Función <code>respetarBarrasDelSistema()</code>.</td><td>Desde Android 15 la app se dibuja detrás de la barra de estado y de la de navegación. Esta función suma su altura al padding para que nada quede tapado.</td></tr>
+  <tr><td><code>PlanoSonoroView</code></td><td>Vista personalizada: dibujo del plano, recorrido guiado, exploración con el dedo, referencias y resumen.</td><td>Junta en un solo componente todo lo que una persona necesita para "leer" una gráfica, y se reutiliza en los 8 temas de funciones con una sola línea de configuración.</td></tr>
+  <tr><td><code>SonidoGrafica</code></td><td>Genera el audio completo del recorrido (pista estática) y los tonos fijos de referencia.</td><td>Sintetizar el recorrido antes de reproducirlo permite un sonido sin cortes y conocer de antemano en qué momento se cruza cada eje (para vibrar en sincronía).</td></tr>
+  <tr><td><code>TonoContinuo</code></td><td>Tono en streaming que cambia mientras el dedo se mueve. Toca hasta 4 voces a la vez, una por rama de la curva.</td><td>La exploración necesita respuesta inmediata, así que usa un búfer pequeño y baja latencia. Las varias voces permiten oír curvas con más de un valor de y en la misma x (un círculo suena con dos tonos). Lo usan <code>PlanoSonoroView</code> y <code>CapaSonora</code>.</td></tr>
+  <tr><td><code>CapaSonora</code></td><td>Vista transparente encima de GeoGebra: convierte el dedo en tono, marca los ejes con tic/bip y vibración, y al soltar dice las coordenadas.</td><td>GeoGebra vive en un WebView y consultarlo en cada movimiento del dedo sería lento. La capa usa un "mapa" de puntos que la página manda cuando cambia la gráfica, así responde al instante con las mismas reglas de sonido que los temas.</td></tr>
+  <tr><td><code>Narrador</code></td><td>Voz propia con aviso de "terminé de hablar".</td><td>TalkBack no avisa cuándo termina de hablar. Con este aviso se encadena voz → tono → voz → recorrido sin que se encimen.</td></tr>
+  <tr><td><code>Vibracion</code></td><td>Patrones distintos para el eje X y el eje Y.</td><td>Da una segunda pista además del oído, útil con ruido ambiente o hipoacusia.</td></tr>
+  <tr><td><code>DescriptorGrafica</code></td><td>Convierte la función en una descripción hablada.</td><td>Confirma con palabras lo que la persona imaginó. Funciona con cualquier función, sin textos escritos a mano.</td></tr>
+  <tr><td><code>ControladorGrafica</code>, <code>AnalizadorFuncion</code>, <code>TecladoMatematico</code>, <code>MotorAccesibilidad</code></td><td>Graficadora libre con GeoGebra.</td><td>Permite explorar funciones propias, con un teclado accesible y sonificación de varias ramas (por ejemplo, un círculo suena con dos voces).</td></tr>
+</table>
+
+<!-- ===================================================== -->
+<h2 id="navegacion">4. Navegación entre pantallas</h2>
+<p>Se usan dos mecanismos a propósito:</p>
+<ul>
+  <li><b>Intercambio dentro de un contenedor</b> (Inicio, Aprendizaje, Graficar): las tres secciones viven bajo el mismo menú, así que <code>MainActivity</code> solo cambia el contenido del <code>FrameLayout</code>.</li>
+  <li><b>Intents hacia Activities</b> (cada tema): un tema es una pantalla completa, sin menú, para que la atención (y el foco de TalkBack) quede solo en el contenido.</li>
+  <li><b>Regreso con Intent y <code>CLEAR_TOP</code></b>: el botón "Regresar" de cada tema abre <code>MainActivity</code> con el dato extra <code>seccion = aprendizaje</code> y las banderas <code>FLAG_ACTIVITY_CLEAR_TOP</code> + <code>FLAG_ACTIVITY_SINGLE_TOP</code>. Así se cierran todas las pantallas de tema abiertas (desde la parte 2 del plano se llega directo, sin pasar por la parte 1) y se reutiliza la <code>MainActivity</code> existente, que recibe el Intent en <code>onNewIntent</code> y muestra Aprendizaje.</li>
+</ul>
+<div class="figura">
+<svg class="diagrama" viewBox="0 0 900 350" role="img" aria-labelledby="nav-t">
+  <title id="nav-t">Mapa de navegación</title>
+  <rect x="20" y="20" width="250" height="290" rx="10" class="caja-gris"/>
+  <text x="145" y="44" text-anchor="middle" class="t-titulo">MainActivity</text>
+  <rect x="40" y="60" width="210" height="44" rx="6" class="caja"/>
+  <text x="145" y="87" text-anchor="middle" class="t-b">Inicio</text>
+  <rect x="40" y="120" width="210" height="44" rx="6" class="caja-fuerte"/>
+  <text x="145" y="147" text-anchor="middle" class="t-claro">Aprendizaje</text>
+  <rect x="40" y="180" width="210" height="44" rx="6" class="caja"/>
+  <text x="145" y="207" text-anchor="middle" class="t-b">Graficar</text>
+  <text x="145" y="250" text-anchor="middle" class="t-chico">El menú cambia el contenido</text>
+  <text x="145" y="266" text-anchor="middle" class="t-chico">del FrameLayout (sin Intent)</text>
+
+  <rect x="360" y="20" width="230" height="44" rx="6" class="caja"/>
+  <text x="475" y="47" text-anchor="middle" class="t-b">Plano cartesiano 1</text>
+  <rect x="650" y="20" width="230" height="44" rx="6" class="caja"/>
+  <text x="765" y="47" text-anchor="middle" class="t-b">Plano cartesiano 2</text>
+  <path d="M590,34 L648,34" class="flecha"/>
+  <text x="619" y="28" text-anchor="middle" class="t-chico">Siguiente</text>
+  <path d="M650,52 L592,52" class="flecha"/>
+  <text x="619" y="70" text-anchor="middle" class="t-chico">Anterior (finish)</text>
+
+  <rect x="360" y="100" width="520" height="210" rx="10" class="caja-gris"/>
+  <text x="620" y="124" text-anchor="middle" class="t-titulo">Temas de funciones (con PlanoSonoroView)</text>
+  <g class="t-b">
+    <rect x="380" y="140" width="155" height="36" rx="6" class="caja"/><text x="457" y="163" text-anchor="middle" class="t-b">Funciones</text>
+    <rect x="542" y="140" width="155" height="36" rx="6" class="caja"/><text x="619" y="163" text-anchor="middle" class="t-b">Lineal</text>
+    <rect x="704" y="140" width="155" height="36" rx="6" class="caja"/><text x="781" y="163" text-anchor="middle" class="t-b">Cuadrática</text>
+    <rect x="380" y="186" width="155" height="36" rx="6" class="caja"/><text x="457" y="209" text-anchor="middle" class="t-b">Cúbica</text>
+    <rect x="542" y="186" width="155" height="36" rx="6" class="caja"/><text x="619" y="209" text-anchor="middle" class="t-b">Valor absoluto</text>
+    <rect x="704" y="186" width="155" height="36" rx="6" class="caja"/><text x="781" y="209" text-anchor="middle" class="t-b">Exponencial</text>
+    <rect x="380" y="232" width="155" height="36" rx="6" class="caja"/><text x="457" y="255" text-anchor="middle" class="t-b">Logarítmica</text>
+    <rect x="542" y="232" width="155" height="36" rx="6" class="caja"/><text x="619" y="255" text-anchor="middle" class="t-b">Seno y coseno</text>
+    <rect x="704" y="232" width="75" height="36" rx="6" class="caja-plan"/><text x="741" y="255" text-anchor="middle" class="t-chico">Raíz*</text>
+    <rect x="784" y="232" width="75" height="36" rx="6" class="caja-plan"/><text x="821" y="255" text-anchor="middle" class="t-chico">Tangente*</text>
+  </g>
+  <text x="620" y="292" text-anchor="middle" class="t-chico">* Pantalla creada, contenido pendiente (sin plano sonoro todavía)</text>
+
+  <path d="M250,142 L330,142 L330,42 L358,42" class="flecha"/>
+  <path d="M250,142 L330,142 L330,200 L358,200" class="flecha"/>
+  <text x="304" y="134" text-anchor="middle" class="t-chico">Intent</text>
+
+  <path d="M358,300 L290,300 L290,156 L252,156" class="flecha"/>
+  <text x="290" y="330" text-anchor="middle" class="t-chico">Regresar (Intent + CLEAR_TOP), desde cualquiera de los 12 temas</text>
+</svg>
+<div class="pie">Figura 2. Mapa de navegación. Desde Aprendizaje, cada botón abre su tema con un Intent explícito; el botón "Regresar" de cada tema vuelve directo a Aprendizaje.</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="maquetado">5. Tipos de maquetado</h2>
+<p>Estos son todos los tipos de maquetado que usa la app, y los que se recomiendan para lo que falta.</p>
+<table>
+  <tr><th>Maquetado</th><th>Dónde se usa</th><th>Por qué se eligió</th><th>Cómo se implementó</th></tr>
+  <tr><td><b>LinearLayout vertical</b></td><td>Contenido de todas las pantallas.</td><td>El contenido educativo es una lista de arriba hacia abajo. Ese mismo orden es el que recorre TalkBack al deslizar, así que el orden visual y el orden de lectura coinciden.</td><td>Hijo único de cada <code>ScrollView</code>, con <code>padding</code> de 30dp y separadores <code>Space</code>.</td></tr>
+  <tr><td><b>LinearLayout horizontal con pesos</b></td><td>Menú superior; fila de botones Graficar/Reproducir; filas del teclado; fila de navegación del plano cartesiano (Regresar + Siguiente y Anterior + Regresar).</td><td>Reparte el ancho en partes iguales en cualquier tamaño de pantalla, sin cálculos.</td><td><code>layout_weight="1"</code> con ancho 0dp; en la graficadora, <code>weightSum="2"</code>. En la fila del plano, <code>baselineAligned="false"</code> para que los dos botones queden a la misma altura aunque uno tenga ícono.</td></tr>
+  <tr><td><b>FrameLayout</b></td><td><code>contenedorPrincipal</code> en <code>vista_principal.xml</code>; contenedor de la gráfica en <code>vista_grafica.xml</code>.</td><td>Solo contiene una sección a la vez y es el contenedor más ligero para eso. En la graficadora, es el único maquetado que <b>apila</b> vistas: la capa sonora queda exactamente encima de GeoGebra, del mismo tamaño.</td><td>Principal: <code>layout_height="0dp"</code> con <code>layout_weight="1"</code>, ocupa todo lo que deja libre el menú. Graficadora: 350dp de alto, con el <code>WebView</code> y la <code>CapaSonora</code> en <code>match_parent</code>; la capa va después, así queda arriba y recibe el dedo primero.</td></tr>
+  <tr><td><b>ScrollView</b></td><td>Raíz de todas las pantallas de contenido.</td><td>Con textos de 20sp y la fuente agrandada en el sistema, el contenido casi nunca cabe en la pantalla. TalkBack desplaza el ScrollView automáticamente al avanzar.</td><td><code>fillViewport="true"</code> (llena la pantalla aunque haya poco contenido) y <code>scrollbars="none"</code>. En las pantallas de tema, <code>respetarBarrasDelSistema()</code> le agrega como padding la altura de las barras del sistema, así el texto desplazado se oculta antes de llegar a la hora y termina arriba de la barra de navegación.</td></tr>
+  <tr><td><b>Space</b></td><td>Separaciones de 15, 30, 35 y 40dp.</td><td>Separa bloques sin agregar elementos que TalkBack tendría que leer.</td><td><code>&lt;Space&gt;</code> con alto fijo.</td></tr>
+  <tr><td><b>Vista personalizada con Canvas</b></td><td><code>PlanoSonoroView</code> (260dp de alto).</td><td>Ningún componente estándar dibuja una gráfica que además suene, reciba gestos de exploración y funcione con TalkBack.</td><td>Hereda de <code>View</code>, sobreescribe <code>onDraw</code>, <code>onTouchEvent</code>, <code>onHoverEvent</code> y <code>performClick</code>.</td></tr>
+  <tr><td><b>WebView</b></td><td><code>contenedorGeogebra</code> (llena su FrameLayout de 350dp).</td><td>GeoGebra es la herramienta de graficación más completa y gratuita, pero solo existe para web.</td><td>Carga <code>https://appassets.androidplatform.net/assets/geogebra.html</code>: una dirección local que <code>WebViewAssetLoader</code> responde con los archivos de la app, sin salir a internet. JavaScript habilitado y un puente <code>Puente</code>. GeoGebra se abre en perspectiva "G" (solo la gráfica, sin panel de álgebra) para que ocupe todo el WebView. Para TalkBack se oculta su contenido (<code>NO_HIDE_DESCENDANTS</code>) y la capa sonora lo representa.</td></tr>
+  <tr><td><b>Vista personalizada transparente</b></td><td><code>CapaSonora</code> sobre GeoGebra.</td><td>Permite explorar con el dedo una gráfica que dibuja otra herramienta, sin modificar GeoGebra.</td><td>Hereda de <code>View</code>; en <code>onTouchEvent</code> devuelve <code>false</code> cuando la exploración está apagada, y así el toque pasa a GeoGebra (mover, zoom).</td></tr>
+  <tr><td><b>SwitchCompat</b></td><td><code>swExplorar</code>, debajo de la gráfica.</td><td>Un interruptor anuncia solo su estado con TalkBack ("activado/desactivado") y deja claro que hay dos modos.</td><td>Encendido: el dedo explora con sonido. Apagado: el dedo mueve la gráfica. Con TalkBack la exploración funciona siempre.</td></tr>
+  <tr><td><b>Vistas creadas por código</b></td><td>Teclado matemático, controles de parámetros, mensaje de estado.</td><td>El número de teclas y de parámetros cambia según la página o la función escrita.</td><td><code>LinearLayout</code>, <code>Button</code> y <code>SeekBar</code> creados en Kotlin y agregados con <code>addView</code>.</td></tr>
+  <tr><td><b>Activities con ViewBinding</b></td><td>Pantallas de temas.</td><td>Acceso seguro a las vistas (si un id cambia, el error aparece al compilar).</td><td><code>viewBinding = true</code> en Gradle; <code>enlace = Vista…Binding.inflate(layoutInflater)</code>.</td></tr>
+  <tr><td>ConstraintLayout (recomendado a futuro)</td><td>Hoy no se usa, aunque la dependencia está incluida.</td><td>Conviene para pantallas con elementos superpuestos o alineados entre sí (por ejemplo, un panel de progreso con Firebase). Para listas verticales, LinearLayout es más simple.</td><td>—</td></tr>
+</table>
+
+<!-- ===================================================== -->
+<h2 id="paleta">6. Paleta de colores</h2>
+<h3>6.1 Paleta institucional (este documento)</h3>
+<p>Este documento usa la paleta de la institución: rojos oscuros, ladrillo, beige y grises.</p>
+<div class="muestras">
+  <div class="muestra"><div style="background:#5E1716"></div><div><b>Vino</b><br>#5E1716</div></div>
+  <div class="muestra"><div style="background:#7F1F1D"></div><div><b>Rojo oscuro</b><br>#7F1F1D</div></div>
+  <div class="muestra"><div style="background:#A9472F"></div><div><b>Ladrillo</b><br>#A9472F</div></div>
+  <div class="muestra"><div style="background:#C9785F"></div><div><b>Ladrillo claro</b><br>#C9785F</div></div>
+  <div class="muestra"><div style="background:#F2E8D8"></div><div><b>Beige</b><br>#F2E8D8</div></div>
+  <div class="muestra"><div style="background:#E6D6BD"></div><div><b>Beige medio</b><br>#E6D6BD</div></div>
+  <div class="muestra"><div style="background:#514C48"></div><div><b>Gris oscuro</b><br>#514C48</div></div>
+  <div class="muestra"><div style="background:#C9C2BA"></div><div><b>Gris claro</b><br>#C9C2BA</div></div>
+</div>
+
+<h3>6.2 Colores que usa hoy la aplicación</h3>
+<div class="alerta"><b>Diferencia importante:</b> la aplicación <b>todavía no usa</b> la paleta institucional. Sus colores, definidos directamente en los XML y en <code>PlanoSonoroView</code>, son estos:</div>
+<div class="muestras">
+  <div class="muestra"><div style="background:#262626"></div><div><b>Fondo</b><br>#262626</div></div>
+  <div class="muestra"><div style="background:#353535"></div><div><b>Divisores, cuadrícula</b><br>#353535</div></div>
+  <div class="muestra"><div style="background:#1C1C1C"></div><div><b>Fondo del plano</b><br>#1C1C1C</div></div>
+  <div class="muestra"><div style="background:#4F4F4F"></div><div><b>Teclas, campo</b><br>#4F4F4F</div></div>
+  <div class="muestra"><div style="background:#D0D0D0"></div><div><b>Texto secundario</b><br>#D0D0D0</div></div>
+  <div class="muestra"><div style="background:#FFB905"></div><div><b>Amarillo (acción, curva)</b><br>#FFB905</div></div>
+  <div class="muestra"><div style="background:#EE03FF"></div><div><b>Magenta (activo, recorrido)</b><br>#EE03FF</div></div>
+</div>
+<p><b>Por qué funcionan para baja visión:</b> el fondo oscuro reduce el deslumbramiento, y el amarillo sobre gris oscuro es de las combinaciones más fáciles de distinguir.</p>
+<table>
+  <tr><th>Combinación</th><th>Contraste</th><th>Resultado (WCAG 2.1)</th></tr>
+  <tr><td>Blanco sobre #262626 (títulos)</td><td>≈ 15.9 : 1</td><td>AAA</td></tr>
+  <tr><td>#D0D0D0 sobre #262626 (texto)</td><td>≈ 9.8 : 1</td><td>AAA</td></tr>
+  <tr><td>#262626 sobre amarillo #FFB905 (botones)</td><td>≈ 8.8 : 1</td><td>AAA</td></tr>
+  <tr><td>Negro sobre magenta #EE03FF (botones morados)</td><td>≈ 6.1 : 1</td><td>AA (AAA en texto grande)</td></tr>
+</table>
+<p class="nota">Durante esta revisión se corrigió el botón "Escuchar tonos de referencia": tenía texto blanco sobre magenta (≈ 3.4 : 1, insuficiente) y ahora usa negro (≈ 6.1 : 1).</p>
+<h4>Cómo migrar a la paleta institucional</h4>
+<p>Si se quiere que la app use los colores de la institución, se recomienda: (1) declarar los colores en <code>res/values/colors.xml</code> con nombres en español (<code>rojo_oscuro</code>, <code>ladrillo</code>, <code>beige</code>, <code>gris_oscuro</code>…); (2) reemplazar los valores fijos de los XML por <code>@color/…</code>; (3) volver a medir el contraste. Por ejemplo, beige #F2E8D8 sobre rojo oscuro #7F1F1D da ≈ 10 : 1, pero ladrillo #A9472F sobre gris #262626 queda por debajo de 4.5 : 1 y no serviría para texto. Este cambio no se hizo en el código porque modifica toda la identidad visual de la app y debe aprobarlo el equipo.</p>
+
+<!-- ===================================================== -->
+<h2 id="wireframes">7. Wireframes</h2>
+<p>Wireframes de baja fidelidad (en grises) de cada tipo de pantalla, sobre un teléfono de referencia de <b>360 × 740 dp</b>. Las cotas en color ladrillo son las <b>medidas reales del XML</b>. Las posiciones verticales son aproximadas, porque dependen del largo de cada texto. La línea roja punteada marca dónde termina la pantalla visible: lo que está debajo se alcanza desplazando.</p>
+
+<div class="wf-rejilla">
+
+<div class="figura">
+<svg viewBox="0 0 520 760" role="img" aria-labelledby="wf1-t">
+  <title id="wf1-t">Wireframe de la estructura principal</title>
+  <rect x="10" y="10" width="360" height="740" rx="18" class="wf-tel"/>
+  <rect x="26" y="26" width="328" height="100" class="wf-bloque"/>
+  <rect x="46" y="46" width="70" height="60" rx="30" class="wf-boton"/>
+  <rect x="155" y="46" width="70" height="60" rx="30" class="wf-boton" style="fill:#857E77"/>
+  <rect x="264" y="46" width="70" height="60" rx="30" class="wf-boton"/>
+  <text x="81" y="80" text-anchor="middle" class="t-chico">Inicio</text>
+  <text x="190" y="80" text-anchor="middle" class="t-chico" style="fill:#fff">Aprend.</text>
+  <text x="299" y="80" text-anchor="middle" class="t-chico">Graficar</text>
+  <rect x="26" y="126" width="328" height="3" class="wf-oscuro"/>
+  <rect x="26" y="129" width="328" height="605" class="wf-bloque" style="fill:#F5F3F0"/>
+  <text x="190" y="420" text-anchor="middle" class="t-b">contenedorPrincipal</text>
+  <text x="190" y="438" text-anchor="middle" class="t-chico">FrameLayout · peso 1</text>
+  <text x="190" y="456" text-anchor="middle" class="t-chico">aquí se inflan Inicio / Aprendizaje / Graficar</text>
+  <path d="M380,26 L380,126" class="cota"/><path d="M375,26 L385,26 M375,126 L385,126" class="cota"/>
+  <text x="390" y="80" class="cota-t">100dp barra de menú</text>
+  <path d="M380,46 L380,106" class="cota" transform="translate(70,0)"/>
+  <text x="390" y="100" class="cota-t">botones: 60dp de alto,</text>
+  <text x="390" y="114" class="cota-t">ancho ≈ 70dp (peso)</text>
+  <text x="390" y="132" class="cota-t">divisor 3dp #353535</text>
+  <path d="M10,18 L26,18" class="cota"/><text x="30" y="21" class="cota-t" style="font-size:9px">16dp</text>
+  <text x="390" y="20" class="cota-t">margen general 16dp</text>
+  <text x="390" y="160" class="cota-t">padding lateral de la</text>
+  <text x="390" y="174" class="cota-t">barra: 20dp</text>
+</svg>
+<div class="pie">Figura 3. <code>vista_principal.xml</code>. El botón activo se pinta en amarillo; los demás, en magenta.</div>
+</div>
+
+<div class="figura">
+<svg viewBox="0 0 520 760" role="img" aria-labelledby="wf2-t">
+  <title id="wf2-t">Wireframe de Aprendizaje</title>
+  <rect x="10" y="10" width="360" height="740" rx="18" class="wf-tel"/>
+  <rect x="26" y="26" width="328" height="100" class="wf-bloque"/>
+  <rect x="26" y="126" width="328" height="3" class="wf-oscuro"/>
+  <rect x="56" y="159" width="190" height="40" rx="3" class="wf-oscuro"/>
+  <text x="62" y="186" class="t-claro" style="font-size:20px">Aprendizaje</text>
+  <rect x="56" y="229" width="200" height="20" rx="3" class="wf-texto"/>
+  <rect x="56" y="264" width="268" height="55" rx="27" class="wf-boton"/>
+  <text x="190" y="296" text-anchor="middle" class="t-chico">El plano cartesiano</text>
+  <rect x="56" y="359" width="120" height="20" rx="3" class="wf-texto"/>
+  <rect x="56" y="394" width="268" height="55" rx="27" class="wf-boton"/>
+  <text x="190" y="426" text-anchor="middle" class="t-chico">¿Qué es una función?</text>
+  <rect x="56" y="464" width="268" height="55" rx="27" class="wf-boton"/>
+  <text x="190" y="496" text-anchor="middle" class="t-chico">Función lineal</text>
+  <rect x="56" y="534" width="268" height="55" rx="27" class="wf-boton"/>
+  <text x="190" y="566" text-anchor="middle" class="t-chico">Función cuadrática</text>
+  <rect x="56" y="604" width="268" height="55" rx="27" class="wf-boton"/>
+  <text x="190" y="636" text-anchor="middle" class="t-chico">Función cúbica</text>
+  <rect x="56" y="674" width="268" height="55" rx="27" class="wf-boton"/>
+  <text x="190" y="706" text-anchor="middle" class="t-chico">… (desplazar)</text>
+  <path d="M10,734 L370,734" class="pliegue"/>
+  <path d="M26,150 L56,150" class="cota"/><text x="28" y="146" class="cota-t" style="font-size:9px">30dp</text>
+  <text x="380" y="184" class="cota-t">título 40sp, negrita</text>
+  <text x="380" y="244" class="cota-t">título de tema 24sp</text>
+  <text x="380" y="258" class="cota-t">(heading para TalkBack)</text>
+  <text x="380" y="296" class="cota-t">botón: ancho completo,</text>
+  <text x="380" y="310" class="cota-t">mín. 55dp, texto 20sp</text>
+  <text x="380" y="372" class="cota-t">40dp entre temas</text>
+  <text x="380" y="460" class="cota-t">15dp entre botones</text>
+  <text x="380" y="760" class="cota-t" style="fill:#7F1F1D">límite de pantalla</text>
+</svg>
+<div class="pie">Figura 4. <code>vista_aprendizaje.xml</code> dentro del contenedor principal.</div>
+</div>
+
+<div class="figura">
+<svg viewBox="0 0 520 1180" role="img" aria-labelledby="wf3-t">
+  <title id="wf3-t">Wireframe de una pantalla de tema de función</title>
+  <rect x="10" y="10" width="360" height="1160" rx="18" class="wf-tel"/>
+  <rect x="40" y="40" width="230" height="40" rx="3" class="wf-oscuro"/>
+  <text x="46" y="67" class="t-claro" style="font-size:20px">Función lineal</text>
+  <rect x="40" y="110" width="260" height="24" rx="3" style="fill:#C9C2BA"/>
+  <text x="46" y="127" class="t-chico">Forma general (22sp, amarillo)</text>
+  <rect x="40" y="164" width="140" height="20" rx="3" class="wf-texto"/>
+  <rect x="52" y="194" width="248" height="14" rx="3" class="wf-bloque"/>
+  <rect x="52" y="216" width="230" height="14" rx="3" class="wf-bloque"/>
+  <rect x="40" y="260" width="180" height="20" rx="3" class="wf-texto"/>
+  <rect x="40" y="290" width="300" height="70" rx="3" class="wf-bloque"/>
+  <text x="190" y="330" text-anchor="middle" class="t-chico">textos explicativos 20sp</text>
+  <rect x="40" y="390" width="300" height="60" rx="3" class="wf-bloque"/>
+  <rect x="40" y="480" width="300" height="3" class="wf-oscuro"/>
+  <rect x="40" y="513" width="190" height="20" rx="3" class="wf-texto"/>
+  <rect x="40" y="545" width="300" height="80" rx="3" class="wf-bloque"/>
+  <text x="190" y="590" text-anchor="middle" class="t-chico">cómo interpretar el sonido</text>
+  <path d="M10,750 L370,750" class="pliegue"/>
+  <rect x="40" y="645" width="300" height="260" rx="16" style="fill:#2D2A28"/>
+  <path d="M50,775 L330,775 M170,655 L170,895" stroke="#C9C2BA" stroke-width="2"/>
+  <path d="M60,880 L320,670" stroke="#FFB905" stroke-width="3"/>
+  <circle cx="170" cy="785" r="8" fill="#EE03FF" stroke="#fff" stroke-width="2"/>
+  <text x="190" y="700" text-anchor="middle" class="t-chico" style="fill:#ECE8E3">PlanoSonoroView</text>
+  <rect x="40" y="925" width="200" height="55" rx="27" class="wf-boton"/>
+  <text x="140" y="957" text-anchor="middle" class="t-chico">Reproducir sonido ▶</text>
+  <rect x="40" y="995" width="270" height="55" rx="27" class="wf-boton" style="fill:#857E77"/>
+  <text x="175" y="1027" text-anchor="middle" class="t-chico" style="fill:#fff">Escuchar tonos de referencia</text>
+  <rect x="40" y="1090" width="150" height="55" rx="27" class="wf-boton" style="fill:#857E77"/>
+  <text x="115" y="1122" text-anchor="middle" class="t-chico" style="fill:#fff">← Regresar</text>
+  <text x="380" y="1112" class="cota-t">55dp, margen sup. 40dp,</text>
+  <text x="380" y="1126" class="cota-t">abajo a la izquierda</text>
+  <path d="M10,32 L40,32" class="cota"/><text x="14" y="28" class="cota-t" style="font-size:9px">30dp</text>
+  <text x="380" y="67" class="cota-t">título 40sp</text>
+  <text x="380" y="100" class="cota-t">30dp</text>
+  <text x="380" y="127" class="cota-t">forma general 22sp</text>
+  <text x="380" y="200" class="cota-t">listas con sangría</text>
+  <text x="380" y="214" class="cota-t">12dp, separación 10dp</text>
+  <text x="380" y="485" class="cota-t">divisor 3dp,</text>
+  <text x="380" y="499" class="cota-t">margen 30dp arriba/abajo</text>
+  <path d="M352,645 L352,905" class="cota"/><path d="M347,645 L357,645 M347,905 L357,905" class="cota"/>
+  <text x="380" y="820" class="cota-t">plano: 260dp de alto,</text>
+  <text x="380" y="834" class="cota-t">ancho completo,</text>
+  <text x="380" y="848" class="cota-t">margen superior 20dp</text>
+  <text x="380" y="957" class="cota-t">55dp, margen 15dp</text>
+  <text x="380" y="1027" class="cota-t">mín. 55dp, margen 15dp</text>
+  <text x="380" y="755" class="cota-t" style="fill:#7F1F1D">límite de pantalla</text>
+</svg>
+<div class="pie">Figura 5. Pantalla de tema (por ejemplo, <code>vista_funcion_lineal.xml</code>). Es una Activity a pantalla completa, sin menú; termina con el botón "Regresar".</div>
+</div>
+
+<div class="figura">
+<svg viewBox="0 0 520 820" role="img" aria-labelledby="wf4-t">
+  <title id="wf4-t">Wireframe de la graficadora</title>
+  <rect x="10" y="10" width="360" height="800" rx="18" class="wf-tel"/>
+  <rect x="26" y="26" width="328" height="100" class="wf-bloque"/>
+  <rect x="26" y="126" width="328" height="3" class="wf-oscuro"/>
+  <rect x="56" y="159" width="200" height="40" rx="3" class="wf-oscuro"/>
+  <text x="62" y="186" class="t-claro" style="font-size:20px">Graficación</text>
+  <rect x="56" y="229" width="268" height="350" class="wf-bloque" style="fill:#fff"/>
+  <path d="M66,404 L314,404 M190,239 L190,569" stroke="#C9C2BA"/>
+  <path d="M90,540 Q190,250 290,540" stroke="#857E77" stroke-width="2" fill="none"/>
+  <rect x="62" y="235" width="256" height="338" fill="none" stroke="#7F1F1D" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="190" y="260" text-anchor="middle" class="t-chico">WebView · GeoGebra (solo la gráfica)</text>
+  <text x="190" y="562" text-anchor="middle" class="t-chico" style="fill:#7F1F1D">CapaSonora encima (transparente)</text>
+  <path d="M245,272 L245,545" stroke="#7F1F1D" stroke-width="1.5"/>
+  <circle cx="245" cy="439" r="7" fill="#7F1F1D"/>
+  <rect x="56" y="599" width="268" height="48" class="wf-bloque"/>
+  <text x="66" y="628" class="t-chico">Explorar con el dedo</text>
+  <rect x="270" y="613" width="40" height="20" rx="10" class="wf-oscuro"/>
+  <circle cx="300" cy="623" r="8" fill="#fff"/>
+  <rect x="56" y="679" width="268" height="40" class="wf-bloque"/>
+  <text x="190" y="704" text-anchor="middle" class="t-chico">Campo de función (20sp)</text>
+  <rect x="56" y="749" width="124" height="50" rx="25" class="wf-boton"/>
+  <rect x="200" y="749" width="124" height="50" rx="25" class="wf-boton" style="fill:#857E77"/>
+  <text x="118" y="778" text-anchor="middle" class="t-chico">Graficar</text>
+  <text x="262" y="778" text-anchor="middle" class="t-chico" style="fill:#fff">Reproducir</text>
+  <path d="M10,794 L370,794" class="pliegue"/>
+  <path d="M340,229 L340,579" class="cota"/><path d="M335,229 L345,229 M335,579 L345,579" class="cota"/>
+  <text x="380" y="398" class="cota-t">FrameLayout 350dp:</text>
+  <text x="380" y="412" class="cota-t">WebView + capa sonora</text>
+  <text x="380" y="593" class="cota-t">20dp</text>
+  <text x="380" y="628" class="cota-t">interruptor, mín. 48dp</text>
+  <text x="380" y="666" class="cota-t">30dp</text>
+  <text x="380" y="704" class="cota-t">EditText, padding inf. 15dp</text>
+  <text x="380" y="736" class="cota-t">30dp</text>
+  <text x="380" y="772" class="cota-t">botones 50dp, peso 1:1,</text>
+  <text x="380" y="786" class="cota-t">10dp a cada lado del centro</text>
+  <text x="380" y="816" class="cota-t" style="fill:#7F1F1D">debajo: estado, teclado</text>
+</svg>
+<div class="pie">Figura 6. <code>vista_grafica.xml</code>. GeoGebra y la capa sonora (línea punteada) comparten el mismo <code>FrameLayout</code>; la línea y el punto rojos son lo que dibuja la capa bajo el dedo. Debajo de los botones se agregan por código el mensaje de estado, el teclado y los parámetros.</div>
+</div>
+
+<div class="figura">
+<svg viewBox="0 0 520 430" role="img" aria-labelledby="wf5-t">
+  <title id="wf5-t">Wireframe del teclado matemático</title>
+  <rect x="10" y="10" width="360" height="410" rx="12" class="wf-tel"/>
+  <g>
+    <rect x="30" y="30" width="100" height="44" rx="22" class="wf-boton"/>
+    <rect x="140" y="30" width="100" height="44" rx="22" class="wf-boton" style="fill:#857E77"/>
+    <rect x="250" y="30" width="100" height="44" rx="22" class="wf-boton" style="fill:#857E77"/>
+    <text x="80" y="57" text-anchor="middle" class="t-chico">123</text>
+    <text x="190" y="57" text-anchor="middle" class="t-chico" style="fill:#fff">f(x)</text>
+    <text x="300" y="57" text-anchor="middle" class="t-chico" style="fill:#fff">abc</text>
+  </g>
+  <g fill="#857E77">
+    <rect x="30" y="90" width="50" height="50" rx="12"/><rect x="84" y="90" width="50" height="50" rx="12"/><rect x="138" y="90" width="50" height="50" rx="12"/><rect x="192" y="90" width="50" height="50" rx="12"/><rect x="246" y="90" width="50" height="50" rx="12"/><rect x="300" y="90" width="50" height="50" rx="12" fill="#C9C2BA"/>
+    <rect x="30" y="146" width="50" height="50" rx="12"/><rect x="84" y="146" width="50" height="50" rx="12"/><rect x="138" y="146" width="50" height="50" rx="12"/><rect x="192" y="146" width="50" height="50" rx="12"/><rect x="246" y="146" width="50" height="50" rx="12"/><rect x="300" y="146" width="50" height="50" rx="12" fill="#C9C2BA"/>
+    <rect x="30" y="202" width="50" height="50" rx="12" fill="#C9C2BA"/><rect x="84" y="202" width="50" height="50" rx="12" fill="#C9C2BA"/><rect x="138" y="202" width="50" height="50" rx="12"/><rect x="192" y="202" width="50" height="50" rx="12"/><rect x="246" y="202" width="50" height="50" rx="12"/><rect x="300" y="202" width="50" height="50" rx="12" fill="#C9C2BA"/>
+    <rect x="30" y="258" width="50" height="50" rx="12" fill="#C9C2BA"/><rect x="84" y="258" width="50" height="50" rx="12" fill="#C9C2BA"/><rect x="138" y="258" width="50" height="50" rx="12"/><rect x="192" y="258" width="50" height="50" rx="12"/><rect x="246" y="258" width="50" height="50" rx="12"/><rect x="300" y="258" width="50" height="50" rx="12" fill="#C9C2BA"/>
+    <rect x="30" y="314" width="50" height="50" rx="12" fill="#C9C2BA"/><rect x="84" y="314" width="50" height="50" rx="12" fill="#C9C2BA"/><rect x="138" y="314" width="50" height="50" rx="12" fill="#514C48"/><rect x="192" y="314" width="50" height="50" rx="12" fill="#514C48"/><rect x="246" y="314" width="50" height="50" rx="12" fill="#514C48"/><rect x="300" y="314" width="50" height="50" rx="12" fill="#514C48"/>
+  </g>
+  <text x="380" y="57" class="cota-t">pestañas 44dp</text>
+  <text x="380" y="118" class="cota-t">teclas 50dp de alto,</text>
+  <text x="380" y="132" class="cota-t">6 por fila (peso 1),</text>
+  <text x="380" y="146" class="cota-t">margen 3dp, radio 12dp</text>
+  <text x="380" y="190" class="cota-t">gris: números y letras</text>
+  <text x="380" y="204" class="cota-t">claro: operadores (magenta)</text>
+  <text x="380" y="218" class="cota-t">oscuro: especiales (amarillo)</text>
+  <text x="380" y="344" class="cota-t">← → ⌫ OK</text>
+</svg>
+<div class="pie">Figura 7. Teclado matemático (página 123). Cada tecla tiene una descripción hablada, por ejemplo "abre paréntesis".</div>
+</div>
+
+<div class="figura">
+<svg viewBox="0 0 520 430" role="img" aria-labelledby="wf6-t">
+  <title id="wf6-t">Wireframe del plano cartesiano partes 1 y 2</title>
+  <rect x="10" y="10" width="240" height="410" rx="14" class="wf-tel"/>
+  <rect x="30" y="50" width="170" height="28" rx="3" class="wf-oscuro"/>
+  <rect x="30" y="100" width="200" height="14" rx="3" class="wf-texto"/>
+  <rect x="30" y="122" width="200" height="90" rx="3" class="wf-bloque"/>
+  <rect x="30" y="222" width="200" height="60" rx="3" class="wf-bloque"/>
+  <rect x="36" y="330" width="88" height="40" rx="20" class="wf-boton" style="fill:#857E77"/>
+  <text x="80" y="355" text-anchor="middle" class="t-chico" style="fill:#fff">← Regresar</text>
+  <rect x="136" y="330" width="88" height="40" rx="20" class="wf-boton"/>
+  <text x="180" y="355" text-anchor="middle" class="t-chico">Siguiente</text>
+  <text x="130" y="400" text-anchor="middle" class="t-chico">Parte 1 · Regresar | Siguiente</text>
+
+  <rect x="270" y="10" width="240" height="410" rx="14" class="wf-tel"/>
+  <rect x="290" y="50" width="170" height="28" rx="3" class="wf-oscuro"/>
+  <rect x="290" y="100" width="200" height="14" rx="3" class="wf-texto"/>
+  <rect x="302" y="122" width="188" height="20" rx="3" class="wf-bloque"/>
+  <rect x="302" y="150" width="188" height="20" rx="3" class="wf-bloque"/>
+  <rect x="302" y="178" width="188" height="20" rx="3" class="wf-bloque"/>
+  <rect x="302" y="206" width="188" height="20" rx="3" class="wf-bloque"/>
+  <rect x="296" y="330" width="88" height="40" rx="20" class="wf-boton" style="fill:#857E77"/>
+  <text x="340" y="355" text-anchor="middle" class="t-chico" style="fill:#fff">Anterior</text>
+  <rect x="396" y="330" width="88" height="40" rx="20" class="wf-boton" style="fill:#857E77"/>
+  <text x="440" y="355" text-anchor="middle" class="t-chico" style="fill:#fff">← Regresar</text>
+  <text x="390" y="400" text-anchor="middle" class="t-chico">Parte 2 · Anterior | Regresar</text>
+</svg>
+<div class="pie">Figura 8. Plano cartesiano. Cada parte termina con una fila de dos botones de igual ancho (peso 1): 55dp de alto, margen superior 40dp, 20dp de separación entre ellos y 8dp extra en cada orilla. "Regresar" ocupa el lado que queda libre: a la izquierda de "Siguiente" en la parte 1 y a la derecha de "Anterior" en la parte 2.</div>
+</div>
+
+</div>
+
+<!-- ===================================================== -->
+<h2 id="medidas">8. Medidas de cada elemento y su justificación</h2>
+<p>Se usan <b>dp</b> (píxeles independientes de la densidad) para tamaños y <b>sp</b> para texto. Los dp hacen que un botón mida lo mismo físicamente en cualquier teléfono. Los sp, además, crecen cuando la persona aumenta el tamaño de fuente en Ajustes, algo muy común en baja visión.</p>
+<table>
+  <tr><th>Elemento</th><th>Medida</th><th>Por qué esa medida</th></tr>
+  <tr><td>Margen general de la pantalla principal</td><td>16dp</td><td>Es el margen estándar de Material Design: separa el contenido del borde curvo de muchos teléfonos y de los gestos del sistema.</td></tr>
+  <tr><td>Barra de menú</td><td>100dp de alto, padding lateral 20dp</td><td>Deja espacio para botones de 60dp con aire arriba y abajo. Al estar siempre arriba, es el primer elemento que encuentra TalkBack y la persona memoriza su lugar.</td></tr>
+  <tr><td>Botones del menú</td><td>60dp de alto, ≈ 70dp de ancho (peso 1), ícono de 40dp, padding 14dp</td><td>Superan con margen el mínimo de 48 × 48dp de Android para objetivos táctiles. Los pesos los reparten igual en cualquier ancho. El orden Inicio → Aprendizaje → Graficar sigue el recorrido de aprendizaje.</td></tr>
+  <tr><td>Divisor del menú</td><td>3dp, #353535</td><td>Separa visualmente el menú del contenido sin competir con él. No es enfocable, así que TalkBack no lo lee.</td></tr>
+  <tr><td>Padding del contenido</td><td>30dp</td><td>Margen amplio para que el texto grande no quede pegado a los bordes y para que el pulgar no toque el borde al desplazarse.</td></tr>
+  <tr><td>Título de pantalla</td><td>40sp, negrita, blanco</td><td>Identifica la pantalla aun con visión muy reducida y se marca como encabezado de accesibilidad para saltar a él con TalkBack.</td></tr>
+  <tr><td>Título de tema / subtítulo</td><td>24sp (Aprendizaje) / 20sp negrita</td><td>Jerarquía clara: título → tema → texto. Cada uno es un encabezado de accesibilidad.</td></tr>
+  <tr><td>Forma general de la función</td><td>22sp, negrita, amarillo #FFB905</td><td>Es la información más importante del tema, así que se destaca con color y tamaño.</td></tr>
+  <tr><td>Texto de cuerpo</td><td>20sp, #D0D0D0, interlineado +4dp</td><td>Más grande que el 14 a 16sp habitual, pensado para baja visión. El gris claro reduce el deslumbramiento frente al blanco puro sin perder contraste (≈ 9.8 : 1).</td></tr>
+  <tr><td>Listas (parámetros, notación)</td><td>sangría 12dp, separación 10dp</td><td>La sangría muestra visualmente que el elemento pertenece al título anterior.</td></tr>
+  <tr><td>Separadores (Space)</td><td>15 / 30 / 35 / 40dp</td><td>15dp entre botones del mismo grupo; 30 a 35dp entre bloques; 40dp entre temas distintos. Entre más distinto es el contenido, más espacio lo separa.</td></tr>
+  <tr><td>Botones de Aprendizaje</td><td>ancho completo, mín. 55dp de alto, texto 20sp</td><td>El ancho completo es el objetivo táctil más fácil de encontrar al tacto. El alto mínimo permite que un título de dos líneas crezca sin cortarse.</td></tr>
+  <tr><td>Botón "Reproducir sonido"</td><td>55dp de alto, ícono de 24dp que cambia: ▶ (reproducir) / ■ (detener)</td><td>Es la acción principal del tema. Va justo debajo del plano, para que al terminar de oír la explicación el siguiente elemento sea la acción. Mientras suena, el texto dice "Detener sonido" y el ícono cambia a un cuadro, así el estado se entiende por la palabra y por la forma.</td></tr>
+  <tr><td>Botón "Regresar" (pantallas de tema)</td><td>55dp de alto, texto 20sp, flecha de 24dp, margen superior 40dp, abajo a la izquierda</td><td>Es lo último de la pantalla: al terminar de leer o escuchar, el siguiente paso natural es salir. Va a la izquierda porque la flecha apunta hacia atrás y porque es el mismo lado que ocupa en la fila del plano cartesiano. Texto visible corto ("Regresar"); TalkBack lee "Regresar a Aprendizaje" (<code>contentDescription</code>), para que se sepa a dónde lleva.</td></tr>
+  <tr><td>Fila de navegación (plano cartesiano)</td><td>2 botones de igual ancho (peso 1), 20dp entre ellos, 8dp extra en cada orilla, relleno interno 6 a 12dp</td><td>Los dos botones pesan lo mismo, así que miden igual. La separación de 20dp evita tocar el equivocado y los 8dp extra alejan el botón derecho de la orilla curva de la pantalla. El relleno se redujo para que "Regresar" quepa en una sola línea a 20sp.</td></tr>
+  <tr><td>Márgenes de las barras del sistema</td><td>padding del XML + altura de la barra de estado (arriba) y de navegación (abajo)</td><td>En Android 15 y 16 la app se dibuja de borde a borde. Sin este margen, el menú y los títulos quedaban debajo de la hora, y los últimos botones detrás de la barra de navegación. La altura de las barras la da el sistema en cada teléfono, así que no se escribe a mano.</td></tr>
+  <tr><td>Plano sonoro</td><td>ancho completo × 260dp, radio 16dp, margen interno 10dp</td><td>Da un recorrido horizontal amplio para explorar con el dedo y, en un teléfono típico, deja visible el botón de reproducir debajo. El margen interno evita que el borde del dedo active el borde del sistema.</td></tr>
+  <tr><td>Curva / recorrido / punto</td><td>3dp amarillo / 5dp magenta / círculo de 8dp con borde blanco de 2dp</td><td>El grosor y el borde blanco hacen visible el punto para quien conserva algo de visión.</td></tr>
+  <tr><td>Gráfica de GeoGebra (WebView + capa sonora)</td><td>350dp de alto, las dos vistas del mismo tamaño</td><td>Es suficiente para ver la curva, explorarla con el dedo y hacer zoom, y deja el campo de función visible al desplazar. La capa mide exactamente lo mismo que GeoGebra para que cada píxel bajo el dedo corresponda al mismo punto de la gráfica.</td></tr>
+  <tr><td>Ventana inicial de GeoGebra</td><td>X de −10 a 10; Y de −10·(alto ÷ ancho) a +10·(alto ÷ ancho), escala 1 : 1</td><td>Con la misma escala en los dos ejes, las formas se ven como son (un círculo es redondo, una pendiente de 1 forma 45°). X conserva el rango de −10 a 10 que se usa en clase, y Y aprovecha todo el alto del recuadro (≈ ±13 en un teléfono vertical).</td></tr>
+  <tr><td>Interruptor "Explorar con el dedo"</td><td>ancho completo, mín. 48dp de alto, texto 20sp negrita; 20dp arriba y 30dp abajo</td><td>Va justo debajo de la gráfica porque controla lo que hace el dedo sobre ella. Ocupa todo el ancho para que sea fácil de encontrar y tocar; 48dp es el mínimo táctil de Android. Pulgar amarillo cuando está encendido y gris cuando está apagado.</td></tr>
+  <tr><td>Línea y punto de la capa sonora</td><td>línea de 2dp gris semitransparente; círculo magenta de 8dp con borde blanco de 2dp</td><td>Las mismas medidas que el punto de los temas, para que quien acompaña viendo sepa qué punto se está escuchando. En curvas con varias ramas se dibuja un punto por rama.</td></tr>
+  <tr><td>Botones Graficar / Reproducir</td><td>50dp, peso 1 : 1, 10dp de separación</td><td>Dos acciones del mismo nivel, una al lado de la otra. La separación evita tocar la equivocada.</td></tr>
+  <tr><td>Teclas del teclado</td><td>50dp de alto, 6 por fila, margen 3dp, radio 12dp</td><td>Seis columnas caben en 360dp manteniendo cada tecla cerca de 48dp de ancho. El color agrupa por tipo: números, operadores y acciones.</td></tr>
+  <tr><td>Esquinas de botones</td><td>radio 50dp (píldora)</td><td>La forma redondeada distingue los botones de los bloques de texto rectangulares.</td></tr>
+</table>
+<h3>Lógica de la posición de cada segmento</h3>
+<ol>
+  <li><b>Menú arriba, contenido abajo.</b> El menú es fijo y siempre es lo primero que lee TalkBack, así la persona sabe dónde está.</li>
+  <li><b>Título → explicación → ejemplo → escuchar.</b> Cada tema sigue el orden de una clase: primero qué es, luego cómo se escribe, después un ejemplo y al final la experiencia con sonido. El plano va <b>después</b> de la explicación de cómo interpretar el sonido.</li>
+  <li><b>Acción principal debajo del plano; acción secundaria después.</b> "Reproducir sonido" va antes que "Escuchar tonos de referencia" porque se usa mucho más. Las referencias suenan solas la primera vez.</li>
+  <li><b>Navegación al final.</b> Todas las pantallas de tema terminan con "Regresar": quien recorre la pantalla con TalkBack la encuentra justo al acabar el contenido. En el plano cartesiano, avanzar va a la derecha ("Siguiente") y volver a la izquierda ("Anterior", "Regresar"), siguiendo el sentido de lectura; en la parte 2, como no hay "Siguiente", "Regresar" toma el lado derecho que queda libre.</li>
+  <li><b>Graficadora: ver → escribir → actuar → ajustar.</b> GeoGebra arriba, con el interruptor de exploración pegado debajo porque cambia lo que hace el dedo sobre ella; después el campo, los botones, el teclado justo debajo del campo y, al final, los parámetros que aparecen según la función.</li>
+</ol>
+
+<!-- ===================================================== -->
+<h2 id="sonido">9. Medidas del sonido, la voz y la vibración</h2>
+<p>En esta app, el sonido y el tiempo también son elementos de diseño, así que tienen medidas como cualquier botón.</p>
+<table>
+  <tr><th>Parámetro</th><th>Valor</th><th>Por qué</th></tr>
+  <tr><td>Rango de tono</td><td>220 Hz (abajo) a 880 Hz (arriba), 2 octavas</td><td>Es una zona cómoda para el oído y bien reproducida por bocinas de teléfono. Dos octavas bastan para distinguir alturas sin llegar a tonos chillones.</td></tr>
+  <tr><td>Escala del tono</td><td>exponencial (octavas)</td><td>El oído percibe la altura de forma logarítmica: subir lo mismo en la gráfica se oye como subir lo mismo en tono.</td></tr>
+  <tr><td>Duración del recorrido</td><td>6 segundos</td><td>Lo bastante lento para seguir los cambios, lo bastante corto para memorizar la forma completa.</td></tr>
+  <tr><td>Paneo estéreo</td><td>del 8 % al 92 % (izquierda → derecha)</td><td>Representa el eje X en el espacio. Nunca suena al 100 % en un solo oído, para no perder la referencia si una bocina es más débil.</td></tr>
+  <tr><td>Marca del eje Y</td><td>"tic" de 1200 Hz, 25 ms + dos toques de vibración (20 ms)</td><td>Un sonido corto y percusivo que se distingue del tono de la curva.</td></tr>
+  <tr><td>Marca del eje X</td><td>"bip" de 1760 Hz, 70 ms + vibración firme (60 ms)</td><td>Los cruces con el eje X (ceros de la función) son conceptos clave, así que su marca es más larga y notoria.</td></tr>
+  <tr><td>Suavizado</td><td>4 ms (recorrido), 6 a 10 ms (exploración), fundidos de 20 ms</td><td>Evita "clics" al aparecer o desaparecer el sonido y hace los cambios de tono fluidos.</td></tr>
+  <tr><td>Saltos bruscos</td><td>cambio mayor al 2 % del rango entre muestras = silencio</td><td>Representa asíntotas o discontinuidades (por ejemplo, en la tangente) como silencio en lugar de un barrido falso.</td></tr>
+  <tr><td>Tonos de referencia</td><td>900 ms cada uno, 250 ms de pausa</td><td>Tiempo suficiente para fijar el tono en la memoria antes del siguiente.</td></tr>
+  <tr><td>Espera por TalkBack</td><td>1.5 s (100 ms sin TalkBack)</td><td>Da tiempo a que TalkBack termine de anunciar el botón antes de empezar a sonar.</td></tr>
+  <tr><td>Actualización visual y de vibración</td><td>cada 16 ms (≈ 60 por segundo)</td><td>Coincide con la frecuencia de pantalla y mantiene el punto sincronizado con el audio.</td></tr>
+  <tr><td>Varias ramas al explorar</td><td>hasta 4 voces; cada una con 0.5 ÷ número de ramas de volumen</td><td>Una voz por cada valor de y en esa x. Repartir el volumen evita que el sonido se sature cuando suenan varias a la vez.</td></tr>
+  <tr><td>Mapa de la graficadora para el tacto</td><td>300 columnas (<code>y = …</code>) o 120 (curvas implícitas); se rehace 250 ms después del último cambio</td><td>300 columnas dan un punto cada ≈ 2.7 px en el ancho de la gráfica, más fino de lo que distingue el dedo. Las curvas implícitas cuestan más de calcular (41 evaluaciones por columna), así que usan menos. La espera de 250 ms junta en un solo mapa los cambios seguidos al arrastrar un control o mover la vista. Medido en el teléfono: 40 a 70 ms (explícitas) y 0.5 a 0.7 s (círculo).</td></tr>
+  <tr><td>Salto que no cuenta como cruce (graficadora)</td><td>cambio mayor al 20 % del alto visible entre columnas</td><td>Evita que una asíntota (por ejemplo, de +9 a −9 en una tangente) suene como cruce del eje X.</td></tr>
+</table>
+
+<!-- ===================================================== -->
+<h2 id="recursos">10. Recursos y su origen</h2>
+<p>La aplicación <b>no usa archivos JPG, PNG ni ICO</b> propios. Todos los íconos son <b>vectores XML</b> (se ven nítidos en cualquier densidad y pesan muy poco) y todos los sonidos se <b>generan con código</b>.</p>
+<table>
+  <tr><th>Recurso</th><th>Tipo</th><th>Origen</th><th>Por qué</th></tr>
+  <tr><td><code>ico_inicio.xml</code></td><td>Vector 40dp, relleno #262626</td><td>Ícono "home" de Material Icons (Google, licencia Apache 2.0), importado con Vector Asset Studio de Android Studio.</td><td>Es el símbolo universal de inicio, reconocible para quien conserva algo de visión.</td></tr>
+  <tr><td><code>ico_aprendizaje.xml</code></td><td>Vector 40dp</td><td>Ícono de libro abierto de Material Symbols (Google, Apache 2.0), importado con Vector Asset Studio.</td><td>Representa la sección de estudio.</td></tr>
+  <tr><td><code>ico_grafica.xml</code></td><td>Vector 40dp</td><td>Ícono de gráfica de área de Material Symbols (Google, Apache 2.0).</td><td>Representa la graficadora.</td></tr>
+  <tr><td><code>ico_reproducir.xml</code></td><td>Vector 24dp</td><td>Ícono "play circle" de Material Icons (Google, Apache 2.0).</td><td>Símbolo universal de reproducir; acompaña al texto, no lo reemplaza.</td></tr>
+  <tr><td><code>ico_detener.xml</code></td><td>Vector 24dp</td><td>Ícono "stop circle" de Material Icons (Google, Apache 2.0).</td><td>Mismo círculo que el de reproducir, con un cuadro dentro: el botón cambia de ícono, no de forma. <code>PlanoSonoroView</code> lo coloca mientras suena.</td></tr>
+  <tr><td><code>ico_regresar.xml</code></td><td>Vector 24dp</td><td>Ícono "arrow back" de Material Icons (Google, Apache 2.0).</td><td>La flecha hacia la izquierda es el símbolo habitual de "volver" en Android.</td></tr>
+  <tr><td><code>btn_amarillo.xml</code>, <code>btn_morado.xml</code></td><td>Shape drawable</td><td>Creados por el equipo: rectángulo con radio de 50dp y color sólido.</td><td>Un fondo de botón reutilizable sin imágenes.</td></tr>
+  <tr><td><code>ic_launcher</code> (WebP por densidad + ícono adaptable XML)</td><td>Ícono de la app</td><td>Plantilla por defecto de Android Studio.</td><td><b>Pendiente:</b> reemplazar por un ícono propio con la identidad institucional.</td></tr>
+  <tr><td>Sonidos (tonos, tic, bip)</td><td>Síntesis PCM en tiempo real</td><td>Generados por <code>SonidoGrafica</code>, <code>TonoContinuo</code> (también al explorar la graficadora) y <code>MotorAccesibilidad</code>.</td><td>El sonido debe depender de cada función; no podría venir de archivos grabados.</td></tr>
+  <tr><td>Voz</td><td>Motor de TextToSpeech del teléfono</td><td>El que tenga instalado el dispositivo (normalmente, la voz de Google).</td><td>Habla cualquier texto, incluidos los resúmenes generados.</td></tr>
+  <tr><td>GeoGebra</td><td>Librería web (<code>deployggb.js</code> + motor <code>web3d</code>), 28 MB en <code>assets/geogebra/</code></td><td>Paquete oficial "GeoGebra Math Apps Bundle" 5.4.934, descargado de geogebra.org el 8 de noviembre de 2026. Se copiaron solo <code>deployggb.js</code>, <code>HTML5/5.0/web3d</code> y <code>HTML5/5.0/css</code>, y de los textos de interfaz solo español e inglés (de 49 MB a 28 MB). Su licencia va en <code>assets/geogebra/LICENCIA_GEOGEBRA.txt</code>.</td><td>Graficación completa sin programarla desde cero, y sin depender de internet. <b>Licencia:</b> GeoGebra permite copiarlo y distribuirlo solo con fines no comerciales; si la app se vende, hay que pedir permiso a GeoGebra.</td></tr>
+  <tr><td>Tipografía</td><td>Fuente del sistema (Roboto)</td><td>Incluida en Android.</td><td>Legible, respeta el tamaño de fuente elegido por la persona y no aumenta el peso de la app.</td></tr>
+  <tr><td>Textos educativos</td><td><code>strings.xml</code></td><td>Redactados por el equipo a partir del documento de contenidos.</td><td>Centralizar los textos facilita revisarlos y, a futuro, traducirlos o cargarlos desde Firebase.</td></tr>
+</table>
+
+<!-- ===================================================== -->
+<h2 id="tiempo">11. Tiempo de desarrollo</h2>
+<p>El repositorio no registra horas trabajadas. Este cálculo se basa en las fechas del historial de Git y en la sesión de trabajo del 8 de noviembre.</p>
+<div class="linea-tiempo">
+  <div><b>7 de octubre de 2026</b> · Proyecto inicial, maquetado de la aplicación y navegación con el menú.</div>
+  <div><b>8 de octubre</b> · Integración de la rama de interfaz (<i>front</i>).</div>
+  <div><b>24 de octubre</b> · Integración de GeoGebra con funciones de cualquier tipo y varias variables.</div>
+  <div><b>26 de octubre</b> · Graficadora y teclado matemático, página HTML, correcciones y unión de las ramas <i>backend</i> y <i>master</i>.</div>
+  <div><b>8 de noviembre</b> · Pantallas de los temas, navegación con Intents y ViewBinding, plano sonoro, exploración táctil, vibración, referencias, resumen hablado, renombrado de variables a español y esta documentación. Por la tarde: prueba en un teléfono real con y sin TalkBack, botón "Regresar" en los 12 temas, corrección de las barras del sistema e ícono de detener. Por la noche: exploración con el dedo en la graficadora (capa sonora sobre GeoGebra, interruptor, tono de varias voces), GeoGebra solo con la gráfica, ejes con la misma escala, GeoGebra dentro de la app para usarla sin internet, y pruebas en el teléfono (incluida una en modo avión). <i>(Cambios aún sin commit.)</i></div>
+</div>
+<table>
+  <tr><th>Indicador</th><th>Valor</th></tr>
+  <tr><td>Periodo de calendario</td><td>33 días (7 de octubre al 8 de noviembre de 2026)</td></tr>
+  <tr><td>Jornadas con trabajo registrado</td><td>5</td></tr>
+  <tr><td>Commits</td><td>9 en el historial</td></tr>
+  <tr><td>Tamaño actual</td><td>26 archivos Kotlin (≈ 3,075 líneas, más ≈ 115 de pruebas), 16 diseños XML, 1 página HTML/JavaScript; app de prueba (APK debug) de 17.2 MB, la mayor parte por GeoGebra</td></tr>
+</table>
+<p class="nota">Si el equipo lleva un registro propio de horas (bitácora, Trello, etc.), conviene agregarlo aquí para tener la cifra exacta.</p>
+
+<!-- ===================================================== -->
+<h2 id="integracion">12. Integración con Firebase y la aplicación web</h2>
+<div class="alerta"><b>Estado:</b> la integración con Firebase y con la aplicación web multiplataforma es un <b>requisito del proyecto que todavía no está implementado</b>. Esta sección describe cómo debe hacerse para que encaje con la arquitectura actual.</div>
+
+<h3>12.1 Qué aportaría cada servicio</h3>
+<table>
+  <tr><th>Servicio</th><th>Uso propuesto</th></tr>
+  <tr><td>Firebase Authentication</td><td>Cuentas para estudiantes y docentes; la misma cuenta sirve en la app y en la web.</td></tr>
+  <tr><td>Cloud Firestore</td><td>Progreso por tema, gráficas guardadas y, a futuro, el contenido de los temas (para actualizarlo sin publicar otra versión de la app).</td></tr>
+  <tr><td>Firebase Hosting</td><td>Alojar la aplicación web.</td></tr>
+</table>
+
+<h3>12.2 Modelo de datos sugerido (compartido por la app y la web)</h3>
+<table>
+  <tr><th>Colección / documento</th><th>Campos</th></tr>
+  <tr><td><code>usuarios/{uid}</code></td><td><code>nombre</code>, <code>rol</code> (estudiante / docente), <code>fechaAlta</code></td></tr>
+  <tr><td><code>usuarios/{uid}/progreso/{idTema}</code></td><td><code>vecesEscuchado</code>, <code>referenciasEscuchadas</code>, <code>ultimaVisita</code></td></tr>
+  <tr><td><code>usuarios/{uid}/graficas/{id}</code></td><td><code>expresion</code>, <code>parametros</code> (mapa nombre → valor), <code>creada</code></td></tr>
+  <tr><td><code>temas/{idTema}</code></td><td><code>titulo</code>, <code>formaGeneral</code>, <code>descripcion</code>, <code>funcionEjemplo</code>, <code>xMin</code>, <code>xMax</code>, <code>yMin</code>, <code>yMax</code></td></tr>
+</table>
+<p>Los campos de <code>temas</code> son exactamente los que hoy recibe <code>PlanoSonoroView.configurar(...)</code>, así que un tema podría pasar de código a base de datos sin cambiar el componente. Las gráficas guardadas pueden usar el mismo formato JSON que ya intercambian Kotlin y GeoGebra (<code>modo</code>, <code>curva</code>, <code>evaluacion</code>, <code>parametros[{nombre, valor}]</code>).</p>
+
+<h3>12.3 Pasos en Android Studio</h3>
+<ol>
+  <li>Crear el proyecto en la consola de Firebase y registrar la app con el paquete <code>com.example.sara</code> (conviene cambiarlo antes por uno definitivo de la institución).</li>
+  <li>Descargar <code>google-services.json</code> y copiarlo a <code>app/</code>.</li>
+  <li>Agregar el plugin de Google Services y el BoM de Firebase en <code>build.gradle.kts</code>, junto con las librerías <code>firebase-auth</code> y <code>firebase-firestore</code>.</li>
+  <li>Crear una capa de datos nueva (por ejemplo, <code>RepositorioProgreso</code>) para que las pantallas no hablen directamente con Firebase y la lógica siga siendo comprobable.</li>
+</ol>
+
+<h3>12.4 La aplicación web</h3>
+<p>La web puede reutilizar casi todo el diseño:</p>
+<ul>
+  <li><b>Graficación:</b> GeoGebra ya es web; <code>geogebra.html</code> sirve como punto de partida.</li>
+  <li><b>Sonido:</b> el algoritmo de <code>SonidoGrafica</code> (tono exponencial, paneo, tic, bip) se traduce directamente a la Web Audio API (<code>OscillatorNode</code>, <code>StereoPannerNode</code>).</li>
+  <li><b>Resumen hablado:</b> <code>DescriptorGrafica</code> no depende de Android y puede portarse a JavaScript; la voz se obtiene con la Web Speech API.</li>
+  <li><b>Accesibilidad:</b> usar HTML semántico, encabezados y regiones ARIA <i>live</i>, equivalentes a lo que ya hace la app con TalkBack.</li>
+</ul>
+
+<!-- ===================================================== -->
+<h2 id="convenciones">13. Convenciones de código</h2>
+<ul>
+  <li><b>Nombres en español y sin acentos ni ñ</b> en variables, funciones, clases, ids de vistas, nombres de recursos y JavaScript (por ejemplo, <code>enlace</code>, <code>manejador</code>, <code>MotorAccesibilidad</code>, <code>fijarParametro</code>, <code>vista_inicio</code>). Los acentos solo aparecen en textos que se muestran o se dicen a la persona.</li>
+  <li>Se conservan en inglés únicamente los nombres que impone Android o Kotlin: métodos sobrescritos (<code>onCreate</code>, <code>onDraw</code>…), el sufijo <code>Activity</code> de las pantallas (convención de Android y del manifiesto) y los nombres de las APIs (<code>TextToSpeech</code>, <code>AudioTrack</code>).</li>
+  <li>Las letras sueltas se usan solo con sentido matemático (<code>x</code>, <code>y</code>, <code>f</code>, <code>i</code>, <code>n</code>). Los prefijos <code>btn</code>, <code>txt</code> y <code>et</code> indican el tipo de vista.</li>
+  <li>Los textos visibles van en <code>strings.xml</code> o, si se generan, se redactan para escucharse (por ejemplo, "menos 0.5" en lugar de "-0.5").</li>
+</ul>
+
+<!-- ===================================================== -->
+<h2 id="pruebas">14. Pruebas en un teléfono real</h2>
+<p>El 8 de noviembre de 2026 la app se instaló por cable (adb) en un <b>Samsung Galaxy SM-S942Q con Android 16</b> (API 36, pantalla de 1080 × 2340 px) y se recorrió primero sin TalkBack y después con TalkBack activado. Las pantallas se revisaron con capturas y el audio con el registro del sistema (<code>dumpsys audio</code> y <code>logcat</code>).</p>
+<table>
+  <tr><th>Qué se probó</th><th>Resultado</th></tr>
+  <tr><td>Instalación y arranque</td><td>Correcto. Sin errores ni cierres inesperados en ningún paso.</td></tr>
+  <tr><td>Menú y Aprendizaje</td><td>Correcto. Los títulos de tema y los 11 botones se muestran y abren su pantalla.</td></tr>
+  <tr><td>Plano sonoro (Función lineal)</td><td>Correcto. La recta 2x + 1 y los ejes se dibujan bien.</td></tr>
+  <tr><td>Secuencia de sonido sin TalkBack</td><td>Correcto. Referencias → presentación → recorrido → resumen, y el botón vuelve a "Reproducir sonido" al terminar (≈ 30 a 40 s la primera vez).</td></tr>
+  <tr><td>Etiquetas para TalkBack</td><td>Correcto. Menú: "Inicio", "Aprendizaje", "Graficar". Botones de tema: su nombre. Plano: su descripción completa con instrucciones. "Regresar": "Regresar a Aprendizaje".</td></tr>
+  <tr><td>Secuencia de sonido con TalkBack</td><td>Correcto. Espera de 1.5 s; referencias de 2 a 18 s; <b>recorrido de 6 s (19 a 24 s) sin voz encima</b>; resumen de 25 a 35 s.</td></tr>
+  <tr><td>Botón "Regresar"</td><td>Correcto. Desde la parte 2 del plano llega directo a Aprendizaje (la parte 1 se cierra) y el menú queda marcado.</td></tr>
+  <tr><td>Barras del sistema</td><td>Se encontró el problema: en Android 16 el contenido quedaba debajo de la hora y de la barra de navegación. Se corrigió con <code>respetarBarrasDelSistema()</code> y se volvió a verificar.</td></tr>
+  <tr><td>Ícono de detener</td><td>Se encontró que el botón mostraba ▶ mientras sonaba. Se agregó <code>ico_detener</code> y se verificó el cambio ▶ ↔ ■.</td></tr>
+  <tr><td>Graficadora: panel de GeoGebra</td><td>Se encontró que el panel de álgebra de GeoGebra tapaba casi toda la gráfica (solo quedaba visible una franja). Se abrió GeoGebra en perspectiva "G" y la gráfica ahora ocupa todo el recuadro.</td></tr>
+  <tr><td>Graficadora: explorar <code>x^2-4</code> con el dedo</td><td>Correcto. Mapa de 300 columnas en 40 ms; con el interruptor encendido la gráfica no se mueve, el punto magenta queda exactamente sobre la curva, el tono suena (<code>AudioTrack</code> activo) y no hay punto donde la curva sale del recuadro.</td></tr>
+  <tr><td>Graficadora: círculo <code>x²+y²=25</code></td><td>Correcto. Dos puntos (y = 5 y y = −5), uno por rama. Mapa de 120 columnas en 0.5 s.</td></tr>
+  <tr><td>Graficadora: mover la vista y cambiar un parámetro</td><td>Correcto. Con el interruptor apagado la gráfica se mueve y el mapa se rehace solo; al mover el control de "a" el mapa se rehace una sola vez y el sonido sigue a la curva nueva.</td></tr>
+  <tr><td>Graficadora: escala de los ejes</td><td>Se encontró que el círculo se veía como óvalo, porque X y Y iban de −10 a 10 en un recuadro más alto que ancho. Se igualó la escala (X de −10 a 10, Y ≈ ±13 en este teléfono) y se verificó: el círculo mide 400 × 399 px y los puntos siguen sobre la curva.</td></tr>
+  <tr><td>Graficadora sin internet</td><td>Correcto. Con GeoGebra dentro de la app, el registro no mostró ningún pedido fuera de la app. Después, con <b>modo avión y Wi-Fi apagado</b> (sin respuesta a un ping), GeoGebra cargó, el círculo se graficó, el mapa se armó en 463 ms y la exploración con el dedo sonó, sin cierres inesperados.</td></tr>
+</table>
+<div class="alerta"><b>Lo que esta prueba no cubre:</b> las pulsaciones enviadas por adb llegan como toques directos y no pasan por los gestos de TalkBack, así que la <b>exploración con el dedo bajo TalkBack</b> (eventos <i>hover</i>), el doble toque y la percepción real del sonido, el paneo y la vibración deben comprobarse con una persona usando el teléfono.</div>
+
+<!-- ===================================================== -->
+<h2 id="pendientes">15. Pendientes y riesgos</h2>
+<table>
+  <tr><th>Tema</th><th>Detalle</th></tr>
+  <tr><td>Contenido faltante</td><td>"Función raíz" y "Tangente" tienen pantalla y botón "Regresar", pero no texto ni plano sonoro.</td></tr>
+  <tr><td>Paleta institucional</td><td>La app todavía usa amarillo y magenta (ver la sección 6.2).</td></tr>
+  <tr><td>Firebase y web</td><td>No implementados (sección 12).</td></tr>
+  <tr><td>Pruebas con personas</td><td>Falta que una persona compruebe con su dedo y TalkBack la exploración táctil (en los temas y en la graficadora), el doble toque, el paneo con audífonos, las varias voces del círculo y la vibración (sección 14).</td></tr>  <tr><td>Conexión a internet</td><td>La graficadora no funciona sin internet, porque GeoGebra se descarga en línea.</td></tr>
+  <tr><td>Licencia de GeoGebra</td><td>GeoGebra va dentro de la app. Su licencia permite distribuirlo solo con fines no comerciales; si la app se vende o se publica con fines comerciales, hay que pedir permiso a GeoGebra.</td></tr>
+  <tr><td>Versión de GeoGebra</td><td>Queda fija en la 5.4.934. Para actualizarla, se descarga un paquete nuevo y se reemplaza <code>assets/geogebra/</code> con los mismos pasos (sección 10).</td></tr>
+  <tr><td>Ícono de la app</td><td>Es el de la plantilla de Android Studio.</td></tr>
+  <tr><td>Texto "Home"</td><td>El título visible de la pantalla de inicio está en inglés.</td></tr>
+  <tr><td>Commit</td><td>Los cambios del 8 de noviembre siguen sin commit; hay un respaldo completo en <code>Sara_respaldo_2026-11-08</code>.</td></tr>
+</table>
+
+</main>
+<footer>Sara · Documentación técnica · Ver también el <a href="manual-tecnico-sara.html">Manual técnico de procesos</a></footer>
+</body>
+</html>

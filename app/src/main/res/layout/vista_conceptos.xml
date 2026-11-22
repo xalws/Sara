@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/txtTituloConceptos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/encabezadoconceptos"
+            android:textColor="#FFFFFF"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <!-- Dominio -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/titulodominio"
+            android:textColor="@color/amarillo"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/definiciondominio"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Rango -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/titulorango"
+            android:textColor="@color/amarillo"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/definicionrango"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Intervalo -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/titulointervalo"
+            android:textColor="@color/amarillo"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/formaintervalo"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:lineSpacingExtra="4dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/titulopartesintervalo"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/parteintervalo1"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/parteintervalo2"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/interpretacionintervalo"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/titulocaracteristicas"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicaintervalo1"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicaintervalo2"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicaintervalo3"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicaintervalo4"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicaintervalo5"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="12dp"
+            android:text="@string/caracteristicaintervalo6"
+            android:textColor="@color/texto_secundario"
+            android:textSize="20sp"
+            android:lineSpacingExtra="4dp" />
+
+        <!-- Regresar: vuelve al panel de Aprendizaje -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRegresar"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_gravity="start"
+            android:layout_marginTop="40dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="25dp"
+            android:background="@drawable/btn_contorno"
+            android:drawableStart="@drawable/ico_regresar"
+            android:drawablePadding="8dp"
+            android:text="@string/regresar"
+            android:contentDescription="@string/regresaraprendizaje"
+            android:drawableTint="@color/amarillo"
+            android:textColor="@color/amarillo"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+        <!-- Espacio final -->
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+    </LinearLayout>
+
+</ScrollView>

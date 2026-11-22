@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/txtTituloInicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/tituloinicio"
+            android:textColor="@color/amarillo"
+            android:textSize="44sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <!-- Tarjeta: qué hace la app y cómo se escucha una gráfica -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="@drawable/fondo_tarjeta">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/introinicio"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:lineSpacingExtra="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/titulosonificacion"
+                android:textColor="@color/amarillo"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:accessibilityHeading="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/sonificaciontono"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:lineSpacingExtra="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/sonificacionlado"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:lineSpacingExtra="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/sonificacionejes"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:lineSpacingExtra="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/sonificacionsilencio"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:lineSpacingExtra="4dp" />
+
+            <!-- Reproduce con voz y tonos lo mismo que explica el texto -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnEjemploSonido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="55dp"
+                android:layout_marginTop="20dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:background="@drawable/btn_contorno"
+                android:text="@string/escucharejemplo"
+                android:textColor="@color/amarillo"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
+
+        <!-- Comenzar: lleva a la graficadora -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnComenzar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/comenzar"
+            android:contentDescription="@string/comenzardescripcion"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+</ScrollView>

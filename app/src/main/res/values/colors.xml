@@ -2,4 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Paleta de Sara: negro y amarillo, de alto contraste -->
+    <color name="fondo">#FF000000</color>
+    <color name="tarjeta">#FF1C1C1C</color>
+    <color name="divisor">#FF333333</color>
+    <color name="amarillo">#FFFFD600</color>
+    <color name="texto_secundario">#FFE0E0E0</color>
 </resources>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/raizPrincipal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/fondo">
+
+    <!-- Barra de menú: Inicio, Graficar, Aprender -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:background="@color/fondo">
+
+        <!-- Btn Inicio -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnInicio"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/fondo_pestana"
+            android:drawableTop="@drawable/ico_inicio"
+            android:drawableTint="@color/color_pestana"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/menuinicio"
+            android:textAllCaps="false"
+            android:textColor="@color/color_pestana"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Btn Graficar -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGraficar"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/fondo_pestana"
+            android:drawableTop="@drawable/ico_grafica"
+            android:drawableTint="@color/color_pestana"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/menugraficar"
+            android:textAllCaps="false"
+            android:textColor="@color/color_pestana"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <!-- Btn Aprendizaje -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnAprendizaje"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/fondo_pestana"
+            android:drawableTop="@drawable/ico_aprendizaje"
+            android:drawableTint="@color/color_pestana"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="@string/menuaprender"
+            android:textAllCaps="false"
+            android:textColor="@color/color_pestana"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Línea divisoria -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/divisor" />
+
+    <!-- Contenedor de las vistas -->
+    <FrameLayout
+        android:id="@+id/contenedorPrincipal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+    </FrameLayout>
+
+</LinearLayout>

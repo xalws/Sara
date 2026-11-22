@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual técnico Sara</title>
+<style>
+  :root {
+    --vino: #5E1716; --rojo-oscuro: #7F1F1D; --ladrillo: #A9472F; --ladrillo-claro: #C9785F;
+    --beige: #F2E8D8; --beige-medio: #E6D6BD; --papel: #FBF7F0;
+    --gris-900: #2D2A28; --gris-700: #514C48; --gris-500: #857E77; --gris-300: #C9C2BA; --gris-100: #ECE8E3;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--papel); color: var(--gris-900); font: 16px/1.65 "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .portada { background: linear-gradient(135deg, var(--vino), var(--rojo-oscuro) 55%, var(--ladrillo)); color: var(--beige); padding: 64px 24px 48px; }
+  .portada .contenido, main { max-width: 940px; margin: 0 auto; }
+  .portada h1 { font-size: 40px; margin: 0 0 8px; }
+  .portada p { margin: 4px 0; font-size: 18px; color: var(--beige-medio); }
+  main { padding: 24px 16px 80px; }
+  nav.indice { background: var(--beige); border-left: 6px solid var(--ladrillo); padding: 16px 24px; margin: 24px 0 40px; }
+  nav.indice ol { margin: 8px 0 0; padding-left: 22px; columns: 2; column-gap: 32px; }
+  nav.indice a { color: var(--rojo-oscuro); text-decoration: none; }
+  h2 { color: var(--vino); font-size: 26px; margin: 52px 0 10px; padding-bottom: 6px; border-bottom: 3px solid var(--ladrillo); }
+  h3 { color: var(--rojo-oscuro); font-size: 19px; margin: 28px 0 8px; }
+  a { color: var(--rojo-oscuro); }
+  p code, li code, td code, span code { overflow-wrap: anywhere; }
+  code { background: var(--gris-100); padding: 1px 6px; border-radius: 4px; font-size: 14px; color: var(--vino); }
+  pre { background: var(--gris-900); color: var(--beige); padding: 14px 16px; border-radius: 8px; overflow-x: auto; font-size: 13.5px; line-height: 1.5; border-left: 5px solid var(--ladrillo); }
+  pre code { background: none; color: inherit; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 14.5px; background: #fff; }
+  th { background: var(--rojo-oscuro); color: var(--beige); text-align: left; padding: 8px 10px; }
+  td { border-bottom: 1px solid var(--gris-300); padding: 8px 10px; vertical-align: top; }
+  tr:nth-child(even) td { background: var(--papel); }
+  .ficha { display: grid; grid-template-columns: 160px 1fr; gap: 4px 16px; background: var(--beige); border-radius: 8px; padding: 12px 16px; margin: 12px 0 16px; font-size: 14.5px; }
+  .ficha b { color: var(--vino); }
+  .nota { background: var(--beige); border-left: 5px solid var(--ladrillo); padding: 12px 16px; margin: 16px 0; }
+  .alerta { background: #F6E3DC; border-left: 5px solid var(--rojo-oscuro); padding: 12px 16px; margin: 16px 0; }
+  ol.pasos li { margin-bottom: 6px; }
+  .figura { background: #fff; border: 1px solid var(--gris-300); border-radius: 10px; padding: 16px; margin: 16px 0 24px; overflow-x: auto; }
+  .figura svg { display: block; margin: 0 auto; max-width: 100%; height: auto; min-width: 640px; }
+  .pie { text-align: center; color: var(--gris-700); font-size: 14px; margin-top: 8px; }
+  .caja { fill: var(--beige); stroke: var(--rojo-oscuro); stroke-width: 1.5; }
+  .caja-ladrillo { fill: var(--ladrillo); }
+  .t { font: 13px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--gris-900); }
+  .t-b { font: 600 13px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--gris-900); }
+  .t-claro { font: 600 13px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--beige); }
+  .t-chico { font: 11px "Segoe UI", Roboto, Arial, sans-serif; fill: var(--gris-700); }
+  .flecha { stroke: var(--gris-700); stroke-width: 1.6; fill: none; marker-end: url(#punta); }
+  .vida { stroke: var(--gris-300); stroke-width: 1.5; stroke-dasharray: 5 4; }
+  footer { text-align: center; color: var(--gris-500); font-size: 13px; padding: 24px; border-top: 1px solid var(--gris-300); }
+  @media (max-width: 640px) {
+    .portada h1 { font-size: 30px; }
+    nav.indice ol { columns: 1; }
+    .ficha { grid-template-columns: 1fr; }
+    table { display: block; overflow-x: auto; font-size: 13px; }
+  }
+  @media print { body { background: #fff; } h2 { break-before: page; } pre, table, .figura { break-inside: avoid; } }
+</style>
+</head>
+<body>
+
+<header class="portada">
+  <div class="contenido">
+    <h1>Manual técnico de procesos</h1>
+    <p>Sara · Cómo funciona cada proceso del código, paso a paso</p>
+    <p>Documento complementario de la <a href="documentacion-sara.html" style="color:var(--beige)">Documentación de arquitectura</a> · 8 de noviembre de 2026</p>
+  </div>
+</header>
+
+<main>
+
+<nav class="indice">
+  <b>Procesos</b>
+  <ol start="0">
+    <li><a href="#p0">Cómo leer este manual</a></li>
+    <li><a href="#p1">Arranque y menú principal</a></li>
+    <li><a href="#p2">Botones de Aprendizaje e Intents</a></li>
+    <li><a href="#p3">Pantallas de tema con ViewBinding</a></li>
+    <li><a href="#p4">Plano cartesiano en dos partes</a></li>
+    <li><a href="#p5">Configuración del plano sonoro</a></li>
+    <li><a href="#p6">Secuencia guiada y turnos</a></li>
+    <li><a href="#p7">Espera por TalkBack</a></li>
+    <li><a href="#p8">Tonos de referencia</a></li>
+    <li><a href="#p9">Síntesis del recorrido</a></li>
+    <li><a href="#p10">Seguimiento: punto y vibración</a></li>
+    <li><a href="#p11">Exploración con el dedo</a></li>
+    <li><a href="#p12">Tono continuo en streaming</a></li>
+    <li><a href="#p13">Resumen hablado</a></li>
+    <li><a href="#p14">Voz encadenada (Narrador)</a></li>
+    <li><a href="#p15">Vibración</a></li>
+    <li><a href="#p16">Dibujo del plano</a></li>
+    <li><a href="#p17">Graficadora con GeoGebra</a></li>
+    <li><a href="#p18">Análisis de la función escrita</a></li>
+    <li><a href="#p19">Teclado matemático</a></li>
+    <li><a href="#p20">Sonificación y exploración en la graficadora</a></li>
+    <li><a href="#p21">Ciclo de vida y liberación</a></li>
+    <li><a href="#p22">Pruebas y compilación</a></li>
+    <li><a href="#p23">Receta: agregar un tema nuevo</a></li>
+    <li><a href="#p24">Glosario</a></li>
+  </ol>
+</nav>
+
+<h2 id="p0">0. Cómo leer este manual</h2>
+<p>Cada proceso tiene una ficha con sus archivos, su punto de entrada y su resultado, seguida de los pasos en el orden en que ocurren en el código. Los nombres entre <code>así</code> son funciones, clases o variables reales del proyecto (todos en español y sin acentos). Las rutas parten de <code>app/src/main/</code>.</p>
+<table>
+  <tr><th>Carpeta</th><th>Contenido</th></tr>
+  <tr><td><code>java/com/example/sara/</code></td><td>Todo el código Kotlin (26 archivos).</td></tr>
+  <tr><td><code>res/layout/</code></td><td>16 diseños XML (<code>vista_*.xml</code>).</td></tr>
+  <tr><td><code>res/values/strings.xml</code></td><td>Textos educativos.</td></tr>
+  <tr><td><code>res/drawable/</code></td><td>Íconos vectoriales y fondos de botón.</td></tr>
+  <tr><td><code>assets/geogebra.html</code></td><td>Página web que carga GeoGebra para la graficadora.</td></tr>
+  <tr><td><code>assets/geogebra/</code></td><td>GeoGebra completo dentro de la app (paquete oficial 5.4.934: <code>deployggb.js</code>, <code>HTML5/5.0/web3d</code>, <code>HTML5/5.0/css</code> y su licencia), para que la graficadora funcione sin internet.</td></tr>
+  <tr><td><code>AndroidManifest.xml</code></td><td>Registro de las 13 Activities y de los permisos (internet, vibración).</td></tr>
+</table>
+
+<!-- ============ 1 ============ -->
+<h2 id="p1">1. Arranque y menú principal</h2>
+<div class="ficha">
+  <b>Archivos</b><span><code>MainActivity.kt</code>, <code>res/layout/vista_principal.xml</code></span>
+  <b>Entrada</b><span>Android abre <code>MainActivity</code> (declarada como LAUNCHER en el manifiesto).</span>
+  <b>Resultado</b><span>Se ve el menú con Inicio activo y el contenido de <code>vista_inicio.xml</code> (o Aprendizaje, si se llegó con el botón "Regresar").</span>
+</div>
+<ol class="pasos">
+  <li><code>onCreate(estadoGuardado)</code> aplica <code>setContentView(R.layout.vista_principal)</code>.</li>
+  <li>Llama a <code>findViewById&lt;View&gt;(R.id.raizPrincipal).respetarBarrasDelSistema()</code> para que el menú no quede debajo de la hora (proceso 3, "Barras del sistema").</li>
+  <li>Con <code>findViewById</code> se obtienen <code>contenedorPrincipal</code> (FrameLayout) y los tres <code>ImageButton</code>: <code>btnInicio</code>, <code>btnAprendizaje</code> y <code>btnGraficar</code>.</li>
+  <li>Si el Intent trae <code>seccion = aprendizaje</code> (<code>pideAprendizaje(intent)</code>), muestra Aprendizaje con <code>mostrarAprendizaje()</code>; si no, llama a <code>cambiarPantalla(R.layout.vista_inicio)</code> y a <code>marcarBotonActivo(btnInicio)</code>.</li>
+  <li>Cada botón del menú repite el mismo par de llamadas con su diseño correspondiente (Aprendizaje usa <code>mostrarAprendizaje()</code>).</li>
+</ol>
+<h3><code>onNewIntent(intencion)</code></h3>
+<p>Cuando una pantalla de tema usa "Regresar", <code>MainActivity</code> ya existe en la pila. Gracias a <code>FLAG_ACTIVITY_SINGLE_TOP</code> no se crea otra: Android llama a <code>onNewIntent</code>, que guarda el Intent con <code>setIntent</code> y, si pide Aprendizaje, llama a <code>mostrarAprendizaje()</code>. Esta vuelve a inflar <code>vista_aprendizaje</code> y marca su botón del menú en amarillo.</p>
+<h3><code>cambiarPantalla(idDiseno)</code></h3>
+<ol class="pasos">
+  <li>Si había una graficadora abierta, llama a <code>grafica?.destruir()</code> para liberar el WebView, la voz y el audio.</li>
+  <li>Vacía el contenedor con <code>removeAllViews()</code>.</li>
+  <li>Infla el diseño nuevo con <code>LayoutInflater.from(this).inflate(idDiseno, contenedorPrincipal, false)</code> y lo agrega.</li>
+  <li>Si es <code>vista_grafica</code>, crea <code>ControladorGrafica(this, nuevaPantalla)</code>.</li>
+  <li>Si es <code>vista_aprendizaje</code>, llama a <code>configurarBotonesAprendizaje(nuevaPantalla)</code>.</li>
+</ol>
+<p><code>marcarBotonActivo(boton)</code> pone el fondo <code>btn_morado</code> a los tres botones y <code>btn_amarillo</code> al activo.</p>
+
+<!-- ============ 2 ============ -->
+<h2 id="p2">2. Botones de Aprendizaje e Intents</h2>
+<div class="ficha">
+  <b>Archivos</b><span><code>MainActivity.kt</code> (<code>configurarBotonesAprendizaje</code>), <code>vista_aprendizaje.xml</code></span>
+  <b>Entrada</b><span>La persona toca un botón de tema.</span>
+  <b>Resultado</b><span>Se abre la Activity del tema.</span>
+</div>
+<ol class="pasos">
+  <li>Como <code>vista_aprendizaje</code> se infla dentro del contenedor, sus botones se buscan sobre esa vista: <code>pantalla.findViewById&lt;Button&gt;(R.id.btnTemaLineal)</code>, etc. (11 botones).</li>
+  <li>Cada botón recibe un <code>setOnClickListener</code> que ejecuta <code>startActivity(Intent(this, FuncionLinealActivity::class.java))</code>.</li>
+  <li>El diseño agrupa los botones bajo títulos de tema (<code>accessibilityHeading="true"</code>), para que TalkBack pueda saltar de un tema a otro.</li>
+</ol>
+<pre><code>btnTemaLineal.setOnClickListener {
+    startActivity(Intent(this, FuncionLinealActivity::class.java))
+}</code></pre>
+
+<!-- ============ 3 ============ -->
+<h2 id="p3">3. Pantallas de tema con ViewBinding</h2>
+<div class="ficha">
+  <b>Archivos</b><span><code>Funcion*Activity.kt</code>, <code>FuncionesActivity.kt</code>, <code>PlanoCartesiano*Activity.kt</code>; <code>build.gradle.kts</code> (<code>viewBinding = true</code>)</span>
+  <b>Entrada</b><span>El Intent del proceso 2.</span>
+  <b>Resultado</b><span>La pantalla del tema con su plano sonoro configurado.</span>
+</div>
+<ol class="pasos">
+  <li>Gradle genera una clase por diseño: <code>vista_funcion_lineal.xml</code> → <code>VistaFuncionLinealBinding</code>. Cada id se vuelve una propiedad (<code>planoSonoro</code>, <code>btnSonidoLineal</code>, <code>btnReferencias</code>).</li>
+  <li>En <code>onCreate</code>: <code>enlace = VistaFuncionLinealBinding.inflate(layoutInflater)</code> y <code>setContentView(enlace.root)</code>.</li>
+  <li><code>enlace.root.respetarBarrasDelSistema()</code> ajusta los márgenes a las barras del sistema.</li>
+  <li><code>enlace.btnRegresar.setOnClickListener { regresarAAprendizaje() }</code> conecta el botón "Regresar".</li>
+  <li>Se configura el plano con la función de ejemplo y se conectan sus botones (proceso 5).</li>
+  <li><code>onStop()</code> llama a <code>enlace.planoSonoro.detener()</code>, así nada sigue sonando al salir de la pantalla.</li>
+</ol>
+<pre><code>setContentView(enlace.root)
+enlace.root.respetarBarrasDelSistema()
+enlace.btnRegresar.setOnClickListener { regresarAAprendizaje() }
+enlace.planoSonoro.configurar("f de x igual a 2x más 1", -4.5, 4.5, -10.0, 10.0) { x -> 2 * x + 1 }
+enlace.planoSonoro.vincularBotones(enlace.btnSonidoLineal, enlace.btnReferencias)</code></pre>
+<p class="nota">El primer parámetro es el texto que dice la voz, así que se escribe como se pronuncia ("2x más 1"), no con símbolos.</p>
+
+<h3>Botón "Regresar" (<code>Navegacion.kt</code>)</h3>
+<p>Los 12 diseños de tema tienen un <code>AppCompatButton</code> con id <code>btnRegresar</code>, así que ViewBinding genera <code>enlace.btnRegresar</code> en todos. El texto visible es <code>@string/regresar</code> ("Regresar") y la descripción para TalkBack es <code>@string/regresaraprendizaje</code> ("Regresar a Aprendizaje"). Al tocarlo, <code>regresarAAprendizaje()</code> (una función de extensión de <code>Activity</code>):</p>
+<ol class="pasos">
+  <li>Crea un <code>Intent</code> hacia <code>MainActivity</code> con el dato extra <code>EXTRA_SECCION = SECCION_APRENDIZAJE</code>.</li>
+  <li>Le agrega <code>FLAG_ACTIVITY_CLEAR_TOP</code>, que cierra todas las Activities que estén encima de <code>MainActivity</code> (por ejemplo, plano 1 y plano 2 a la vez), y <code>FLAG_ACTIVITY_SINGLE_TOP</code>, que reutiliza la <code>MainActivity</code> existente.</li>
+  <li>Llama a <code>startActivity</code> y a <code>finish()</code>. <code>MainActivity</code> recibe el Intent en <code>onNewIntent</code> (proceso 1).</li>
+</ol>
+<pre><code>fun Activity.regresarAAprendizaje() {
+    val intencion = Intent(this, MainActivity::class.java)
+        .putExtra(EXTRA_SECCION, SECCION_APRENDIZAJE)
+        .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+    startActivity(intencion)
+    finish()
+}</code></pre>
+<p class="nota">Después de regresar, el botón Atrás del sistema cierra la app desde Aprendizaje, en lugar de volver al tema: las pantallas de tema ya no están en la pila.</p>
+
+<h3>Barras del sistema (<code>BarrasSistema.kt</code>)</h3>
+<p>Desde Android 15, las apps que apuntan a esa versión se dibujan "de borde a borde": la ventana ocupa también el área de la barra de estado y la de navegación. <code>respetarBarrasDelSistema()</code> lo compensa así:</p>
+<ol class="pasos">
+  <li>Guarda el padding que la vista ya tenía en el XML (por ejemplo, 16dp en <code>vista_principal</code>).</li>
+  <li>Registra un <code>ViewCompat.setOnApplyWindowInsetsListener</code>. Android lo llama con los <i>insets</i>: cuánto miden las barras (<code>systemBars()</code>), el recorte de la cámara (<code>displayCutout()</code>) y el teclado en pantalla (<code>ime()</code>).</li>
+  <li>Aplica <code>setPadding(original + barra)</code> en cada lado; abajo usa la mayor medida entre la barra de navegación y el teclado.</li>
+</ol>
+<p>Se aplica a la raíz de cada pantalla: <code>raizPrincipal</code> en <code>MainActivity</code> y <code>enlace.root</code> (el <code>ScrollView</code>) en cada tema. Como el <code>ScrollView</code> recorta su contenido en el padding, el texto desplazado desaparece antes de llegar a la hora.</p>
+
+<!-- ============ 4 ============ -->
+<h2 id="p4">4. Plano cartesiano en dos partes</h2>
+<div class="ficha">
+  <b>Archivos</b><span><code>PlanoCartesianoActivity.kt</code>, <code>PlanoCartesiano2Activity.kt</code></span>
+  <b>Resultado</b><span>Navegación Siguiente / Anterior entre las dos partes, y "Regresar" a Aprendizaje desde cualquiera.</span>
+</div>
+<ol class="pasos">
+  <li>Parte 1: <code>enlace.btnSiguientePlano</code> abre la parte 2 con <code>startActivity(Intent(this, PlanoCartesiano2Activity::class.java))</code>.</li>
+  <li>Parte 2: <code>enlace.btnAnteriorPlano</code> llama a <code>finish()</code>. Se usa <code>finish()</code> en lugar de otro Intent para no apilar pantallas repetidas: el botón Atrás del sistema y "Anterior" hacen lo mismo.</li>
+  <li>En las dos partes, <code>enlace.btnRegresar</code> usa <code>regresarAAprendizaje()</code>. Desde la parte 2, <code>CLEAR_TOP</code> cierra las dos partes de una vez.</li>
+</ol>
+<p>En el diseño, los botones de cada parte forman una "fila de navegación": un <code>LinearLayout</code> horizontal con <code>baselineAligned="false"</code>, 8dp de padding en cada orilla y dos botones con <code>layout_width="0dp"</code> y <code>layout_weight="1"</code> (miden igual), separados por 10dp de margen en cada uno. Parte 1: Regresar | Siguiente. Parte 2: Anterior | Regresar.</p>
+
+<!-- ============ 5 ============ -->
+<h2 id="p5">5. Configuración del plano sonoro</h2>
+<div class="ficha">
+  <b>Archivo</b><span><code>PlanoSonoroView.kt</code> (<code>configurar</code>, <code>vincularBotones</code>)</span>
+  <b>Entrada</b><span>La Activity del tema.</span>
+  <b>Resultado</b><span>El plano dibujado, con el resumen precalculado y la descripción para TalkBack.</span>
+</div>
+<ol class="pasos">
+  <li><code>configurar(descripcion, xMin, xMax, yMin, yMax, f)</code> guarda la función y la <b>ventana</b> del plano (qué parte de los ejes se ve y se escucha).</li>
+  <li>Calcula una sola vez <code>resumen = DescriptorGrafica.describir(...)</code> (proceso 13).</li>
+  <li>Asigna <code>contentDescription</code>: "Plano con la gráfica de … Desliza un dedo de izquierda a derecha para explorarla. Toca dos veces para escuchar el recorrido completo."</li>
+  <li><code>vincularBotones(reproducir, referencias)</code> conecta los botones. Si algo está sonando, cualquiera de los dos lo detiene; si no, el primero llama a <code>reproducir()</code> y el segundo a <code>escucharReferencias()</code>.</li>
+</ol>
+<p><b>Cómo elegir la ventana:</b> debe incluir los puntos importantes (cruces, vértices) y dejar un poco de margen arriba y abajo, porque lo que sale de la ventana se oye como silencio. Ejemplo: la cuadrática x² − 4x + 3 usa x ∈ [−1, 5] e y ∈ [−2, 8] para que se oigan el vértice (2, −1) y los cruces en 1 y 3.</p>
+
+<!-- ============ 6 ============ -->
+<h2 id="p6">6. Secuencia guiada y turnos</h2>
+<div class="ficha">
+  <b>Archivo</b><span><code>PlanoSonoroView.kt</code></span>
+  <b>Entrada</b><span>Botón "Reproducir sonido" o doble toque sobre el plano con TalkBack (<code>performClick</code>).</span>
+  <b>Resultado</b><span>Referencias (solo la primera vez) → presentación hablada → recorrido sonoro → resumen hablado.</span>
+</div>
+<div class="figura">
+<svg viewBox="0 0 900 380" role="img" aria-labelledby="sec-t">
+  <title id="sec-t">Diagrama de secuencia del recorrido guiado</title>
+  <defs><marker id="punta" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#514C48"/></marker></defs>
+  <rect x="20" y="10" width="130" height="36" rx="6" class="caja"/><text x="85" y="33" text-anchor="middle" class="t-b">Botón</text>
+  <rect x="200" y="10" width="150" height="36" rx="6" class="caja"/><text x="275" y="33" text-anchor="middle" class="t-b">PlanoSonoroView</text>
+  <rect x="400" y="10" width="130" height="36" rx="6" class="caja-ladrillo"/><text x="465" y="33" text-anchor="middle" class="t-claro">Narrador</text>
+  <rect x="580" y="10" width="140" height="36" rx="6" class="caja-ladrillo"/><text x="650" y="33" text-anchor="middle" class="t-claro">SonidoGrafica</text>
+  <rect x="770" y="10" width="110" height="36" rx="6" class="caja-ladrillo"/><text x="825" y="33" text-anchor="middle" class="t-claro">Vibracion</text>
+  <path d="M85,46 L85,370 M275,46 L275,370 M465,46 L465,370 M650,46 L650,370 M825,46 L825,370" class="vida"/>
+  <path d="M85,70 L273,70" class="flecha"/><text x="179" y="64" text-anchor="middle" class="t-chico">reproducir()</text>
+  <path d="M275,92 L275,92" /><text x="285" y="96" class="t-chico">empezarTurno() · espera 1.5 s si hay TalkBack</text>
+  <path d="M275,120 L463,120" class="flecha"/><text x="370" y="114" text-anchor="middle" class="t-chico">"Tonos de referencia…" (1.ª vez)</text>
+  <path d="M465,140 L277,140" class="flecha"/><text x="370" y="154" text-anchor="middle" class="t-chico">al terminar de hablar</text>
+  <path d="M275,172 L648,172" class="flecha"/><text x="460" y="166" text-anchor="middle" class="t-chico">reproducirTono(0 · 1 · eje X), 900 ms cada uno</text>
+  <path d="M275,204 L463,204" class="flecha"/><text x="370" y="198" text-anchor="middle" class="t-chico">"Gráfica de f de x igual a…"</text>
+  <path d="M275,236 L648,236" class="flecha"/><text x="460" y="230" text-anchor="middle" class="t-chico">reproducir(f, ventana) → pista de 6 s + cruces</text>
+  <path d="M650,262 L277,262" class="flecha"/><text x="460" y="276" text-anchor="middle" class="t-chico">progreso() cada 16 ms</text>
+  <path d="M275,296 L823,296" class="flecha"/><text x="560" y="290" text-anchor="middle" class="t-chico">ejeX() / ejeY() al pasar cada cruce</text>
+  <path d="M275,334 L463,334" class="flecha"/><text x="370" y="328" text-anchor="middle" class="t-chico">"Resumen. Empieza a la izquierda…"</text>
+  <path d="M275,360 L87,360" class="flecha"/><text x="179" y="354" text-anchor="middle" class="t-chico">terminar(): texto e ícono originales (▶)</text>
+</svg>
+<div class="pie">Figura 1. Orden de los pasos del recorrido guiado.</div>
+</div>
+<h3>El mecanismo de turnos</h3>
+<p>Casi todos los pasos son asíncronos (la voz avisa al terminar, los tonos esperan con <code>postDelayed</code>). Si la persona toca "Detener" o empieza a explorar en medio de la secuencia, los pasos pendientes no deben ejecutarse. Para eso:</p>
+<ol class="pasos">
+  <li><code>turno</code> es un entero que crece cada vez que empieza o se cancela una acción (<code>cancelarTodo()</code> hace <code>turno++</code>).</li>
+  <li>Cada secuencia guarda su número en <code>mi</code> al empezar.</li>
+  <li>Antes de cada paso se comprueba <code>if (mi != turno) return</code>: si cambió, la secuencia ya no es la vigente y se descarta sola.</li>
+</ol>
+<h3><code>ejecutar(mi, pasos, luego)</code></h3>
+<p>Recibe una lista de <code>Paso</code>: <code>Paso.Decir(texto)</code> o <code>Paso.Tono(altura)</code>. Ejecuta el primero y, cuando termina, se llama a sí misma con el resto. Al vaciarse la lista, ejecuta <code>luego()</code>. Así cualquier guion (referencias, presentación, resumen) se escribe como una lista simple.</p>
+<pre><code>ejecutar(mi, listOf(Paso.Decir("Gráfica de $descripcion. De izquierda a derecha."))) {
+    iniciarRecorrido(mi)
+}</code></pre>
+
+<!-- ============ 7 ============ -->
+<h2 id="p7">7. Espera por TalkBack</h2>
+<p><code>despuesDeTalkBack(mi, accion)</code> pregunta a <code>AccessibilityManager</code> si la exploración táctil está activa (<code>isTouchExplorationEnabled</code>, que es lo que activa TalkBack). Si lo está, espera <b>1500 ms</b> antes de la acción; si no, solo <b>100 ms</b>. Además, <code>empezarTurno()</code> cambia el texto del botón a "Detener sonido" <i>antes</i> de esperar, para que TalkBack lo anuncie durante la espera y no encima del sonido.</p>
+<p><b>Ícono del botón:</b> <code>vincularBotones</code> guarda el ícono original del XML (<code>compoundDrawablesRelative[2]</code>, el <code>drawableEnd</code>) en <code>iconoReproducir</code>. <code>empezarTurno()</code> pone <code>iconoDetener</code> (<code>ico_detener</code>, ■) con <code>setCompoundDrawablesRelativeWithIntrinsicBounds</code>, y <code>terminar()</code> restaura el texto y el ícono originales (▶). Así el estado se entiende por la palabra y por la forma.</p>
+
+<!-- ============ 8 ============ -->
+<h2 id="p8">8. Tonos de referencia</h2>
+<ol class="pasos">
+  <li><code>secuenciaReferencias(mi, luego)</code> arma la lista: decir "parte más baja" → <code>Tono(0.0)</code> → decir "parte más alta" → <code>Tono(1.0)</code>.</li>
+  <li>Si el eje X está dentro de la ventana (<code>0.0 in yMin..yMax</code>), agrega "altura del eje X" y <code>Tono((0 − yMin) / (yMax − yMin))</code>.</li>
+  <li>Cada tono dura <code>DURACION_TONO_MS</code> (900 ms), seguido de una pausa de 250 ms.</li>
+  <li>Al terminar, marca <code>referenciasEscuchadas = true</code>: los siguientes recorridos ya no las repiten. El botón "Escuchar tonos de referencia" las vuelve a tocar cuando se quiera.</li>
+</ol>
+
+<!-- ============ 9 ============ -->
+<h2 id="p9">9. Síntesis del recorrido</h2>
+<div class="ficha">
+  <b>Archivo</b><span><code>SonidoGrafica.kt</code> (<code>reproducir</code>, <code>sintetizarRecorrido</code>)</span>
+  <b>Entrada</b><span>Función, ventana y duración (6000 ms).</span>
+  <b>Resultado</b><span>Una pista de audio estéreo que se reproduce, más la lista de cruces con los ejes.</span>
+</div>
+<ol class="pasos">
+  <li><code>lanzar()</code> incrementa <code>version</code>, libera la pista anterior y sintetiza en un <b>hilo de fondo</b> para no congelar la pantalla.</li>
+  <li>Calcula <code>n = 44100 × 6</code> muestras. Para cada muestra <code>i</code>:
+    <ul>
+      <li><code>avance = i / (n − 1)</code> (de 0 a 1) y <code>x = xMin + (xMax − xMin) × avance</code>.</li>
+      <li><code>y = f(x)</code>. Es <b>visible</b> si es finita, está dentro de [yMin, yMax] y no saltó más del 2 % del rango desde la muestra anterior (así una asíntota suena como silencio).</li>
+      <li>Si x pasa de negativo a ≥ 0: se programa un <b>tic</b> y se registra <code>EventoEje(avance, EJE_Y)</code>.</li>
+      <li>Si y cambia de signo (o llega a 0): se programa un <b>bip</b> y se registra <code>EventoEje(avance, EJE_X)</code>.</li>
+      <li>La frecuencia objetivo es <code>frecuenciaParaAltura((y − yMin) / (yMax − yMin))</code> = 220 × 2^(2·altura) Hz.</li>
+      <li>La frecuencia y la amplitud se acercan a su objetivo con un filtro suave (constante de 4 ms) para evitar clics.</li>
+      <li>La muestra es <code>amplitud × sin(fase)</code>, más el tic (1200 Hz, 25 ms) o el bip (1760 Hz, 70 ms) si están activos.</li>
+      <li>El paneo es <code>panoramaParaAvance(avance) = 0.08 + 0.84 × avance</code>. Con potencia constante: izquierda = muestra × cos(balance·π/2), derecha = muestra × sin(balance·π/2).</li>
+    </ul>
+  </li>
+  <li>Aplica un fundido final de 20 ms.</li>
+  <li><code>crearPista()</code> construye un <code>AudioTrack</code> en modo <b>STATIC</b> (toda la pista en memoria, sin cortes) y lo reproduce.</li>
+  <li>Llama a <code>alIniciar(eventos)</code> para que la vista empiece a seguir el progreso.</li>
+</ol>
+<pre><code>internal fun frecuenciaParaAltura(altura: Double): Double =
+    FRECUENCIA_MINIMA * 2.0.pow(altura.coerceIn(0.0, 1.0) * OCTAVAS_GRAFICA)</code></pre>
+<p><code>reproducirTono(altura, duracionMs)</code> usa el mismo camino con <code>sintetizarTono</code>: un seno fijo al centro, con entrada y salida suaves de 20 ms.</p>
+
+<!-- ============ 10 ============ -->
+<h2 id="p10">10. Seguimiento: punto y vibración</h2>
+<ol class="pasos">
+  <li><code>seguirRecorrido(mi)</code> se ejecuta cada 16 ms con un <code>Handler</code> (no depende de que la pantalla se dibuje, así funciona aunque TalkBack oscurezca la pantalla).</li>
+  <li>Pide <code>sonido.progreso()</code>, que es <code>playbackHeadPosition / totalMuestras</code>: la posición real del audio, no un cálculo de tiempo.</li>
+  <li>Para cada <code>EventoEje</code> entre el progreso anterior y el actual, vibra con <code>ejeX()</code> o <code>ejeY()</code>.</li>
+  <li>Guarda <code>progresoActual</code> y llama a <code>invalidate()</code> para redibujar el punto.</li>
+  <li>Cuando <code>progreso()</code> devuelve <code>null</code> (terminó el audio), dice el resumen y llama a <code>terminar()</code>.</li>
+</ol>
+
+<!-- ============ 11 ============ -->
+<h2 id="p11">11. Exploración con el dedo</h2>
+<div class="ficha">
+  <b>Archivo</b><span><code>PlanoSonoroView.kt</code> (<code>onTouchEvent</code>, <code>onHoverEvent</code>, <code>explorar</code>)</span>
+  <b>Entrada</b><span>Dedo sobre el plano. Sin TalkBack llegan eventos <i>touch</i>; con TalkBack, eventos <i>hover</i>.</span>
+  <b>Resultado</b><span>Un tono que sigue la altura de la gráfica bajo el dedo; al soltar, la voz dice las coordenadas.</span>
+</div>
+<ol class="pasos">
+  <li><b>Sin TalkBack:</b> <code>ACTION_DOWN</code> pide al ScrollView que no intercepte el gesto (<code>requestDisallowInterceptTouchEvent(true)</code>), llama a <code>empezarExploracion()</code> y luego a <code>explorar(x)</code>. <code>ACTION_MOVE</code> llama a <code>explorar(x)</code>. <code>ACTION_UP</code> llama a <code>terminarExploracion(anunciar = true)</code>.</li>
+  <li><b>Con TalkBack:</b> TalkBack convierte el deslizamiento de un dedo en <code>HOVER_ENTER / MOVE / EXIT</code>. Se llama primero a <code>super.onHoverEvent</code> (para que TalkBack enfoque y lea el plano) y después a la misma lógica.</li>
+  <li><code>empezarExploracion()</code> cancela cualquier recorrido en curso e inicia <code>TonoContinuo</code>.</li>
+  <li><code>explorar(xPantalla)</code>:
+    <ul>
+      <li>Convierte el píxel en <code>avance</code> (0 a 1) y luego en <code>x</code>. Solo importa la posición horizontal, así la persona no necesita "atinarle" a la curva.</li>
+      <li>Calcula <code>y = f(x)</code>; si es visible, manda la altura a <code>tono.mover(altura, balance)</code>; si no, <code>mover(null, …)</code> lo silencia.</li>
+      <li>Si x cambió de signo: <code>tono.marcarEjeY()</code> y <code>vibracion.ejeY()</code>. Si y cambió de signo: <code>marcarEjeX()</code> y <code>ejeX()</code>.</li>
+    </ul>
+  </li>
+  <li><code>terminarExploracion(true)</code> detiene el tono y dice "x igual a 1.5, y igual a 4" (o "En x igual a … la gráfica no existe").</li>
+</ol>
+<p class="nota"><code>performClick()</code> no se llama desde <code>onTouchEvent</code> a propósito: si se llamara, cada vez que alguien explora y suelta el dedo empezaría el recorrido. El clic solo llega por TalkBack (doble toque) o por teclado o switch, y en esos casos sí inicia el recorrido.</p>
+
+<!-- ============ 12 ============ -->
+<h2 id="p12">12. Tono continuo en streaming</h2>
+<div class="ficha">
+  <b>Archivo</b><span><code>TonoContinuo.kt</code></span>
+  <b>Lo usan</b><span><code>PlanoSonoroView</code> (temas) y <code>CapaSonora</code> (graficadora, proceso 20).</span>
+  <b>Por qué separado</b><span>El recorrido se genera completo antes de sonar; la exploración no sabe adónde irá el dedo, así que genera el audio en bloques pequeños mientras suena.</span>
+</div>
+<ol class="pasos">
+  <li><code>iniciar()</code> incrementa <code>generacion</code>, vacía <code>objetivoAlturas</code> (silencio) y lanza un hilo con <code>bucle(mi)</code>.</li>
+  <li>La interfaz llama a <code>mover(alturas, balance)</code> con una altura por rama de la curva (de 0 a 1), o a <code>mover(altura?, balance)</code> si solo hay una; <code>null</code> o una lista vacía significan "aquí no hay gráfica". Las alturas se guardan ordenadas de menor a mayor, hasta <code>MAX_VOCES = 4</code>.</li>
+  <li>El hilo crea un <code>AudioTrack</code> en modo <b>STREAM</b>, con el búfer mínimo y <code>PERFORMANCE_MODE_LOW_LATENCY</code> (Android 8 o superior).</li>
+  <li>En cada vuelta genera 256 cuadros estéreo (≈ 6 ms), leyendo los objetivos <code>@Volatile</code> que escribe la interfaz (<code>objetivoAlturas</code>, <code>objetivoBalance</code>) y los contadores atómicos de tic y bip.</li>
+  <li>Cada voz tiene su propia frecuencia, amplitud y fase. Las voces presentes suenan con <code>AMPLITUD_GRAFICA / presentes</code> (el volumen se reparte para no saturar); las que sobran bajan a cero conservando su tono, para apagarse sin salto. Una voz que reaparece entra directo en su tono.</li>
+  <li>Suaviza la frecuencia (10 ms), la amplitud y el balance (6 ms), suma las voces, agrega tic o bip y escribe el bloque con <code>pista.write</code>, que bloquea hasta que hay espacio. Ese bloqueo marca el ritmo del bucle.</li>
+  <li><code>detener()</code> incrementa <code>generacion</code>. El hilo ve que ya no es el vigente, baja la amplitud a cero (sin clic) y libera la pista. Si se inicia otra exploración enseguida, el hilo viejo se apaga solo y no compite con el nuevo.</li>
+</ol>
+
+<!-- ============ 13 ============ -->
+<h2 id="p13">13. Resumen hablado</h2>
+<div class="ficha">
+  <b>Archivo</b><span><code>DescriptorGrafica.kt</code> (<code>describir</code>)</span>
+  <b>Entrada</b><span>Función y ventana.</span>
+  <b>Resultado</b><span>Texto como "Empieza a la izquierda, por debajo del eje X, y va subiendo. Cruza el eje X en x igual a menos 0.5. …"</span>
+</div>
+<ol class="pasos">
+  <li>Muestrea 801 puntos de izquierda a derecha (<code>pasoX = (xMax − xMin) / 800</code>).</li>
+  <li><b>Inicio:</b> en el primer punto donde la función existe, describe la posición respecto al eje X (por debajo, por encima, sobre él, o fuera del plano). Si no existía desde el borde, busca con bisección dónde empieza (<code>borde</code>) y dice "No existe a la izquierda de x igual a 0. Ahí aparece…".</li>
+  <li><b>Dirección inicial:</b> agrega "y va subiendo" o "y va bajando".</li>
+  <li><b>Sucesos</b> (cada uno con su x, para ordenarlos):
+    <ul>
+      <li>Cruce del eje Y: "Cruza el eje Y en y igual a f(0)".</li>
+      <li>Cruce del eje X: el valor exacto se obtiene con <code>biseccion</code> (50 iteraciones). Se ignora el último punto para no repetir lo que dirá "Termina…".</li>
+      <li>Cambio de dirección: con búsqueda ternaria (<code>extremo</code>) se localiza el punto más alto o más bajo y se dice "Llega a su punto más alto en x igual a …, y igual a …, y empieza a bajar".</li>
+      <li>Deja de existir: con <code>borde</code>.</li>
+    </ul>
+  </li>
+  <li>Si cruza ambos ejes en (0, 0), reemplaza los dos sucesos por "Pasa por el origen".</li>
+  <li><b>Final:</b> "Termina a la derecha, …".</li>
+  <li><code>numero(valor)</code> redondea a 2 decimales, quita ceros sobrantes y cambia "-" por "menos", porque el texto se escucha, no se lee.</li>
+</ol>
+<p>La tolerancia (<code>tolerancia = rango × 10⁻⁶</code>) evita que el ruido numérico, como sin(2π) ≈ −2.4 × 10⁻¹⁶, se interprete como un cruce.</p>
+
+<!-- ============ 14 ============ -->
+<h2 id="p14">14. Voz encadenada (Narrador)</h2>
+<ol class="pasos">
+  <li>Se crea al conectar la vista (<code>onAttachedToWindow</code>), para que el motor de voz ya esté listo cuando se necesite.</li>
+  <li><code>onInit</code>: intenta <code>es-MX</code> y, si falta, <code>es</code>. Registra un <code>UtteranceProgressListener</code>.</li>
+  <li><code>decir(texto, luego)</code>: genera un id único (<code>sara0</code>, <code>sara1</code>…), guarda <code>luego</code> en un mapa y habla con <code>QUEUE_FLUSH</code> (interrumpe lo anterior).</li>
+  <li>Cuando el motor avisa <code>onDone(idFrase)</code>, saca el callback del mapa y lo ejecuta en el hilo principal.</li>
+  <li>Si el motor aún se está iniciando, guarda el texto como <code>pendiente</code>. Si no hay motor de voz, ejecuta <code>luego</code> enseguida: la secuencia continúa sin voz y el sonido no se bloquea.</li>
+  <li><code>callar()</code> vacía los callbacks y detiene el habla; <code>cerrar()</code> libera el motor.</li>
+</ol>
+
+<!-- ============ 15 ============ -->
+<h2 id="p15">15. Vibración</h2>
+<p><code>Vibracion.kt</code> obtiene el vibrador del sistema (<code>VibratorManager</code> en Android 12 o superior, <code>VIBRATOR_SERVICE</code> antes) y ofrece dos patrones con <code>VibrationEffect.createWaveform</code>:</p>
+<table>
+  <tr><th>Función</th><th>Patrón (ms)</th><th>Significado</th></tr>
+  <tr><td><code>ejeX()</code></td><td>0, 60</td><td>Una vibración firme: la gráfica cruza o toca el eje X.</td></tr>
+  <tr><td><code>ejeY()</code></td><td>0, 20, 70, 20</td><td>Dos toques cortos: se pasa por x = 0.</td></tr>
+</table>
+<p>Requiere el permiso <code>android.permission.VIBRATE</code>, que ya está en el manifiesto.</p>
+
+<!-- ============ 16 ============ -->
+<h2 id="p16">16. Dibujo del plano</h2>
+<ol class="pasos">
+  <li><code>onDraw(lienzo)</code> dibuja el fondo redondeado (#1C1C1C, radio 16dp) y reduce el <code>marco</code> 10dp por lado.</li>
+  <li><code>dibujarCuadricula</code>: líneas cada 1, 2 o 5 unidades según el rango (<code>pasoCuadricula</code>), ejes en #BDBDBD y etiquetas "x" e "y".</li>
+  <li>Recorta al marco (<code>clipRect</code>) y traza la curva con <code>construirCurva</code>: 400 puntos, cortando el trazo donde la función no existe o salta (asíntotas).</li>
+  <li>Durante el recorrido, dibuja encima el tramo recorrido en magenta (5dp) y el punto actual (círculo de 8dp con borde blanco). Al explorar, dibuja el punto bajo el dedo y una línea vertical tenue.</li>
+</ol>
+<p>Conversión de coordenadas: <code>aPantallaX(x) = marco.left + (x − xMin) / (xMax − xMin) × ancho</code>; en y se invierte, porque en pantalla y crece hacia abajo.</p>
+
+<!-- ============ 17 ============ -->
+<h2 id="p17">17. Graficadora con GeoGebra</h2>
+<div class="ficha">
+  <b>Archivos</b><span><code>ControladorGrafica.kt</code>, <code>assets/geogebra.html</code>, <code>vista_grafica.xml</code></span>
+  <b>Entrada</b><span>Sección Graficar del menú.</span>
+  <b>Resultado</b><span>GeoGebra cargado, con un campo, un teclado y botones para graficar y escuchar.</span>
+</div>
+<ol class="pasos">
+  <li>El constructor obtiene las vistas del XML y agrega por código, debajo de los botones, el mensaje de estado (región <i>live</i> que TalkBack lee sola), el teclado y el contenedor de parámetros.</li>
+  <li><code>configurarWebView()</code>: habilita JavaScript y almacenamiento, desactiva el oscurecimiento automático, registra <code>Puente</code> como objeto <code>Android</code> en JavaScript y carga <code>https://appassets.androidplatform.net/assets/geogebra.html</code>. Esa dirección no sale a internet: <code>WebViewAssetLoader</code> (librería <code>androidx.webkit</code>) la intercepta en <code>shouldInterceptRequest</code> y responde con los archivos de <code>assets/</code>. Se usa en lugar de <code>file://</code> porque el WebView bloquea muchas cosas que GeoGebra necesita cuando la página viene de un archivo. Si algo pidiera otra dirección, se anota en el registro como <code>Pedido fuera de la app</code>.</li>
+  <li>En el HTML, <code>&lt;script src="geogebra/deployggb.js"&gt;</code> carga el instalador local y <code>visor.setHTML5Codebase("geogebra/HTML5/5.0/web3d/", true)</code> le dice que el motor está en la app (<code>true</code> = sin conexión). El idioma se fija en <code>"es"</code>, porque solo se incluyeron los textos en español e inglés.</li>
+  <li>El HTML crea <code>new GGBApplet(opcionesVisor)</code> con <code>"perspective": "G"</code> (solo la vista gráfica: sin el panel de álgebra, que en pantallas verticales tapaba casi toda la gráfica). Al cargar, guarda la API en <code>aplicacionGeogebra</code>, repite <code>setPerspective("G")</code> por seguridad, llama a <code>fijarVentanaInicial()</code> (X de −10 a 10 y Y calculada con la proporción alto ÷ ancho de la página, para que los dos ejes tengan la misma escala y un círculo se vea redondo), registra un oyente de cambios de vista (<code>registerClientListener</code>, evento <code>viewChanged2D</code>) y envía <code>enviar("listo", "")</code>.</li>
+  <li>Al pulsar Graficar: <code>AnalizadorFuncion.analizar(texto)</code> (proceso 18) → <code>capa.borrarMapa()</code> → se crean los controles de parámetros → <code>vistaWeb.evaluateJavascript("graficar(" + plan.aJson(valores) + ")")</code>.</li>
+  <li>En JavaScript, <code>graficar(plan)</code> borra lo anterior, crea los parámetros, crea <code>curvaG</code> (y <code>evaluarG</code> si es implícita), oculta su etiqueta, guarda <code>modoActual</code>, responde <code>enviar("grafica", {ok})</code> y llama a <code>programarMapa()</code> (proceso 20).</li>
+  <li>Al mover un parámetro: <code>fijarParametro('a', 1.5)</code> actualiza GeoGebra en vivo y llama a <code>programarMapa()</code>; sin TalkBack, la voz dice el valor 350 ms después de soltar el control.</li>
+  <li>Si GeoGebra no responde en 15 s, se muestra "GeoGebra no terminó de cargar. Sal de la sección y vuelve a entrar."</li>
+</ol>
+<h3>Actualizar la versión de GeoGebra</h3>
+<ol class="pasos">
+  <li>Descargar el paquete "GeoGebra Math Apps Bundle" desde <code>https://download.geogebra.org/package/geogebra-math-apps-bundle</code> y descomprimirlo en una carpeta aparte.</li>
+  <li>Reemplazar en <code>assets/geogebra/</code>: <code>deployggb.js</code>, <code>HTML5/5.0/web3d</code> y <code>HTML5/5.0/css</code>, y copiar <code>README.txt</code> como <code>LICENCIA_GEOGEBRA.txt</code>.</li>
+  <li>En <code>HTML5/5.0/web3d/js</code>, borrar los <code>properties_keys_*.js</code> que no sean <code>es</code> o <code>en</code> (ahorra unos 20 MB).</li>
+  <li>Compilar, abrir la graficadora y revisar en el registro (<code>adb logcat -s SaraWeb</code>) que diga "codebase loaded: 'geogebra/HTML5/5.0/web3d/'" y que no aparezca ningún "Pedido fuera de la app". Probar al final con modo avión y Wi-Fi apagado.</li>
+</ol>
+<h3>Contrato JSON entre Kotlin y JavaScript</h3>
+<table>
+  <tr><th>Dirección</th><th>Mensaje</th><th>Contenido</th></tr>
+  <tr><td>Kotlin → JS</td><td><code>graficar(plan)</code></td><td><code>{ modo, curva, evaluacion, parametros: [{nombre, valor}] }</code></td></tr>
+  <tr><td>Kotlin → JS</td><td><code>fijarParametro(nombre, valor)</code></td><td>Texto y número.</td></tr>
+  <tr><td>Kotlin → JS</td><td><code>muestrear(modo, cantidad)</code></td><td>"explicita" / "implicita"; 120 o 60 columnas.</td></tr>
+  <tr><td>JS → Kotlin</td><td><code>evento("listo" | "error" | "grafica" | "muestras", datos)</code></td><td><code>{ ok, mensaje }</code> o <code>{ ok, series, yMin, yMax }</code></td></tr>
+  <tr><td>JS → Kotlin</td><td><code>evento("mapa", datos)</code> (lo inicia la página sola)</td><td><code>{ xMin, xMax, yMin, yMax, series }</code>; <code>series</code> tiene 300 columnas (explícita) o 120 (implícita).</td></tr>
+</table>
+<p class="nota">Las llamadas desde JavaScript llegan en otro hilo; <code>Puente.evento</code> las pasa al hilo principal con <code>runOnUiThread</code> antes de tocar la interfaz.</p>
+
+<!-- ============ 18 ============ -->
+<h2 id="p18">18. Análisis de la función escrita</h2>
+<ol class="pasos">
+  <li><code>limpiar(texto)</code>: convierte ² ³ π √ − × · ÷ a su forma ASCII, la coma decimal a punto y los corchetes a paréntesis.</li>
+  <li><code>expandirLetras</code> → <code>expandir(grupo)</code>: separa grupos de letras pegadas: "ax" → "a*x", "senx" → "sin(x)", "pix" → "pi*x". Los <code>candidatos</code> se ordenan del más largo al más corto, para que "arcsen" gane a "sen".</li>
+  <li>El <code>alias</code> traduce del español a GeoGebra (sen → sin, raiz → sqrt, log → log10).</li>
+  <li>Si hay "=": decide entre <b>explícita</b> (<code>y = …</code> o <code>f(x) = …</code>) e <b>implícita</b> (cualquier otra ecuación en x e y, como x² + y² = 25). Sin "=": es explícita salvo que aparezca y.</li>
+  <li><code>parametros()</code>: toda letra suelta distinta de x, y, z, e, i se vuelve un control deslizante (máximo 6).</li>
+  <li>Devuelve <code>Analisis.Valido(plan)</code> o <code>Analisis.Invalido(mensaje)</code> con un mensaje que se anuncia en voz alta.</li>
+</ol>
+
+<!-- ============ 19 ============ -->
+<h2 id="p19">19. Teclado matemático</h2>
+<ol class="pasos">
+  <li>El campo <code>etFuncion</code> tiene <code>setShowSoftInputOnFocus(false)</code>: el teclado del sistema no aparece y se muestra el propio.</li>
+  <li>Tres pestañas (<code>mostrarPagina</code>): 123, f(x) y abc. Cada página es una lista de filas de <code>Tecla</code>.</li>
+  <li>Cada <code>Tecla</code> tiene <code>etiqueta</code> (lo que se ve), <code>insertar</code> (lo que se escribe), <code>voz</code> (lo que lee TalkBack), <code>atras</code> (cuántos caracteres retrocede el cursor, por ejemplo 1 para dejarlo dentro de "sqrt()"), <code>tipo</code> (color) y <code>accion</code>.</li>
+  <li><code>pulsar(tecla)</code>: inserta en la posición del cursor (<code>insertar</code>), borra (<code>borrar</code>; mantener presionado borra todo), mueve el cursor (<code>mover</code>) o acepta y grafica.</li>
+  <li>Cada pulsación da retroalimentación háptica (<code>KEYBOARD_TAP</code>).</li>
+</ol>
+
+<!-- ============ 20 ============ -->
+<h2 id="p20">20. Sonificación y exploración en la graficadora</h2>
+<h3>Botón Reproducir</h3>
+<ol class="pasos">
+  <li>Al pulsar Reproducir: <code>muestrear(modo, cantidad)</code> en JavaScript recorre la ventana visible de GeoGebra con <code>calcularSeries(modo, cantidad, ventana)</code>.</li>
+  <li><b>Explícita:</b> en cada columna x, toma <code>curvaG(x)</code> si está dentro de la vista.</li>
+  <li><b>Implícita:</b> en cada columna, recorre 40 divisiones en y buscando cambios de signo de <code>evaluarG(x, y)</code> e interpola el cruce. Puede haber varias y por columna (por ejemplo, el círculo tiene dos).</li>
+  <li>Kotlin recibe <code>series</code> y llama a <code>MotorAccesibilidad.reproducirSerie</code>, que normaliza al rango real de la curva y sintetiza hasta 4 voces simultáneas (una por rama), con duración total de unos 5 s.</li>
+</ol>
+
+<h3>Explorar con el dedo (<code>CapaSonora.kt</code>)</h3>
+<div class="ficha">
+  <b>Archivos</b><span><code>CapaSonora.kt</code>, <code>TonoContinuo.kt</code>, <code>assets/geogebra.html</code>, <code>ControladorGrafica.kt</code>, <code>vista_grafica.xml</code></span>
+  <b>Entrada</b><span>Deslizar un dedo sobre la gráfica: con el interruptor "Explorar con el dedo" encendido, o en cualquier momento con TalkBack.</span>
+  <b>Resultado</b><span>Las mismas reglas de sonido que en los temas: tono según la altura, paneo según x, tic y bip en los ejes, vibración y coordenadas al soltar.</span>
+</div>
+<p>En los temas, la función vive en Kotlin y se calcula al instante. En la graficadora vive dentro de GeoGebra (JavaScript), y preguntarle en cada movimiento del dedo sería lento y asíncrono. Por eso la página manda un <b>mapa</b> de la zona visible cada vez que algo cambia, y la capa lo consulta localmente.</p>
+<ol class="pasos">
+  <li><b>Diseño.</b> En <code>vista_grafica.xml</code>, un <code>FrameLayout</code> de 350dp contiene el <code>WebView</code> y, encima, la <code>CapaSonora</code>, las dos en <code>match_parent</code>. Como GeoGebra está en perspectiva "G", la gráfica llena el WebView y cada píxel de la capa corresponde al mismo punto de la gráfica.</li>
+  <li><b>Programar el mapa.</b> <code>programarMapa()</code> se llama al graficar, al mover un parámetro y cuando GeoGebra avisa <code>viewChanged2D</code> (mover o hacer zoom). Reinicia un temporizador de 250 ms, así muchos cambios seguidos producen un solo mapa.</li>
+  <li><b>Calcular el mapa.</b> <code>enviarMapa()</code> obtiene la ventana con <code>vista()</code> (esquinas <code>Corner(1)</code> y <code>Corner(3)</code>), calcula 300 columnas (explícita) o 120 (implícita) con <code>calcularSeries</code> y envía <code>enviar("mapa", {xMin, xMax, yMin, yMax, series})</code>. Escribe en el registro cuánto tardó (<code>SaraWeb</code>: "Mapa de 300 columnas en 40 ms").</li>
+  <li><b>Recibir el mapa.</b> <code>ControladorGrafica.procesarMapa</code> convierte el JSON en una lista de <code>DoubleArray</code> y llama a <code>capa.fijarMapa(...)</code>, que ordena los valores de cada columna y actualiza la descripción para TalkBack.</li>
+  <li><b>Toque sin TalkBack.</b> <code>onTouchEvent</code> devuelve <code>false</code> si <code>exploracionActiva</code> está apagada: el toque pasa al WebView de abajo y GeoGebra mueve o hace zoom. Encendida, pide al <code>ScrollView</code> que no intercepte y explora.</li>
+  <li><b>Con TalkBack.</b> <code>onHoverEvent</code> explora siempre. El WebView está marcado <code>IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS</code>, así TalkBack enfoca la capa y no los elementos internos de GeoGebra. Tocar dos veces llama a <code>performClick()</code> → <code>alTocarDosVeces</code> → botón Reproducir.</li>
+  <li><b>Explorar.</b> <code>explorar(x)</code> convierte la posición en columna (<code>avance × (columnas − 1)</code>), pasa las alturas de esa columna a <code>tono.mover(alturas, panoramaParaAvance(avance))</code> y dibuja la línea y un punto por rama.</li>
+  <li><b>Cruces.</b> <code>revisarCruces(desde, hasta)</code> revisa todas las columnas entre la anterior y la actual (por si el dedo se movió rápido): tic y doble vibración si cambia el signo de x; bip y vibración si alguna rama cambia de signo en y con un salto menor al 20 % del alto visible (un salto mayor es una asíntota).</li>
+  <li><b>Soltar.</b> <code>terminarExploracion</code> detiene el tono y dice las coordenadas con <code>Narrador</code>, de arriba hacia abajo: "x igual a 3, y igual a 4 y menos 4", o "no hay gráfica en la zona visible". Si aún no hay gráfica, dice "Primero grafica una función".</li>
+  <li><b>Otros sonidos.</b> Al empezar a explorar, <code>alEmpezar</code> detiene el audio del botón Reproducir (<code>motor.detenerAudio()</code>).</li>
+</ol>
+
+<!-- ============ 21 ============ -->
+<h2 id="p21">21. Ciclo de vida y liberación de recursos</h2>
+<table>
+  <tr><th>Momento</th><th>Qué se libera</th><th>Dónde</th></tr>
+  <tr><td>Salir de una pantalla de tema</td><td>Recorrido, tono, voz</td><td><code>onStop()</code> → <code>planoSonoro.detener()</code></td></tr>
+  <tr><td>Destruir la vista del plano</td><td>Todo, más el motor de voz</td><td><code>onDetachedFromWindow()</code> → <code>cancelarTodo()</code>, <code>narrador.cerrar()</code></td></tr>
+  <tr><td>Cambiar de sección en el menú</td><td>WebView, voz y audio de la graficadora</td><td><code>cambiarPantalla</code> → <code>grafica.destruir()</code></td></tr>
+  <tr><td>Quitar la capa sonora de la pantalla</td><td>Tono de exploración y su motor de voz</td><td><code>CapaSonora.onDetachedFromWindow()</code> → <code>tono.detener()</code>, <code>narrador.cerrar()</code></td></tr>
+  <tr><td>Cerrar la app</td><td>Graficadora</td><td><code>MainActivity.onDestroy()</code></td></tr>
+  <tr><td>Nueva reproducción</td><td>Pista anterior</td><td><code>SonidoGrafica.lanzar()</code> (<code>version++</code>, <code>liberar()</code>)</td></tr>
+</table>
+<p>Los <code>AudioTrack</code> se liberan siempre con <code>stop()</code> + <code>release()</code>; si no se liberan, Android se queda sin pistas de audio disponibles.</p>
+
+<!-- ============ 22 ============ -->
+<h2 id="p22">22. Pruebas y compilación</h2>
+<p>Requisitos: Android Studio (incluye el JDK en <code>jbr</code>). Desde la raíz del proyecto:</p>
+<pre><code>gradlew.bat :app:assembleDebug        # genera app/build/outputs/apk/debug/app-debug.apk
+gradlew.bat :app:testDebugUnitTest    # corre las pruebas unitarias</code></pre>
+<p><code>DescriptorGraficaTest</code> comprueba el resumen de las 7 funciones de ejemplo: cruces exactos (−0.5, ±1.73, 1, 3), vértices, "Pasa por el origen", el inicio del logaritmo y el formato de números. Si se cambia el algoritmo del resumen, estas pruebas avisan si alguna frase cambió de significado.</p>
+<h3>Prueba en un teléfono real</h3>
+<ol class="pasos">
+  <li>En el teléfono: <i>Ajustes → Acerca del teléfono</i>, tocar 7 veces "Número de compilación"; luego, en <i>Opciones de desarrollador</i>, activar <b>Depuración USB</b>.</li>
+  <li>Conectar por cable y aceptar "¿Permitir depuración USB?".</li>
+  <li>Comprobar la conexión e instalar:
+<pre><code>adb devices                          # debe listar el teléfono como "device"
+gradlew.bat :app:installDebug        # compila e instala en el teléfono conectado</code></pre></li>
+  <li>Para revisar errores mientras se usa la app: <code>adb logcat -b crash</code>. Para ver qué audio está sonando: <code>adb shell dumpsys audio</code>.</li>
+</ol>
+<p class="nota">En Git Bash, los comandos de adb con rutas del teléfono (<code>/sdcard/...</code>) necesitan <code>MSYS_NO_PATHCONV=1</code>; si no, Git Bash convierte la ruta a una de Windows.</p>
+<div class="alerta">La prueba del 8 de noviembre en un Galaxy con Android 16 está en la sección 14 de la documentación de arquitectura. Las pulsaciones enviadas por adb no pasan por los gestos de TalkBack, así que la exploración con el dedo bajo TalkBack, el paneo y la vibración deben probarse a mano.</div>
+
+<!-- ============ 23 ============ -->
+<h2 id="p23">23. Receta: agregar un tema nuevo con sonido</h2>
+<ol class="pasos">
+  <li>Crear <code>res/layout/vista_funcion_nueva.xml</code> copiando uno existente. Debe incluir <code>PlanoSonoroView</code> con id <code>planoSonoro</code>, el botón <code>btnSonidoNueva</code>, <code>btnReferencias</code> y, al final, el botón <code>btnRegresar</code>.</li>
+  <li>Agregar los textos a <code>strings.xml</code> (nombres en español, sin acentos).</li>
+  <li>Crear <code>FuncionNuevaActivity.kt</code>:
+<pre><code>class FuncionNuevaActivity : AppCompatActivity() {
+    private lateinit var enlace: VistaFuncionNuevaBinding
+
+    override fun onCreate(estadoGuardado: Bundle?) {
+        super.onCreate(estadoGuardado)
+        enlace = VistaFuncionNuevaBinding.inflate(layoutInflater)
+        setContentView(enlace.root)
+        enlace.root.respetarBarrasDelSistema()
+        enlace.btnRegresar.setOnClickListener { regresarAAprendizaje() }
+        enlace.planoSonoro.configurar("f de x igual a raíz de x", -1.0, 9.0, -1.0, 4.0) { x -> sqrt(x) }
+        enlace.planoSonoro.vincularBotones(enlace.btnSonidoNueva, enlace.btnReferencias)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        enlace.planoSonoro.detener()
+    }
+}</code></pre></li>
+  <li>Registrarla en <code>AndroidManifest.xml</code>: <code>&lt;activity android:name=".FuncionNuevaActivity" android:exported="false" /&gt;</code>.</li>
+  <li>Agregar su botón en <code>vista_aprendizaje.xml</code> y su <code>startActivity(Intent(...))</code> en <code>configurarBotonesAprendizaje</code>.</li>
+  <li>(Opcional) Agregar una prueba del resumen en <code>DescriptorGraficaTest</code>.</li>
+</ol>
+
+<!-- ============ 24 ============ -->
+<h2 id="p24">24. Glosario</h2>
+<table>
+  <tr><th>Término</th><th>Significado</th></tr>
+  <tr><td>Sonificación</td><td>Representar datos con sonido; aquí, la altura de una gráfica con el tono.</td></tr>
+  <tr><td>Ventana</td><td>La parte del plano que se muestra y se escucha (xMin, xMax, yMin, yMax).</td></tr>
+  <tr><td>Altura (normalizada)</td><td>Valor de 0 (abajo de la ventana) a 1 (arriba) que se convierte en tono.</td></tr>
+  <tr><td>Avance</td><td>Valor de 0 (borde izquierdo) a 1 (borde derecho) del recorrido.</td></tr>
+  <tr><td>Balance / paneo</td><td>Reparto del sonido entre el oído izquierdo y el derecho.</td></tr>
+  <tr><td>PCM</td><td>Audio como lista de números (muestras); se usan 44,100 por segundo y por canal.</td></tr>
+  <tr><td>AudioTrack STATIC / STREAM</td><td>STATIC: toda la pista en memoria (recorrido). STREAM: se alimenta en bloques mientras suena (exploración).</td></tr>
+  <tr><td>Turno / generación / versión</td><td>Contadores que invalidan tareas viejas cuando empieza una nueva.</td></tr>
+  <tr><td>Exploración táctil</td><td>Modo de TalkBack en el que deslizar un dedo lee lo que está debajo; llega a la app como eventos <i>hover</i>.</td></tr>
+  <tr><td>Región <i>live</i></td><td>Vista cuyo cambio de texto anuncia TalkBack automáticamente.</td></tr>
+  <tr><td>Bisección / búsqueda ternaria</td><td>Métodos numéricos para hallar con precisión un cruce con cero y un máximo o mínimo.</td></tr>
+  <tr><td>ViewBinding</td><td>Clases generadas por Gradle que dan acceso directo y seguro a las vistas de un XML.</td></tr>
+  <tr><td>CLEAR_TOP / SINGLE_TOP</td><td>Banderas de Intent: cerrar las pantallas que están encima del destino y reutilizar el destino si ya está arriba.</td></tr>
+  <tr><td>De borde a borde / <i>insets</i></td><td>Modo de Android 15+ en el que la app se dibuja detrás de las barras del sistema; los <i>insets</i> son las medidas de esas barras que la app usa para dejarles espacio.</td></tr>
+  <tr><td>adb</td><td>Android Debug Bridge: herramienta para instalar la app y revisar un teléfono conectado por cable.</td></tr>
+  <tr><td>Mapa (graficadora)</td><td>Lista de columnas con los valores de y visibles de la gráfica de GeoGebra; la capa sonora lo consulta mientras el dedo se mueve.</td></tr>
+  <tr><td>Capa transparente</td><td>Vista sin fondo apilada encima de otra en un <code>FrameLayout</code>; recibe el toque primero y decide si lo usa o lo deja pasar.</td></tr>
+  <tr><td>Voz (de sonido)</td><td>Un tono independiente; con varias voces suenan varios tonos a la vez, uno por rama de la curva.</td></tr>
+  <tr><td>Perspectiva "G"</td><td>Configuración de GeoGebra que muestra solo la vista gráfica, sin el panel de álgebra.</td></tr>
+  <tr><td>WebViewAssetLoader</td><td>Herramienta de <code>androidx.webkit</code> que hace que el WebView abra archivos de la app como si fueran una página web normal (<code>https://appassets.androidplatform.net/...</code>), sin internet.</td></tr>
+</table>
+
+</main>
+<footer>Sara · Manual técnico de procesos · Ver también la <a href="documentacion-sara.html">Documentación de arquitectura</a></footer>
+</body>
+</html>

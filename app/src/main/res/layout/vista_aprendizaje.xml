@@ -2,10 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#262626"
+    android:background="@color/fondo"
     android:fillViewport="true"
-    android:scrollbars="none"
-    >
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +12,7 @@
         android:orientation="vertical"
         android:padding="30dp">
 
-        <!-- Título -->
+
         <TextView
             android:id="@+id/txtTituloAprendizaje"
             android:layout_width="match_parent"
@@ -21,172 +20,308 @@
             android:text="Aprendizaje"
             android:textColor="#FFFFFF"
             android:textSize="40sp"
-            android:textStyle="bold" />
-
-        <!-- Espacio -->
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
-
-        <!-- Función cuadrática -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Función cuadrática:"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <!-- Fórmula -->
-        <TextView
-            android:id="@+id/txtFuncionCuadratica"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="f(x) = x²"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <!-- Botón sonido -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSonidoCuadratica"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_marginTop="15dp"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:background="@drawable/btn_amarillo"
-            android:backgroundTint="@null"
-            android:text="Reproducir sonido "
-            android:drawableEnd="@drawable/ico_play"
-            android:textColor="#262626"
-            android:textSize="20sp"
             android:textStyle="bold"
-            android:textAllCaps="false" />
+            android:accessibilityHeading="true" />
 
-        <!-- Espacio -->
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
-
-        <!-- Función logarítmica -->
+        <!-- Plano cartesiano -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Función logarítmica:"
+            android:layout_marginTop="30dp"
+            android:text="@string/encabezadoplano"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <!-- Fórmula -->
-        <TextView
-            android:id="@+id/txtFuncionLogaritmica"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="f(x) = ln(x)"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <!-- Botón sonido -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSonidoLogaritmica"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/btn_amarillo"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:text="Reproducir sonido "
-            android:drawableEnd="@drawable/ico_play"
-            android:textColor="#262626"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textAllCaps="false" />
+            android:accessibilityHeading="true" />
 
-        <!-- Espacio -->
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
-
-        <!-- Funciones trigonométricas -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Funciones trigonométricas:"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <!-- Fórmula -->
-        <TextView
-            android:id="@+id/txtFuncionTrigonometrica"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="f(x) = sen(x + 2)"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <!-- Botón sonido -->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSonidoTrigonometrica"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/btn_amarillo"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:text="Reproducir sonido "
-            android:drawableEnd="@drawable/ico_play"
-            android:textColor="#262626"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAllCaps="false" />
-
-        <!-- Espacio -->
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="35dp" />
-
-        <!-- Otra sección -->
-        <TextView
+            android:id="@+id/btnTemaPlano"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Funciones trigonométricas:"
-            android:textColor="#FFFFFF"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadoplano"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/txtFuncionTrigonometrica2"
+        <!-- Conceptos: dominio, rango e intervalo -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaConceptos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="f(x) = cos(x)"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadoconceptos"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!--  Funciones -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/encabezadofuncion"
             android:textColor="#FFFFFF"
-            android:textSize="30sp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaFunciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="¿Qué es una función?"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSonidoTrigonometrica2"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
+            android:id="@+id/btnTemaRecta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
             android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:background="@drawable/btn_amarillo"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:text="Reproducir sonido "
-            android:drawableEnd="@drawable/ico_play"
-            android:textColor="#262626"
+            android:text="@string/encabezadorecta"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAllCaps="false" />
+            android:textStyle="bold" />
 
-        <!-- Espacio final -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaLineal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadolineal"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaCuadratica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadocuadratica"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaCubica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadocubica"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaValorAbsoluto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadovalorabsoluto"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaRaiz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadoraiz"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaExponencial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadoexponencial"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaLogaritmica"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadologaritmica"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaConicas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadoconicas"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- Funciones trigonométricas y circulo unitario-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/encabezadocirculounitario"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaCirculoUnitario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="@string/encabezadocirculounitario"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Funciones trigonométricas"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:accessibilityHeading="true" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaSenoCoseno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="Seno y coseno"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTemaTangente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="55dp"
+            android:layout_marginTop="15dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/btn_amarillo"
+            android:text="Tangente"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="30dp" />
